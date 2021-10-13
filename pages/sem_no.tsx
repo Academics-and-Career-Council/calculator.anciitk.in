@@ -7,14 +7,14 @@ import { Button } from 'antd';
 import Styles from '../pages/sem_no.module.css'
 const { Header, Footer, Content } = Layout;
 
-let NoOfCourses: any = []
-let Grade:any[][]=[]
-let Credit:any=[]
-let Name:any=[]
+let NoOfCourses: number[] = []
+let Grade:number[][]=[]
+let Credit:number[][]=[]
+let Name:string[][]=[]
 
 
 
-function cpi_calculation(props:any){
+function cpi_calculation(props:number){
     let num=0;
     let denom=0;
     
@@ -48,14 +48,13 @@ export default function sem_no() {
     const [button,setButton]=useState(false)
     let [cpi, setcpi] = useState(0)
     NoOfCourses[courseind] = courseNo
-    //console.log(NoOfCourses)
     let sem_no
     let sem_no_load = []
     sem_no = sem
     for (var i = 0; i < sem_no; i++) {
         sem_no_load.push(i)
     }
-    let loadcourses: any = []
+    let loadcourses: number[][] = []
     for (var j = 0; j < sem; j++) {
         loadcourses[j] = []
         for (var k = 0; k < NoOfCourses[j]; k++) {
@@ -73,11 +72,6 @@ export default function sem_no() {
         }
        
     }
-    // if(NoOfCourses[0]>=1){
-    //     setButton(true)
-    // }else{
-    //     setButton(false)
-    // }
     const menu = (
         <Menu onClick={(e) => setSem(Number(e.key)) }>
             <Menu.Item key="1">1</Menu.Item>
@@ -92,8 +86,7 @@ export default function sem_no() {
     );
     return (
         <div>
-            <Layout>
-
+            <Layout >
                 <Header className={Styles.header}> CPI CALCULATOR </Header>
                 < Content className={Styles.content} >
                     <div className={Styles.centre}>
@@ -107,26 +100,25 @@ export default function sem_no() {
                         </Dropdown>
                     </div>
                     <div>
-                        {sem_no_load.map((e: any) => <div>
+                        {sem_no_load.map((e: number) => <div>
                             
-                            <No_of_courses i={e} onChange={(event: any) => { setCourseNo(event), setCourseind(e), setButton(true)}} />
+                            <No_of_courses i={e} onChange={(event:number ) => { setCourseNo(event), setCourseind(e), setButton(true)}} />
                         </div>)}
                     </div>
                     <div >
-                        {loadcourses.map((e:any,i1:any) =>  <div className={Styles.semdiv}>
-                            {e[0]==0?<h2 style={{position:'relative',left:'-20rem'}}>Semester {i1+1}</h2>:''}
-                            {e.map((e: any, i2: any) => <div style={{ paddingBottom:'0.2rem' }}>
-                                <Coursename onChange={(e: any, check: any) => {
+                        {loadcourses.map((e:number[],i1:number) =>  <div className={Styles.semdiv}>
+                            {e[0]==0?<h2 className={Styles.semno}>Semester {i1+1}</h2>:''}
+                            {e.map((e:number,i2: number) => <div style={{ paddingBottom:'0.2rem' }}>
+                                <Coursename onChange={(e: React.ChangeEvent<HTMLInputElement>, check: number) => {
                                     if (check == 1) {
-
+                                        Name[i1][i2] = e.currentTarget.value;
+                                        console.log(Name)
                                     }
                                     if (check == 2) {
-                                        Grade[i1][i2] = e.key
-                                        console.log(Grade)
+                                        Grade[i1][i2] = e.key;
                                     }
                                     if (check == 3) {
-                                        Credit[i1][i2] = e
-                                        console.log(Credit)
+                                        Credit[i1][i2] = Number(e);
                                     }
                                 }} />
 
@@ -144,7 +136,7 @@ export default function sem_no() {
                         {CPI?<h3 className={Styles.yourcpi}>Your CPI is {cpi}</h3>:''}
                     </div>
                 </Content>
-                < Footer className="footer" > Footer </Footer>
+                {/* < Footer className="footer" > Footer </Footer> */}
 
             </Layout>
 

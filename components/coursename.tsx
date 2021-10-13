@@ -21,29 +21,29 @@ export default function coursename  (props:any)  {
     );
     return (
         <div className={Coursename.div}>
-            <h3 style={{paddingRight:'1rem',paddingLeft:'1rem'}}>
+            <h3 className={Coursename.h31}>
                 Course Name
             </h3>
             <Input
                 placeholder="Course Name"
                 type='text'
-                
                 style={{width:'initial'}}
                 onChange={(e) => props.onChange(e, 1)}
             />
-            <h3 style={{ paddingRight: '1rem',paddingLeft:'5rem' }}>
+            <h3 className={Coursename.h31}>
                 Grade
             </h3>
             <Dropdown
                 overlay={menu}
                 arrow={true}
+                
             >
                 <a className={Coursename.a}>{value}</a>
             </Dropdown>
-            <h3 style={{ paddingRight: '1rem', paddingLeft: '5rem' }}>
+            <h3 className={Coursename.h31}>
                 Course Credit
             </h3>
-            <InputNumber min={1} max={10}
+            <InputNumber min={1} max={15}
             placeholder='Credits'
             onChange={(e)=>props.onChange(e,3)} />
         </div>
