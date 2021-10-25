@@ -1,12 +1,13 @@
 import { Layout } from 'antd';
-import { Menu, Dropdown } from 'antd';
 import { useState } from 'react';
 import Coursename from '../components/Mcoursename';
 import No_of_courses from '../pages/no_of_courses';
 import { Button } from 'antd';
 import Styles from '../pages/Msem_no.module.css'
-const { Header, Footer, Content } = Layout;
-import { Divider } from 'antd';
+const { Header, Content } = Layout;
+import { Select } from 'antd';
+const { Option } = Select;
+
 
 let NoOfCourses: number[] = []
 let Grade: number[][] = []
@@ -73,18 +74,6 @@ export default function sem_no() {
         }
 
     }
-    const menu = (
-        <Menu onClick={(e) => setSem(Number(e.key))}>
-            <Menu.Item key="1">1</Menu.Item>
-            <Menu.Item key="2">2</Menu.Item>
-            <Menu.Item key="3">3</Menu.Item>
-            <Menu.Item key="4">4</Menu.Item>
-            <Menu.Item key="5">5</Menu.Item>
-            <Menu.Item key="6">6</Menu.Item>
-            <Menu.Item key="7">7</Menu.Item>
-            <Menu.Item key="8">8</Menu.Item>
-        </Menu>
-    );
     return (
         <div>
             <Layout >
@@ -92,13 +81,16 @@ export default function sem_no() {
                 < Content className={Styles.content} >
                     <div className={Styles.centre}>
                         <h2 style={{ paddingRight: '15px' }}>No of Semesters</h2>
-                        <Dropdown
-                            overlay={menu}
-                            overlayStyle={{ color: 'black' }}
-                            arrow={true}
-                        >
-                            <a className={Styles.a}>{sem}</a>
-                        </Dropdown>
+                        <Select defaultValue="1" style={{ width: 60, fontWeight: 'bolder', textAlign: 'center' }} onChange={(e) => { setSem(Number(e)), setCPI(false) }}>
+                            <Option value="1">1</Option>
+                            <Option value="2">2</Option>
+                            <Option value="3">3</Option>
+                            <Option value="4">4</Option>
+                            <Option value="5">5</Option>
+                            <Option value="6">6</Option>
+                            <Option value="7">7</Option>
+                            <Option value="8">8</Option>
+                        </Select>
                     </div>
                     <div>
                         {sem_no_load.map((e: number) => <div>
@@ -116,7 +108,7 @@ export default function sem_no() {
                                         console.log(Name)
                                     }
                                     if (check == 2) {
-                                        Grade[i1][i2] = e.key;
+                                        Grade[i1][i2] = Number(e);
                                     }
                                     if (check == 3) {
                                         Credit[i1][i2] = Number(e);
@@ -136,8 +128,6 @@ export default function sem_no() {
                         {CPI ? <h3 className={Styles.yourcpi}>Your CPI is {cpi}</h3> : ''}
                     </div>
                 </Content>
-
-
             </Layout>
 
         </div>

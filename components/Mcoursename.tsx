@@ -4,22 +4,10 @@ import { useState } from 'react';
 import { InputNumber } from 'antd';
 import Mcoursename from '../components/Mcoursename.module.css';
 import { Divider } from 'antd';
+import { Select } from 'antd';
+const { Option } = Select;
 
 export default function coursename(props: any) {
-    const [value, setValue] = useState('A*')
-    const menu = (
-        <Menu onClick={(e) => { props.onChange(e, 2), setValue(e.domEvent.target.outerText) }}>
-            <Menu.Item key="10.0" >A*</Menu.Item>
-            <Menu.Item key="10" >A</Menu.Item>
-            <Menu.Item key="8">B</Menu.Item>
-            <Menu.Item key="6">C</Menu.Item>
-            <Menu.Item key="4">D</Menu.Item>
-            <Menu.Item key="2">E</Menu.Item>
-            <Menu.Item key="0">F</Menu.Item>
-            <Menu.Item key="11">DROP</Menu.Item>
-            <Menu.Item key="12">S/X</Menu.Item>
-        </Menu>
-    );
     return (
         <div  >
             <div className={Mcoursename.centre} style={{ marginTop: '1rem'}}>
@@ -37,16 +25,20 @@ export default function coursename(props: any) {
                 style={{ background: 'black', marginTop: '1vh', marginBottom: '1vh' }}
             />
             <div className={Mcoursename.centre}>
-                <h3 style={{ marginLeft: '1rem', marginRight: '5.5rem' }}>
+                <h3 style={{ marginLeft: '1rem', marginRight: '5rem' }}>
                     Grade
                 </h3>
-                <Dropdown
-                    overlay={menu}
-                    arrow={true}
-
-                >
-                    <a className={Mcoursename.a}>{value}</a>
-                </Dropdown>
+                <Select placeholder='Grade' style={{ width: 80, fontWeight: 'bolder', textAlign: 'center', marginLeft: '1rem' }} onChange={(e) => { props.onChange(e, 2) }}>
+                    <Option value="10.0">A*</Option>
+                    <Option value="10">A</Option>
+                    <Option value="8">B</Option>
+                    <Option value="6">C</Option>
+                    <Option value="4">D</Option>
+                    <Option value="2">E</Option>
+                    <Option value="0">F</Option>
+                    <Option value="11">DROP</Option>
+                    <Option value="12">S/X</Option>
+                </Select>
             </div>
             <Divider 
                 style={{ background: 'black', marginTop: '1vh', marginBottom: '1vh' }}
@@ -59,9 +51,6 @@ export default function coursename(props: any) {
                     placeholder='Credits'
                     onChange={(e) => props.onChange(e, 3)} />
             </div>
-            {/* <Divider 
-                style={{ background: 'black', marginTop: '1vh', marginBottom: '1vh' }}
-            /> */}
         </div>
     )
 }

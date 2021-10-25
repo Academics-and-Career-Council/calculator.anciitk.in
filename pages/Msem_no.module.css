@@ -39,10 +39,14 @@
     font-size: 3rem;
     background-color: slateblue;
     border-radius: 3rem;
-    max-width: max-content;
+    width: max-content;
     padding-left: 2rem;
     padding-right: 2rem;
     margin-left: 13%;
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
 }
 .a{
      background-color: white;

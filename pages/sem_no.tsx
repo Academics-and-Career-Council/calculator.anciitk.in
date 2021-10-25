@@ -7,7 +7,7 @@ import No_of_courses from '../pages/no_of_courses';
 import { Button } from 'antd';
 import Styles from '../pages/sem_no.module.css'
 import { Statistic, Card, Row, Col } from 'antd';
-import { Progress } from 'antd';
+
 
 const { Header, Content } = Layout;
 
