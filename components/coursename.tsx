@@ -1,24 +1,12 @@
 import { Input } from 'antd';
-import { Menu, Dropdown } from 'antd';
-import { useState } from 'react';
 import { InputNumber } from 'antd';
 import Coursename from '../components/coursename.module.css'
+import { Select } from 'antd';
+const { Option } = Select;
+import { useState } from 'react';
 
 export default function coursename  (props:any)  {
-    const[value,setValue]= useState('A*')
-    const menu = (
-        <Menu onClick={(e) => { props.onChange(e, 2), setValue(e.domEvent.target.outerText)}}>
-            <Menu.Item key="10.0" >A*</Menu.Item>
-            <Menu.Item key="10" >A</Menu.Item>
-            <Menu.Item key="8">B</Menu.Item>
-            <Menu.Item key="6">C</Menu.Item>
-            <Menu.Item key="4">D</Menu.Item>
-            <Menu.Item key="2">E</Menu.Item>
-            <Menu.Item key="0">F</Menu.Item>
-            <Menu.Item key="11">DROP</Menu.Item>
-            <Menu.Item key="12">S/X</Menu.Item>
-        </Menu>
-    );
+    const [Value ,setValue]= useState(NaN)
     return (
         <div className={Coursename.div}>
             <h3 className={Coursename.h31}>
@@ -33,19 +21,24 @@ export default function coursename  (props:any)  {
             <h3 className={Coursename.h31}>
                 Grade
             </h3>
-            <Dropdown
-                overlay={menu}
-                arrow={true}
-                
-            >
-                <a className={Coursename.a}>{value}</a>
-            </Dropdown>
+            <Select placeholder='Grade'  style={{ width: 80, fontWeight: 'bolder', textAlign: 'center' }} onChange={(e) => { props.onChange(e, 2) }}>
+                <Option value="10.0">A*</Option>
+                <Option value="10">A</Option>
+                <Option value="8">B</Option>
+                <Option value="6">C</Option>
+                <Option value="4">D</Option>
+                <Option value="2">E</Option>
+                <Option value="0">F</Option>
+                <Option value="11">DROP</Option>
+                <Option value="12">S/X</Option>
+            </Select>
             <h3 className={Coursename.h31}>
                 Course Credit
             </h3>
             <InputNumber min={1} max={15}
             placeholder='Credits'
-            onChange={(e)=>props.onChange(e,3)} />
+            defaultValue={NaN}
+            onChange={(e)=>{props.onChange(e,3)}} />
         </div>
     )
 }
