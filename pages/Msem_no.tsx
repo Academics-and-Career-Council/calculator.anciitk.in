@@ -2,10 +2,11 @@ import { Layout } from 'antd';
 import { useState } from 'react';
 import Coursename from '../components/Mcoursename';
 import No_of_courses from '../pages/no_of_courses';
+import Mno_of_courses from '../pages/Mno_of_courses';
 import { Button } from 'antd';
 import Styles from '../pages/Msem_no.module.css'
 const { Header, Content } = Layout;
-import { Select } from 'antd';
+import { Select,Image } from 'antd';
 const { Option } = Select;
 
 
@@ -80,8 +81,8 @@ export default function sem_no() {
                 <Header className={Styles.header}> CPI CALCULATOR </Header>
                 < Content className={Styles.content} >
                     <div className={Styles.centre}>
-                        <h2 style={{ paddingRight: '15px' }}>No of Semesters</h2>
-                        <Select defaultValue="1" style={{ width: 60, fontWeight: 'bolder', textAlign: 'center' }} onChange={(e) => { setSem(Number(e)), setCPI(false) }}>
+                        <h2 style={{ paddingRight: '1vh' ,fontSize:'1.5vh'}}>No of Semesters</h2>
+                        <Select defaultValue="1" style={{ width: '1vh', fontWeight: 'bolder', textAlign: 'center' }} onChange={(e) => { setSem(Number(e)), setCPI(false) }}>
                             <Option value="1">1</Option>
                             <Option value="2">2</Option>
                             <Option value="3">3</Option>
@@ -93,9 +94,9 @@ export default function sem_no() {
                         </Select>
                     </div>
                     <div>
-                        {sem_no_load.map((e: number) => <div>
+                        {sem_no_load.map((e: number) => <div >
 
-                            <No_of_courses i={e} onChange={(event: number) => { setCourseNo(event), setCourseind(e), setButton(true) }} />
+                            <Mno_of_courses i={e} onChange={(event: number) => { setCourseNo(event), setCourseind(e), setButton(true) }} />
                         </div>)}
                     </div>
                     <div >

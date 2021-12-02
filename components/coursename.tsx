@@ -8,6 +8,7 @@ import { useState } from 'react';
 export default function coursename  (props:any)  {
     const [Value ,setValue]= useState(NaN)
     return (
+        
         <div className={Coursename.div}>
             <h3 className={Coursename.h31}>
                 Course Name

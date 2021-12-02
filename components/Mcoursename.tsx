@@ -11,7 +11,7 @@ export default function coursename(props: any) {
     return (
         <div  >
             <div className={Mcoursename.centre} style={{ marginTop: '1rem'}}>
-                <h3 style={{marginLeft:'1rem',marginRight:'2rem'}}>
+                <h3 style={{marginLeft:'1rem',marginRight:'2rem',fontSize:'1vh'}}>
                     Course Name
                 </h3>
                 <Input
@@ -22,13 +22,13 @@ export default function coursename(props: any) {
                 />
             </div>
             <Divider
-                style={{ background: 'black', marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ background: 'white', marginTop: '1vh', marginBottom: '1vh' }}
             />
             <div className={Mcoursename.centre}>
-                <h3 style={{ marginLeft: '1rem', marginRight: '5rem' }}>
+                <h3 style={{ marginLeft: '1rem', marginRight: '5rem',fontSize:'1vh' }}>
                     Grade
                 </h3>
-                <Select placeholder='Grade' style={{ width: 80, fontWeight: 'bolder', textAlign: 'center', marginLeft: '1rem' }} onChange={(e) => { props.onChange(e, 2) }}>
+                <Select placeholder='Grade' style={{ width: '90%', fontWeight: 'bolder', textAlign: 'center', marginLeft: '1rem' }} onChange={(e) => { props.onChange(e, 2) }}>
                     <Option value="10.0">A*</Option>
                     <Option value="10">A</Option>
                     <Option value="8">B</Option>
@@ -41,16 +41,20 @@ export default function coursename(props: any) {
                 </Select>
             </div>
             <Divider 
-                style={{ background: 'black', marginTop: '1vh', marginBottom: '1vh' }}
+                style={{ background: 'white', marginTop: '1vh', marginBottom: '1vh' }}
             />
             <div className={Mcoursename.centre}>
-                <h3 style={{ marginLeft: '1rem', marginRight: '2rem' }} >
+                <h3 style={{ marginLeft: '1rem', marginRight: '2rem' ,fontSize:'1vh'}} >
                     Course Credit
                 </h3>
                 <InputNumber min={1} max={15}
                     placeholder='Credits'
-                    onChange={(e) => props.onChange(e, 3)} />
+                    onChange={(e) => props.onChange(e, 3)} 
+                    style={{width: '73%'}}/>
             </div>
+            <Divider
+                style={{ background: 'black' ,marginBottom:'0vh' }}
+            />
         </div>
     )
 }

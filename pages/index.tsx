@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
 import Sem_no from './sem_no';
 import Msem_no from './Msem_no';
+import {isMobile} from 'react-device-detect';
 
 
 
@@ -10,7 +11,7 @@ import Msem_no from './Msem_no';
 const Home: NextPage = () => {
   return (
     <div  >
-    <Msem_no/>
+      {isMobile?<Msem_no/>:<Sem_no/>}   
     </div>
   )
 }
