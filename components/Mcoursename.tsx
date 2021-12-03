@@ -4,14 +4,17 @@ import { useState } from 'react';
 import { InputNumber } from 'antd';
 import Mcoursename from '../components/Mcoursename.module.css';
 import { Divider } from 'antd';
-import { Select } from 'antd';
+import { Select ,Space} from 'antd';
 const { Option } = Select;
 
 export default function coursename(props: any) {
     return (
         <div  >
-            <div className={Mcoursename.centre} style={{ marginTop: '1rem'}}>
-                <h3 style={{marginLeft:'1rem',marginRight:'2rem',fontSize:'1vh'}}>
+            <Divider
+                style={{ background: 'black' ,marginTop:'0vh' }}
+            />
+            <div className={Mcoursename.centre} style={{ marginTop: '0.5rem'}}>
+                <h3 style={{marginLeft:'1rem',marginRight:'2rem',fontSize:'1.8vh'}}>
                     Course Name
                 </h3>
                 <Input
@@ -21,14 +24,16 @@ export default function coursename(props: any) {
                     onChange={(e) => props.onChange(e, 1)}
                 />
             </div>
-            <Divider
+            <Space/>
+            {/* <Divider
                 style={{ background: 'white', marginTop: '1vh', marginBottom: '1vh' }}
-            />
+            /> */}
+            <div style={{display:'flex',marginTop:'1vh'}}>
             <div className={Mcoursename.centre}>
-                <h3 style={{ marginLeft: '1rem', marginRight: '5rem',fontSize:'1vh' }}>
+                <h3 style={{ marginLeft: '0.5rem', marginRight: '1.5rem',fontSize:'1.6vh' }}>
                     Grade
                 </h3>
-                <Select placeholder='Grade' style={{ width: '90%', fontWeight: 'bolder', textAlign: 'center', marginLeft: '1rem' }} onChange={(e) => { props.onChange(e, 2) }}>
+                <Select placeholder='Grade' style={{  fontWeight: 'bolder', textAlign: 'center', marginLeft: '1rem' }} onChange={(e) => { props.onChange(e, 2) }}>
                     <Option value="10.0">A*</Option>
                     <Option value="10">A</Option>
                     <Option value="8">B</Option>
@@ -40,21 +45,20 @@ export default function coursename(props: any) {
                     <Option value="12">S/X</Option>
                 </Select>
             </div>
-            <Divider 
+            {/* <Divider 
                 style={{ background: 'white', marginTop: '1vh', marginBottom: '1vh' }}
-            />
+            /> */}
             <div className={Mcoursename.centre}>
-                <h3 style={{ marginLeft: '1rem', marginRight: '2rem' ,fontSize:'1vh'}} >
+                <h3 style={{ marginLeft: '1rem', marginRight: '2rem' ,fontSize:'1.6vh'}} >
                     Course Credit
                 </h3>
                 <InputNumber min={1} max={15}
                     placeholder='Credits'
                     onChange={(e) => props.onChange(e, 3)} 
-                    style={{width: '73%'}}/>
+                    />
             </div>
-            <Divider
-                style={{ background: 'black' ,marginBottom:'0vh' }}
-            />
+            </div>
+            
         </div>
     )
 }

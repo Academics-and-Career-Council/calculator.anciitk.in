@@ -6,7 +6,7 @@ import Mno_of_courses from '../pages/Mno_of_courses';
 import { Button } from 'antd';
 import Styles from '../pages/Msem_no.module.css'
 const { Header, Content } = Layout;
-import { Select,Image } from 'antd';
+import { Select,Card } from 'antd';
 const { Option } = Select;
 
 
@@ -45,11 +45,14 @@ function cpi_calculation(props: number) {
 
 export default function sem_no() {
     const [sem, setSem] = useState(1)
-    const [courseNo, setCourseNo] = useState(0)
+    const [courseNo, setCourseNo] = useState(1)
     const [courseind, setCourseind] = useState(0)
     const [CPI, setCPI] = useState(false)
     const [button, setButton] = useState(false)
     let [cpi, setcpi] = useState(0)
+    for (var i=0;i<sem;i++){
+        NoOfCourses.push(1)
+    }
     NoOfCourses[courseind] = courseNo
     let sem_no
     let sem_no_load = []
@@ -77,12 +80,13 @@ export default function sem_no() {
     }
     return (
         <div>
-            <Layout >
-                <Header className={Styles.header}> CPI CALCULATOR </Header>
+            <Layout style={{position:'relative'}}>
+                <Header className={Styles.header} style={{fontSize:'6vw',position:'relative'}}> CPI CALCULATOR </Header>
                 < Content className={Styles.content} >
-                    <div className={Styles.centre}>
-                        <h2 style={{ paddingRight: '1vh' ,fontSize:'1.5vh'}}>No of Semesters</h2>
-                        <Select defaultValue="1" style={{ width: '1vh', fontWeight: 'bolder', textAlign: 'center' }} onChange={(e) => { setSem(Number(e)), setCPI(false) }}>
+                    <div style={{position:'relative'}}>
+                    <div className={Styles.centre} style={{display:'block',marginLeft:'auto',marginRight:'auto'}}>
+                        <h2 style={{ paddingRight: '1vh' ,fontSize:'6vw'}}>No of Semesters</h2>
+                        <Select defaultValue="1" style={{  fontWeight: 'bolder', textAlign: 'center' }} onChange={(e) => { setSem(Number(e)), setCPI(false) }}>
                             <Option value="1">1</Option>
                             <Option value="2">2</Option>
                             <Option value="3">3</Option>
@@ -100,7 +104,7 @@ export default function sem_no() {
                         </div>)}
                     </div>
                     <div >
-                        {loadcourses.map((e: number[], i1: number) => <div className={Styles.semdiv}>
+                        {loadcourses.map((e: number[], i1: number) => <Card className={Styles.semdiv} style={{backgroundColor: 'rgba(255, 255, 255, 0.7)', marginBottom:'0.1vh' }}>
                             {e[0] == 0 ? <h2 className={Styles.semno}>Semester {i1 + 1}</h2> : ''}
                             {e.map((e: number, i2: number) => <div className={Styles.semcourse}>
                                 <Coursename onChange={(e: React.MouseEvent<HTMLInputElement>, check: number) => {
@@ -117,7 +121,7 @@ export default function sem_no() {
                                 }} />
                             </div>)}
 
-                        </div>
+                        </Card>
                         )}
                     </div>
                     <div style={{ padding: '20px' }}>
@@ -127,6 +131,7 @@ export default function sem_no() {
                     </div>
                     <div className={Styles.centre}>
                         {CPI ? <h3 className={Styles.yourcpi}>Your CPI is {cpi}</h3> : ''}
+                    </div>
                     </div>
                 </Content>
             </Layout>
