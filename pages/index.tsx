@@ -11,8 +11,7 @@ import {isMobile} from 'react-device-detect';
 const Home: NextPage = () => {
   return (
     <div >
-      
-    <Msem_no/>
+      {isMobile?<Msem_no/>:<Sem_no/>}
     </div>
   )
 }
