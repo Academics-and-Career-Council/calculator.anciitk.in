@@ -1,4 +1,4 @@
-import { InputRef, Row } from 'antd';
+import { InputRef, Row, Upload, UploadFile, UploadProps } from 'antd';
 import { Button, Form, Input, Popconfirm, Table, AutoComplete } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -8,6 +8,8 @@ import DataType from './datatype';
 import { allSemsData } from './recoilDeclarations';
 import { useRecoilState } from "recoil";
 import getCreditsReceived from './getCreditsReceived';
+import { UploadOutlined } from '@ant-design/icons';
+import { RcFile } from 'antd/lib/upload';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -16,7 +18,7 @@ const options:any = [
   {value: 'MTH101'}, {value: 'MTH102'}, {value: 'EE200'}, {value: 'EE370'}
 ]
 const optionsGrade:any = [
-  {value: 'A*'}, {value: 'A'}, {value: 'B'}, {value: 'C'}, {value: 'D'}, {value: 'E'}, {value: 'F'}
+  {value: 'A*'}, {value: 'A'}, {value: 'B'}, {value: 'C'}, {value: 'D'}, {value: 'E'}, {value: 'F'}, {value: 'S'}, {value: 'X'}
 ]
 interface courseList {
   course: string;
@@ -209,13 +211,53 @@ const App: React.FC = () => {
 
   const [count, setCount] = useState(0);
 
+  const addAllData = () => {
+    setSemData([]);
+    let semDataAll = semData
+    semDataAll = []
+    if(sem1.length !== 0) {semDataAll = [sem1];}
+    if(sem2.length !== 0) {semDataAll?.push(sem2)}
+    if(sem3.length !== 0) {semDataAll?.push(sem3)}
+    if(sem4.length !== 0) {semDataAll?.push(sem4)}
+    if(sem5.length !== 0) {semDataAll?.push(sem5)}
+    if(sem6.length !== 0) {semDataAll?.push(sem6)}
+    if(sem7.length !== 0) {semDataAll?.push(sem7)}
+    if(sem8.length !== 0) {semDataAll?.push(sem8)}
+    if(sem9.length !== 0) {semDataAll?.push(sem9)}
+    if(sem10.length !== 0) {semDataAll?.push(sem10)}
+    if(sem11.length !== 0) {semDataAll?.push(sem11)}
+    if(sem12.length !== 0) {semDataAll?.push(sem12)}
+    if(sem13.length !== 0) {semDataAll?.push(sem13)}
+    if(sem14.length !== 0) {semDataAll?.push(sem14)}
+    if(sem15.length !== 0) {semDataAll?.push(sem15)}
+    if(sem16.length !== 0) {semDataAll?.push(sem16)}
+    setSemData(semDataAll)
+  }
+
   const handleDelete = (course: string, sem:DataType[], setSem:any, sem_num:number) => {
+    addAllData()
     const newData = sem.filter(item => item.course !== course);
     setSem(newData);
     if(sem_num === count && newData.length === 0) {
         setCount(sem_num-1);
     }
   };
+  const handleEdit = (course: string, sem:DataType[], setSem:any, sem_num:number) => {
+    addAllData()
+    let newData:DataType[] = [];
+    for(let ind=0; ind<sem.length; ind++) {
+      let temp:DataType = {course:sem[ind].course, credits:sem[ind].credits, credits_received:sem[ind].credits_received, grade: sem[ind].grade, is_repeated:sem[ind].is_repeated}
+      newData.push(temp)
+      // newData[ind].course = sem[ind].course
+      // newData[ind].credits = sem[ind].credits
+      // newData[ind].credits_received = sem[ind].credits_received
+      // newData[ind].grade = sem[ind].grade
+      // newData[ind].is_repeated = sem[ind].is_repeated
+      if(newData[ind].course === course) {newData[ind].is_repeated = true}
+    }
+    setSem(newData);
+    
+  }
 //: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[]
   const defaultColumns = (sem:DataType[], setSem:any, sem_num:number) => [
     {
@@ -238,20 +280,31 @@ const App: React.FC = () => {
       dataIndex: 'operation',
       render: (_, record: { course: string }) =>
         sem.length >= 1 ? (
+          <div>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.course, sem, setSem, sem_num)}>
-            <a>Delete</a>
+            <a>Delete </a>
           </Popconfirm>
+           | 
+          <Popconfirm title="Only click yes if you have done this course once again 
+          after failing this course ( Make sure you do not select the best attempt )" 
+          onConfirm={() => handleEdit(record.course, sem, setSem, sem_num)}>
+          <a> Repeated</a>
+        </Popconfirm>
+        </div>
         ) : null,
     },
   ];
-
+  
+  
   const handleAdd = (setSem:any, sem:DataType[], sem_num:number) => {
+    addAllData()
     const newData: DataType = {
     //   key: count,
       course: ``,
       grade: '',
       credits: 0,
       credits_received: 0,
+      is_repeated: false,
     };
     if(count < sem_num){
         setCount(sem_num)
@@ -259,8 +312,9 @@ const App: React.FC = () => {
     setSem([...sem, newData]);
     // setCount(count + 1);
   };
-// console.log(sem1)
+
   const handleSave = (row: DataType, sem: DataType[], setSem:any, isCourse: boolean) => {
+    addAllData()
     const newData = [...sem];
     if(isCourse === true) {
       let courseAtHand = jsonOfCourseCredits.filter(item => item.course === row.course)
@@ -300,6 +354,7 @@ const App: React.FC = () => {
       }),
     };
   });
+  
     const [isLoading, setIsLoading] = React.useState(false);
     const inputFileRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -348,26 +403,30 @@ const App: React.FC = () => {
         .catch(function (error) {
           console.log(error);
         });
-
+        addAllData()
         setIsLoading(false);
     };
-
+    
   
   return (
-    <div>
+    <div >
 
-            <form>
-                <div>
-                    <input type="file" name="myfile" ref={inputFileRef} />
+
+
+            <form style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+                <div >
+                    <input 
+                    type="file" name="myfile" ref={inputFileRef} />
+                    
                 </div>
-                <div>
+                <div >
                     <input type="submit" value="Upload" disabled={isLoading} onClick={handleOnClick} />
                     {isLoading && ` Wait, please...`}
                 </div>
             </form>
       <div>
         {
-            (count >= 0) && 
+            (count > 0) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 1</p>
       <Button onClick={() => handleAdd(setSem1, sem1, 1)} type="primary" style={{ marginBottom: 16 }}>
@@ -386,7 +445,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 1) && 
+            (count > 1) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 2</p>
                 <Button onClick={() => handleAdd(setSem2, sem2, 2)} type="primary" style={{ marginBottom: 16 }}>
@@ -404,7 +463,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 2) && 
+            (count > 2) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 3</p>
                 <Button onClick={() => handleAdd(setSem3, sem3, 3)} type="primary" style={{ marginBottom: 16 }}>
@@ -422,7 +481,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 3) && 
+            (count > 3) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 4</p>
                 <Button onClick={() => handleAdd(setSem4, sem4, 4)} type="primary" style={{ marginBottom: 16 }}>
@@ -440,7 +499,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 4) && 
+            (count > 4) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 5</p>
                 <Button onClick={() => handleAdd(setSem5, sem5, 5)} type="primary" style={{ marginBottom: 16 }}>
@@ -458,7 +517,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 5) && 
+            (count > 5) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 6</p>
                 <Button onClick={() => handleAdd(setSem6, sem6, 6)} type="primary" style={{ marginBottom: 16 }}>
@@ -476,7 +535,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 6) && 
+            (count > 6) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 7</p>
                 <Button onClick={() => handleAdd(setSem7, sem7, 7)} type="primary" style={{ marginBottom: 16 }}>
@@ -494,7 +553,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 7) && 
+            (count > 7) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 8</p>
                 <Button onClick={() => handleAdd(setSem8, sem8, 8)} type="primary" style={{ marginBottom: 16 }}>
@@ -512,7 +571,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 8) && 
+            (count > 8) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 9</p>
                 <Button onClick={() => handleAdd(setSem9, sem9, 9)} type="primary" style={{ marginBottom: 16 }}>
@@ -530,7 +589,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 9) && 
+            (count > 9) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 10</p>
                 <Button onClick={() => handleAdd(setSem10, sem10, 10)} type="primary" style={{ marginBottom: 16 }}>
@@ -548,7 +607,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 10) && 
+            (count > 10) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 11</p>
                 <Button onClick={() => handleAdd(setSem11, sem11, 11)} type="primary" style={{ marginBottom: 16 }}>
@@ -566,7 +625,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 11) && 
+            (count > 11) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 12</p>
                 <Button onClick={() => handleAdd(setSem12, sem12, 12)} type="primary" style={{ marginBottom: 16 }}>
@@ -584,7 +643,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 12) && 
+            (count > 12) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 13</p>
                 <Button onClick={() => handleAdd(setSem13, sem13, 13)} type="primary" style={{ marginBottom: 16 }}>
@@ -602,7 +661,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 13) && 
+            (count > 13) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 14</p>
                 <Button onClick={() => handleAdd(setSem14, sem14, 14)} type="primary" style={{ marginBottom: 16 }}>
@@ -620,7 +679,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 14) && 
+            (count > 14) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 15</p>
                 <Button onClick={() => handleAdd(setSem15, sem15, 15)} type="primary" style={{ marginBottom: 16 }}>
@@ -638,7 +697,7 @@ const App: React.FC = () => {
       </div>
       <div>
         {
-            (count >= 15) && 
+            (count > 15) && 
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 16</p>
                 <Button onClick={() => handleAdd(setSem16, sem16, 16)} type="primary" style={{ marginBottom: 16 }}>
@@ -653,8 +712,35 @@ const App: React.FC = () => {
       />
       </div>
         }
-      </div>
-
+      
+      <div style={{display:'flex',justifyContent:'center', alignItems:'center', padding:"10px"}}>
+      <Button  style={{width:"150px"}} onClick={() => setCount(count+1)}> Add Sem </Button>
+        </div>
+        <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+      <Button style={{width:"150px"}} onClick={() => {
+       if(count > 0) {setCount(count-1)}
+       if(count === 1) {setSem1([]);}
+       if(count === 2) {setSem2([]);}
+       if(count === 3) {setSem3([]);}
+       if(count === 4) {setSem4([]);}
+       if(count === 5) {setSem5([]);}
+       if(count === 6) {setSem6([]);}
+       if(count === 7) {setSem7([]);}
+       if(count === 8) {setSem8([]);}
+       if(count === 9) {setSem9([]);}
+       if(count === 10) {setSem10([]);}
+       if(count === 11) {setSem11([]);}
+       if(count === 12) {setSem12([]);}
+       if(count === 13) {setSem13([]);}
+       if(count === 14) {setSem14([]);}
+       if(count === 15) {setSem15([]);}
+       if(count === 16) {setSem16([]);}
+        }}> Delete last Sem </Button>
+        </div>
+        <div style={{display:'flex',justifyContent:'center', alignItems:'center', padding:"10px"}}>
+        <Button  style={{width:"150px"}} onClick={() => addAllData()}> Save </Button>
+        </div>
+        </div>
     </div>
   );
 };

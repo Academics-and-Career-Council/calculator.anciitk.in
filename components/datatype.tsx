@@ -6,4 +6,5 @@ export default interface DataType {
     grade: string;
     credits: number;
     credits_received: number;
+    is_repeated: boolean;
 }
