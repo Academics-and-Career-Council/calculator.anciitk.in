@@ -1,6 +1,5 @@
 import { useState } from "react"
 import SPIFinder from "./spiFinder"
-import APFinder from "./apFinder"
 import { Button, Table } from "antd"
 import App from "./uploadTranscript"
 import { useRecoilState } from "recoil"
@@ -144,6 +143,25 @@ const columns: ColumnsType<SPIstruct> = [
 
             {/* // } */}
             </div>
+            
+            <div> { showStat &&
+
+            
+                <div style={{paddingBottom:"50px"}}>
+                    {(semData.length > 0) &&
+                <p style={{"fontSize":"25px", display:'flex',justifyContent:'center', alignItems:'center'}}>{status}</p>
+                }
+                {
+                        (semData.length == 0) &&
+                        <p style={{display:'flex',justifyContent:'center', alignItems:'center'}}>Enter data into the semesters to find out your academic status</p>
+                }
+                <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+                    <Button onClick={() => setShowStat(false)}>Hide Status</Button>
+                </div>
+                </div>
+            }
+            </div>
+            
             <div>{ showStat2 && 
                 <div style={{paddingBottom: "50px"}}>
                 
@@ -162,23 +180,7 @@ const columns: ColumnsType<SPIstruct> = [
                 </div>
                 </div>}
             </div>
-            <div> { showStat &&
-
             
-            <div style={{paddingBottom:"50px"}}>
-                {(semData.length > 0) &&
-            <p style={{"fontSize":"25px", display:'flex',justifyContent:'center', alignItems:'center'}}>{status}</p>
-            }
-            {
-                    (semData.length == 0) &&
-                    <p style={{display:'flex',justifyContent:'center', alignItems:'center'}}>Enter data into the semesters to find out your academic status</p>
-                }
-                <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
-            <Button onClick={() => setShowStat(false)}>Hide Status</Button>
-            </div>
-            </div>
-            }
-            </div>
         </div>
     </div>
     )

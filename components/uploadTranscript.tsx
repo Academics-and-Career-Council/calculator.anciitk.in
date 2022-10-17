@@ -1,4 +1,4 @@
-import { InputRef, Row, Upload, UploadFile, UploadProps } from 'antd';
+import { InputRef, Row, Tag, Upload, UploadFile, UploadProps } from 'antd';
 import { Button, Form, Input, Popconfirm, Table, AutoComplete } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useRef, useState } from 'react';
@@ -293,6 +293,26 @@ const App: React.FC = () => {
         </div>
         ) : null,
     },
+    {
+      title: 'Repeated',
+      dataIndex: 'is_repeated',
+      
+      render: (_, record: {is_repeated:Boolean} ) => (
+        <>
+          {(record.is_repeated === true) &&
+              <Tag color='volcano' >
+                Counted for SPI (NOT CPI)
+              </Tag>
+          }
+          {
+            (record.is_repeated === false) &&
+            <Tag color='green' >
+              Counted for SPI and CPI
+            </Tag>
+          }
+        </>
+      ),
+    }
   ];
   
   
@@ -372,8 +392,9 @@ const App: React.FC = () => {
         const formData = new FormData();
         Object.values(inputFileRef.current.files).forEach(file => {
             formData.append('file', file);
+            console.log(file)
         })
-        axios.post('http://127.0.0.1:5000/uploader', formData, {
+        axios.post('http://api.anciitk.in/.proton/uploader', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -430,7 +451,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 1</p>
       <Button onClick={() => handleAdd(setSem1, sem1, 1)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       
       <Table
@@ -449,7 +470,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 2</p>
                 <Button onClick={() => handleAdd(setSem2, sem2, 2)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -467,7 +488,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 3</p>
                 <Button onClick={() => handleAdd(setSem3, sem3, 3)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -485,7 +506,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 4</p>
                 <Button onClick={() => handleAdd(setSem4, sem4, 4)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -503,7 +524,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 5</p>
                 <Button onClick={() => handleAdd(setSem5, sem5, 5)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -521,7 +542,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 6</p>
                 <Button onClick={() => handleAdd(setSem6, sem6, 6)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -539,7 +560,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 7</p>
                 <Button onClick={() => handleAdd(setSem7, sem7, 7)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -557,7 +578,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 8</p>
                 <Button onClick={() => handleAdd(setSem8, sem8, 8)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -575,7 +596,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 9</p>
                 <Button onClick={() => handleAdd(setSem9, sem9, 9)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -593,7 +614,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 10</p>
                 <Button onClick={() => handleAdd(setSem10, sem10, 10)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -611,7 +632,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 11</p>
                 <Button onClick={() => handleAdd(setSem11, sem11, 11)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -629,7 +650,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 12</p>
                 <Button onClick={() => handleAdd(setSem12, sem12, 12)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -647,7 +668,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 13</p>
                 <Button onClick={() => handleAdd(setSem13, sem13, 13)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -665,7 +686,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 14</p>
                 <Button onClick={() => handleAdd(setSem14, sem14, 14)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -683,7 +704,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 15</p>
                 <Button onClick={() => handleAdd(setSem15, sem15, 15)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
@@ -701,7 +722,7 @@ const App: React.FC = () => {
             <div>
                 <p style={{"fontSize":"25px"}}>Semester editing: 16</p>
                 <Button onClick={() => handleAdd(setSem16, sem16, 16)} type="primary" style={{ marginBottom: 16 }}>
-        Add a row
+        Add a course
       </Button>
       <Table
         components={components}
