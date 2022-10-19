@@ -41,7 +41,7 @@ const Home: NextPage = () => {
                 <p style={{fontSize: "15px", justifyContent:'center', alignItems:'center'}}>
                   Find your semwise SPI and CPI using the AnC calculator. 
                   Add new semesters and add new courses to each semester to get the data.
-                   You can also click on the button "repeated" if that course has been repeated by the student and the better grade is obtained in the 
+                   You can also click on the button &quot;repeated&quot; if that course has been repeated by the student and the better grade is obtained in the 
                    next attempt. Note that only the best attempt of each course should have the repeated button not clicked.
                 </p>
             </div>
