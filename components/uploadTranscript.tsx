@@ -10,6 +10,7 @@ import { useRecoilState } from "recoil";
 import getCreditsReceived from './getCreditsReceived';
 import { options } from './courseOptions';
 import { jsonOfCourseCredits } from './courseCredits';
+import { type } from 'os';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
@@ -117,7 +118,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     placeholder="Type the course ID (eg. MTH101)"
     // onPressEnter={save}
     filterOption={(inputValue, option) =>
-      option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+      typeof option!.value === 'string' && option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
     }
     onBlur={save}
   />
@@ -141,7 +142,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     placeholder="Enter the grade obtained(A*, A, B, C, etc.)"
     // onPressEnter={save}
     filterOption={(inputValue, option) =>
-      option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+      typeof option!.value === 'string' && option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
     }
     onBlur={save}
   />
