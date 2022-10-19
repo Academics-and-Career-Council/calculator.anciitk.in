@@ -264,7 +264,7 @@ const App: React.FC = () => {
     {
       title: 'operation',
       dataIndex: 'operation',
-      render: (_, record: { course: string }) =>
+      render: (_:any, record: { course: string }) =>
         sem.length >= 1 ? (
           <div>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.course, sem, setSem, sem_num)}>
@@ -283,7 +283,7 @@ const App: React.FC = () => {
       title: 'Repeated',
       dataIndex: 'is_repeated',
       
-      render: (_, record: {is_repeated:Boolean} ) => (
+      render: (_:any, record: {is_repeated:Boolean} ) => (
         <>
           {(record.is_repeated === true) &&
               <Tag color='volcano' >
@@ -364,56 +364,56 @@ const App: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const inputFileRef = React.useRef<HTMLInputElement | null>(null);
 
-    const handleOnClick = async (e: React.MouseEvent<HTMLInputElement>) => {
+    // const handleOnClick = async (e: React.MouseEvent<HTMLInputElement>) => {
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-        if (!inputFileRef.current?.files?.length) {
-            alert('Please, select file you want to upload');
-            return;
-        }
+    //     if (!inputFileRef.current?.files?.length) {
+    //         alert('Please, select file you want to upload');
+    //         return;
+    //     }
 
-        setIsLoading(true);
+    //     setIsLoading(true);
 
-        const formData = new FormData();
-        Object.values(inputFileRef.current.files).forEach(file => {
-            formData.append('file', file);
-            console.log(file)
-        })
-        axios.post('http://127.0.0.1:5000/uploader', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(function (response) {
-          let data = response.data
-          console.log(data)
-            let index = 0;
-            for (index = 0; index < data['sems'].length; index++) {
-            if( data['sems'][index]['sem_num'] === 1) {setSem1(data['sems'][index]['courses']); setCount(1)}
-            else if( data['sems'][index]['sem_num'] === 2) {setSem2(data['sems'][index]['courses']); setCount(2)}
-            else if(data['sems'][index]['sem_num'] === 3) {setSem3(data['sems'][index]['courses']); setCount(3)}
-            else if(data['sems'][index]['sem_num'] === 4) {setSem4(data['sems'][index]['courses']); setCount(4)}
-            else if(data['sems'][index]['sem_num'] === 5) {setSem5(data['sems'][index]['courses']); setCount(5)}
-            else if(data['sems'][index]['sem_num'] === 6) {setSem6(data['sems'][index]['courses']); setCount(6)}
-            else if(data['sems'][index]['sem_num'] === 7) {setSem7(data['sems'][index]['courses']); setCount(7)}
-            else if(data['sems'][index]['sem_num'] === 8) {setSem8(data['sems'][index]['courses']); setCount(8)}
-            else if(data['sems'][index]['sem_num'] === 9) {setSem9(data['sems'][index]['courses']); setCount(9)}
-            else if( data['sems'][index]['sem_num'] === 10) {setSem10(data['sems'][index]['courses']); setCount(10)}
-            else if( data['sems'][index]['sem_num'] === 11) {setSem11(data['sems'][index]['courses']); setCount(11)}
-            else if( data['sems'][index]['sem_num'] === 12) {setSem12(data['sems'][index]['courses']); setCount(12)}
-            else if( data['sems'][index]['sem_num'] === 13) {setSem13(data['sems'][index]['courses']); setCount(13)}
-            else if( data['sems'][index]['sem_num'] === 14) {setSem14(data['sems'][index]['courses']); setCount(14)}
-            else if( data['sems'][index]['sem_num'] === 15) {setSem15(data['sems'][index]['courses']); setCount(15)}
-            else if( data['sems'][index]['sem_num'] === 16) {setSem16(data['sems'][index]['courses']); setCount(16)}
-        }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-        addAllData()
-        setIsLoading(false);
-    };
+    //     const formData = new FormData();
+    //     Object.values(inputFileRef.current.files).forEach(file => {
+    //         formData.append('file', file);
+    //         console.log(file)
+    //     })
+    //     axios.post('http://127.0.0.1:5000/uploader', formData, {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data'
+    //       }
+    //     })
+    //     .then(function (response) {
+    //       let data = response.data
+    //       console.log(data)
+    //         let index = 0;
+    //         for (index = 0; index < data['sems'].length; index++) {
+    //         if( data['sems'][index]['sem_num'] === 1) {setSem1(data['sems'][index]['courses']); setCount(1)}
+    //         else if( data['sems'][index]['sem_num'] === 2) {setSem2(data['sems'][index]['courses']); setCount(2)}
+    //         else if(data['sems'][index]['sem_num'] === 3) {setSem3(data['sems'][index]['courses']); setCount(3)}
+    //         else if(data['sems'][index]['sem_num'] === 4) {setSem4(data['sems'][index]['courses']); setCount(4)}
+    //         else if(data['sems'][index]['sem_num'] === 5) {setSem5(data['sems'][index]['courses']); setCount(5)}
+    //         else if(data['sems'][index]['sem_num'] === 6) {setSem6(data['sems'][index]['courses']); setCount(6)}
+    //         else if(data['sems'][index]['sem_num'] === 7) {setSem7(data['sems'][index]['courses']); setCount(7)}
+    //         else if(data['sems'][index]['sem_num'] === 8) {setSem8(data['sems'][index]['courses']); setCount(8)}
+    //         else if(data['sems'][index]['sem_num'] === 9) {setSem9(data['sems'][index]['courses']); setCount(9)}
+    //         else if( data['sems'][index]['sem_num'] === 10) {setSem10(data['sems'][index]['courses']); setCount(10)}
+    //         else if( data['sems'][index]['sem_num'] === 11) {setSem11(data['sems'][index]['courses']); setCount(11)}
+    //         else if( data['sems'][index]['sem_num'] === 12) {setSem12(data['sems'][index]['courses']); setCount(12)}
+    //         else if( data['sems'][index]['sem_num'] === 13) {setSem13(data['sems'][index]['courses']); setCount(13)}
+    //         else if( data['sems'][index]['sem_num'] === 14) {setSem14(data['sems'][index]['courses']); setCount(14)}
+    //         else if( data['sems'][index]['sem_num'] === 15) {setSem15(data['sems'][index]['courses']); setCount(15)}
+    //         else if( data['sems'][index]['sem_num'] === 16) {setSem16(data['sems'][index]['courses']); setCount(16)}
+    //     }
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    //     addAllData()
+    //     setIsLoading(false);
+    // };
     
   
   return (
