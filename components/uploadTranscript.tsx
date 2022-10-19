@@ -1,5 +1,5 @@
-import { InputRef, Row, Tag, Upload, UploadFile, UploadProps } from 'antd';
-import { Button, Form, Input, Popconfirm, Table, AutoComplete } from 'antd';
+import { InputRef, Tag } from 'antd';
+import { Button, Form, Popconfirm, Table, AutoComplete } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'antd/dist/antd.css';
@@ -8,27 +8,13 @@ import DataType from './datatype';
 import { allSemsData } from './recoilDeclarations';
 import { useRecoilState } from "recoil";
 import getCreditsReceived from './getCreditsReceived';
-import { UploadOutlined } from '@ant-design/icons';
-import { RcFile } from 'antd/lib/upload';
+import { options } from './courseOptions';
+import { jsonOfCourseCredits } from './courseCredits';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
-
-const options:any = [
-  {value: 'MTH101'}, {value: 'MTH102'}, {value: 'EE200'}, {value: 'EE370'}
-]
 const optionsGrade:any = [
   {value: 'A*'}, {value: 'A'}, {value: 'B'}, {value: 'C'}, {value: 'D'}, {value: 'E'}, {value: 'F'}, {value: 'S'}, {value: 'X'}
-]
-interface courseList {
-  course: string;
-  cred: number;
-}
-const jsonOfCourseCredits:courseList[] = [
-  {course:"MTH101", cred:10},
-  {course:"MTH102", cred:13},
-  {course:"EE200", cred:12},
-  {course:"EE370", cred:11}
 ]
 
 interface Item {
@@ -394,13 +380,14 @@ const App: React.FC = () => {
             formData.append('file', file);
             console.log(file)
         })
-        axios.post('http://api.anciitk.in/.proton/uploader', formData, {
+        axios.post('http://127.0.0.1:5000/uploader', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         })
         .then(function (response) {
           let data = response.data
+          console.log(data)
             let index = 0;
             for (index = 0; index < data['sems'].length; index++) {
             if( data['sems'][index]['sem_num'] === 1) {setSem1(data['sems'][index]['courses']); setCount(1)}
@@ -434,7 +421,7 @@ const App: React.FC = () => {
 
 
 
-            <form style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+            {/* <form style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
                 <div >
                     <input 
                     type="file" name="myfile" ref={inputFileRef} />
@@ -444,7 +431,7 @@ const App: React.FC = () => {
                     <input type="submit" value="Upload" disabled={isLoading} onClick={handleOnClick} />
                     {isLoading && ` Wait, please...`}
                 </div>
-            </form>
+            </form> */}
       <div>
         {
             (count > 0) && 

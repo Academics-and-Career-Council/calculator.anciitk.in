@@ -33,12 +33,12 @@ export default function Navigation() {
         
         for(let index = 0; index < semData.length; index++) {
             for(let index2 = 0; index2<semData[index].length; index2++) {
-                if( semData[index][index2].credits_received !== 0 || semData[index][index2].grade !== "E") {
+                // if( semData[index][index2].credits_received !== 0 || semData[index][index2].grade !== "E") {
                     totCreds = ( totCreds + semData[index][index2].credits );
                     if(index !== semData.length - 1) {
                         prevSemCreds = ( prevSemCreds + semData[index][index2].credits )
                     }
-                }
+                // }
             }
             // setNumSems(numSems+1);
             numSems = numSems + 1
