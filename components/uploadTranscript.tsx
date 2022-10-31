@@ -5,17 +5,30 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'antd/dist/antd.css';
 import axios from 'axios';
 import DataType from './datatype';
-import { allSemsData } from './recoilDeclarations';
+import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from './recoilDeclarations';
 import { useRecoilState } from "recoil";
 import getCreditsReceived from './getCreditsReceived';
 import { options } from './courseOptions';
 import { jsonOfCourseCredits } from './courseCredits';
 import { type } from 'os';
+// import { addAllData } from './addData';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 const optionsGrade:any = [
-  {value: 'A*'}, {value: 'A'}, {value: 'B'}, {value: 'C'}, {value: 'D'}, {value: 'E'}, {value: 'F'}, {value: 'S'}, {value: 'X'}
+  {value: 'A*'}, 
+  {value: 'A'},
+  {value: 'B+'},
+  {value: 'B'},
+  {value: 'C+'}, 
+  {value: 'C'},
+  {value: 'D+'}, 
+  {value: 'D'}, 
+  {value: 'E(old)'},
+  {value: 'E(new)'}, 
+  {value: 'F'}, 
+  {value: 'S'}, 
+  {value: 'X'}
 ]
 
 interface Item {
@@ -139,7 +152,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         <AutoComplete
     value={inputRef}
     options={optionsGrade}
-    placeholder="Enter the grade obtained(A*, A, B, C, etc.)"
+    placeholder="Grade(A*, A, B+, B, etc.)"
     // onPressEnter={save}
     filterOption={(inputValue, option) =>
       typeof option!.value === 'string' && option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -177,24 +190,24 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [semData, setSemData] = useRecoilState(allSemsData)
-  const [sem1, setSem1] = useState<DataType[]>([])
-  const [sem2, setSem2] = useState<DataType[]>([])
-  const [sem3, setSem3] = useState<DataType[]>([])
-  const [sem4, setSem4] = useState<DataType[]>([])
-  const [sem5, setSem5] = useState<DataType[]>([])
-  const [sem6, setSem6] = useState<DataType[]>([])
-  const [sem7, setSem7] = useState<DataType[]>([])
-  const [sem8, setSem8] = useState<DataType[]>([])
-  const [sem9, setSem9] = useState<DataType[]>([])
-  const [sem10, setSem10] = useState<DataType[]>([])
-  const [sem11, setSem11] = useState<DataType[]>([])
-  const [sem12, setSem12] = useState<DataType[]>([])
-  const [sem13, setSem13] = useState<DataType[]>([])
-  const [sem14, setSem14] = useState<DataType[]>([])
-  const [sem15, setSem15] = useState<DataType[]>([])
-  const [sem16, setSem16] = useState<DataType[]>([])
+  const [sem1, setSem1] = useRecoilState(Sem1Data)
+  const [sem2, setSem2] = useRecoilState(Sem2Data)
+  const [sem3, setSem3] = useRecoilState(Sem3Data)
+  const [sem4, setSem4] = useRecoilState(Sem4Data)
+  const [sem5, setSem5] = useRecoilState(Sem5Data)
+  const [sem6, setSem6] = useRecoilState(Sem6Data)
+  const [sem7, setSem7] = useRecoilState(Sem7Data)
+  const [sem8, setSem8] = useRecoilState(Sem8Data)
+  const [sem9, setSem9] = useRecoilState(Sem9Data)
+  const [sem10, setSem10] = useRecoilState(Sem10Data)
+  const [sem11, setSem11] = useRecoilState(Sem11Data)
+  const [sem12, setSem12] = useRecoilState(Sem12Data)
+  const [sem13, setSem13] = useRecoilState(Sem13Data)
+  const [sem14, setSem14] = useRecoilState(Sem14Data)
+  const [sem15, setSem15] = useRecoilState(Sem15Data)
+  const [sem16, setSem16] = useRecoilState(Sem16Data)
 
   const [count, setCount] = useState(0);
 
@@ -220,6 +233,9 @@ const App: React.FC = () => {
     if(sem16.length !== 0) {semDataAll?.push(sem16)}
     setSemData(semDataAll)
   }
+  // useEffect(() => {
+  //   addAllData()
+  // })
 
   const handleDelete = (course: string, sem:DataType[], setSem:any, sem_num:number) => {
     addAllData()
@@ -228,6 +244,7 @@ const App: React.FC = () => {
     if(sem_num === count && newData.length === 0) {
         setCount(sem_num-1);
     }
+    addAllData()
   };
   const handleEdit = (course: string, sem:DataType[], setSem:any, sem_num:number) => {
     addAllData()
@@ -240,9 +257,17 @@ const App: React.FC = () => {
       // newData[ind].credits_received = sem[ind].credits_received
       // newData[ind].grade = sem[ind].grade
       // newData[ind].is_repeated = sem[ind].is_repeated
-      if(newData[ind].course === course) {newData[ind].is_repeated = true}
+      if(newData[ind].course === course) {
+        if(newData[ind].is_repeated === true) {
+          newData[ind].is_repeated = false
+        }
+        else {
+          newData[ind].is_repeated = true
+        }
+      }
     }
     setSem(newData);
+    addAllData()
     
   }
 //: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[]
@@ -265,18 +290,26 @@ const App: React.FC = () => {
     {
       title: 'operation',
       dataIndex: 'operation',
-      render: (_:any, record: { course: string }) =>
+      render: (_:any, record: { course: string, is_repeated:boolean }) =>
         sem.length >= 1 ? (
           <div>
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.course, sem, setSem, sem_num)}>
             <a>Delete </a>
           </Popconfirm>
            | 
-          <Popconfirm title="Only click yes if you have done this course once again 
+          { record.is_repeated === false &&
+            <Popconfirm title="Only click yes if you have done this course once again 
           after failing this course ( Make sure you do not select the best attempt )" 
           onConfirm={() => handleEdit(record.course, sem, setSem, sem_num)}>
           <a> Repeated</a>
-        </Popconfirm>
+          </Popconfirm>
+          }
+          { record.is_repeated === true &&
+            <Popconfirm title="Click Yes to make this course counted for both SPI and CPI" 
+          onConfirm={() => handleEdit(record.course, sem, setSem, sem_num)}>
+          <a> Undo Repeat</a>
+          </Popconfirm>
+          }
         </div>
         ) : null,
     },
@@ -317,6 +350,7 @@ const App: React.FC = () => {
         setCount(sem_num)
     }
     setSem([...sem, newData]);
+    addAllData()
     // setCount(count + 1);
   };
 
@@ -343,6 +377,7 @@ const App: React.FC = () => {
       ...row,
     });
     setSem(newData);
+    addAllData()
   };
   const columns = (sem:DataType[], setSem:any, sem_num:number) => defaultColumns(sem, setSem, sem_num).map(col => {
     if (!col.editable) {
@@ -725,7 +760,7 @@ const App: React.FC = () => {
       <div style={{display:'flex',justifyContent:'center', alignItems:'center', padding:"10px"}}>
       <Button  style={{width:"150px"}} onClick={() => setCount(count+1)}> Add Sem </Button>
         </div>
-        <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+        <div style={{display:'flex',justifyContent:'center', alignItems:'center', paddingBottom: 50}}>
       <Button style={{width:"150px"}} onClick={() => {
        if(count > 0) {setCount(count-1)}
        if(count === 1) {setSem1([]);}
@@ -747,11 +782,10 @@ const App: React.FC = () => {
         }}> Delete last Sem </Button>
         </div>
         <div style={{display:'flex',justifyContent:'center', alignItems:'center', padding:"10px"}}>
-        <Button  style={{width:"150px"}} onClick={() => addAllData()}> Save </Button>
+        {/* <Button  style={{width:"150px"}} onClick={() => addAllData()}> Save </Button> */}
         </div>
         </div>
     </div>
   );
 };
 
-export default App;
