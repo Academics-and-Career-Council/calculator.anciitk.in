@@ -1,10 +1,10 @@
-import { Menu, Breadcrumb, Button } from 'antd';
+import { Menu,  Button } from 'antd';
 import Layout, { Content, Footer, Header } from 'antd/lib/layout/layout';
 import type { NextPage } from 'next'
 import { Navigation,  SPIstruct } from '../components/navigation';
 import {isMobile} from 'react-device-detect'
 import Table, { ColumnsType } from 'antd/lib/table';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useRecoilState } from 'recoil';
 import DataType from '../components/datatype';
 import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from '../components/recoilDeclarations';
@@ -16,22 +16,22 @@ const Home: NextPage = () => {
   // const [trial, setTrial] = useState<DataType[][]>()
     const [status, setStatus] = useState("Normal");
     const [showStat, setShowStat] = useState(false)
-    const [sem1a, setSem1] = useRecoilState(Sem1Data)
-    const [sem2a, setSem2] = useRecoilState(Sem2Data)
-    const [sem3a, setSem3] = useRecoilState(Sem3Data)
-    const [sem4a, setSem4] = useRecoilState(Sem4Data)
-    const [sem5a, setSem5] = useRecoilState(Sem5Data)
-    const [sem6a, setSem6] = useRecoilState(Sem6Data)
-    const [sem7a, setSem7] = useRecoilState(Sem7Data)
-    const [sem8a, setSem8] = useRecoilState(Sem8Data)
-    const [sem9a, setSem9] = useRecoilState(Sem9Data)
-    const [sem10a, setSem10] = useRecoilState(Sem10Data)
-    const [sem11a, setSem11] = useRecoilState(Sem11Data)
-    const [sem12a, setSem12] = useRecoilState(Sem12Data)
-    const [sem13a, setSem13] = useRecoilState(Sem13Data)
-    const [sem14a, setSem14] = useRecoilState(Sem14Data)
-    const [sem15a, setSem15] = useRecoilState(Sem15Data)
-    const [sem16a, setSem16] = useRecoilState(Sem16Data)
+    const [sem1a, ] = useRecoilState(Sem1Data)
+    const [sem2a, ] = useRecoilState(Sem2Data)
+    const [sem3a, ] = useRecoilState(Sem3Data)
+    const [sem4a, ] = useRecoilState(Sem4Data)
+    const [sem5a, ] = useRecoilState(Sem5Data)
+    const [sem6a, ] = useRecoilState(Sem6Data)
+    const [sem7a, ] = useRecoilState(Sem7Data)
+    const [sem8a, ] = useRecoilState(Sem8Data)
+    const [sem9a, ] = useRecoilState(Sem9Data)
+    const [sem10a, ] = useRecoilState(Sem10Data)
+    const [sem11a, ] = useRecoilState(Sem11Data)
+    const [sem12a, ] = useRecoilState(Sem12Data)
+    const [sem13a, ] = useRecoilState(Sem13Data)
+    const [sem14a, ] = useRecoilState(Sem14Data)
+    const [sem15a, ] = useRecoilState(Sem15Data)
+    const [sem16a, ] = useRecoilState(Sem16Data)
     const tempFunc = () => {
       setSemData([]);
       let semDataAll = semData
@@ -54,18 +54,7 @@ const Home: NextPage = () => {
       if(sem15a.length !== 0) {semDataAll?.push(sem15a)}
       if(sem16a.length !== 0) {semDataAll?.push(sem16a)}
       setSemData(semDataAll)
-      // console.log(semDataAll)
   }
-  // useEffect(() => {
-  //   if(trial !== semData) {
-  //     tempFunc()
-  //     setTrial(semData)
-  //   }
-  // })
-    // const [totCreds, setTotCreds] = useState(0);
-    // const [prevSemCreds, setPrevSemCreds] = useState(0);
-    // const [numSems, setNumSems] = useState(0)
-    // const [prevSemStatus, setPrevSemStatus] = useState("Normal")
 
     const getStats = (semData:DataType[][]) => {  
       

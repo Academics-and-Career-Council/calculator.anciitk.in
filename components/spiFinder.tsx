@@ -2,7 +2,6 @@ import { Button } from "antd"
 import { useState } from "react";
 import { useRecoilState } from "recoil"
 import { allSemsData } from "./recoilDeclarations"
-import App from "./uploadTranscript"
 
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';

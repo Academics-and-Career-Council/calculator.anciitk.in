@@ -3,15 +3,12 @@ import { Button, Form, Popconfirm, Table, AutoComplete } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'antd/dist/antd.css';
-import axios from 'axios';
 import DataType from './datatype';
 import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from './recoilDeclarations';
 import { useRecoilState } from "recoil";
 import getCreditsReceived from './getCreditsReceived';
 import { options } from './courseOptions';
 import { jsonOfCourseCredits } from './courseCredits';
-import { type } from 'os';
-// import { addAllData } from './addData';
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
