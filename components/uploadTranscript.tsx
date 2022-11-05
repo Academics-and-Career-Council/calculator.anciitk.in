@@ -29,7 +29,7 @@ const optionsGrade:any = [
 ]
 
 interface Item {
-  // key: string;
+  key: string;
   course: string;
   credits: number;
   credits_obtained: number;
@@ -60,6 +60,7 @@ interface EditableCellProps {
   handleSave: (record: Item, sem: DataType[], setSem:any, isCourse:boolean) => void;
   sem: DataType[],
   setSem: any,
+  message: string
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
@@ -71,9 +72,11 @@ const EditableCell: React.FC<EditableCellProps> = ({
   handleSave,
   sem,
   setSem,
+  message,
   ...restProps
 }) => {
   const [editing, setEditing] = useState(false);
+  const [wasEdited, setWasEdited] = useState(false);
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
   const [isCourse, setIsCourse] = useState(true)
@@ -105,9 +108,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
       console.log('Save failed:', errInfo);
     }
   };
-
   let childNode = children;
-  // if()
+
   if (editable) {
     childNode = editing ? (
       <div>
@@ -125,12 +127,13 @@ const EditableCell: React.FC<EditableCellProps> = ({
         <AutoComplete
     value={inputRef}
     options={options}
-    placeholder="Type the course ID (eg. MTH101)"
+    placeholder="Course ID (ex: MTH101A)"
     // onPressEnter={save}
     filterOption={(inputValue, option) =>
       typeof option!.value === 'string' && option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
     }
     onBlur={save}
+    onSelect = {save}
   />
   </Form.Item>
   }
@@ -149,21 +152,29 @@ const EditableCell: React.FC<EditableCellProps> = ({
         <AutoComplete
     value={inputRef}
     options={optionsGrade}
-    placeholder="Grade(A*, A, B+, B, etc.)"
+    placeholder="Grade(A*, A, B+, etc)"
     // onPressEnter={save}
     filterOption={(inputValue, option) =>
       typeof option!.value === 'string' && option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
     }
     onBlur={save}
+    onSelect={save}
   />
   </Form.Item>
   }
   </div>
   </div>
-    ) : (
+    ) 
+    : 
+    (!wasEdited? (
+    <div className="editable-cell-value-wrap" style={{ paddingRight: 24, color:"lightgray" }} onClick={() => {setWasEdited(true), toggleEdit(), setWasEdited(true)}}>
+      {message}
+    </div>) : 
+    (
       <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
         {children}
       </div>
+    )
     );
   }
 
@@ -207,6 +218,7 @@ export const App: React.FC = () => {
   const [sem16, setSem16] = useRecoilState(Sem16Data)
 
   const [count, setCount] = useState(0);
+  const [count2, setCount2] = useState(0);
 
   const addAllData = () => {
     setSemData([]);
@@ -234,27 +246,33 @@ export const App: React.FC = () => {
   //   addAllData()
   // })
 
-  const handleDelete = (course: string, sem:DataType[], setSem:any, sem_num:number) => {
+  const handleDelete = (key:number, sem:DataType[], setSem:any, sem_num:number) => {
     addAllData()
-    const newData = sem.filter(item => item.course !== course);
+    const newData = sem.filter(item => item.key !== key);
     setSem(newData);
     if(sem_num === count && newData.length === 0) {
-        setCount(sem_num-1);
+      setCount(sem_num-1);
     }
     addAllData()
   };
-  const handleEdit = (course: string, sem:DataType[], setSem:any, sem_num:number) => {
+  const handleEdit = (key: number, sem:DataType[], setSem:any, sem_num:number) => {
     addAllData()
     let newData:DataType[] = [];
     for(let ind=0; ind<sem.length; ind++) {
-      let temp:DataType = {course:sem[ind].course, credits:sem[ind].credits, credits_received:sem[ind].credits_received, grade: sem[ind].grade, is_repeated:sem[ind].is_repeated}
+      let temp:DataType = {
+        key:sem[ind].key,
+        course:sem[ind].course,
+        credits:sem[ind].credits,
+        credits_received:sem[ind].credits_received,
+        grade: sem[ind].grade, is_repeated:sem[ind].is_repeated
+      }
       newData.push(temp)
       // newData[ind].course = sem[ind].course
       // newData[ind].credits = sem[ind].credits
       // newData[ind].credits_received = sem[ind].credits_received
       // newData[ind].grade = sem[ind].grade
       // newData[ind].is_repeated = sem[ind].is_repeated
-      if(newData[ind].course === course) {
+      if(newData[ind].key === key) {
         if(newData[ind].is_repeated === true) {
           newData[ind].is_repeated = false
         }
@@ -270,45 +288,50 @@ export const App: React.FC = () => {
 //: (ColumnTypes[number] & { editable?: boolean; dataIndex: string })[]
   const defaultColumns = (sem:DataType[], setSem:any, sem_num:number) => [
     {
+      key: 'key',
       title: 'Course',
       dataIndex: 'course',
       width: '30%',
       editable: true,
+      message: "Course ID (ex: MTH101A)"
+
     },
     {
       title: 'Credits',
       dataIndex: 'credits',
+      message: ""
     },
     {
       title: 'Grade',
       dataIndex: 'grade',
       editable: true,
+      message: "Grade(A*, A, B+, etc)"
     },
     {
       title: 'operation',
       dataIndex: 'operation',
-      render: (_:any, record: { course: string, is_repeated:boolean }) =>
+      render: (_:any, record: { key: number, is_repeated:boolean }) =>
         sem.length >= 1 ? (
           <div>
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.course, sem, setSem, sem_num)}>
+          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key, sem, setSem, sem_num)}>
             <a>Delete </a>
           </Popconfirm>
            | 
           { record.is_repeated === false &&
             <Popconfirm title="Only click yes if you have done this course once again 
           after failing this course ( Make sure you do not select the best attempt )" 
-          onConfirm={() => handleEdit(record.course, sem, setSem, sem_num)}>
+          onConfirm={() => handleEdit(record.key, sem, setSem, sem_num)}>
           <a> Repeated</a>
           </Popconfirm>
           }
           { record.is_repeated === true &&
             <Popconfirm title="Click Yes to make this course counted for both SPI and CPI" 
-          onConfirm={() => handleEdit(record.course, sem, setSem, sem_num)}>
+          onConfirm={() => handleEdit(record.key, sem, setSem, sem_num)}>
           <a> Undo Repeat</a>
           </Popconfirm>
           }
         </div>
-        ) : null,
+      ) : null,
     },
     {
       title: 'Repeated',
@@ -336,7 +359,7 @@ export const App: React.FC = () => {
   const handleAdd = (setSem:any, sem:DataType[], sem_num:number) => {
     addAllData()
     const newData: DataType = {
-    //   key: count,
+      key: count2,
       course: ``,
       grade: '',
       credits: 0,
@@ -346,9 +369,19 @@ export const App: React.FC = () => {
     if(count < sem_num){
         setCount(sem_num)
     }
+    let newData2: DataType = {
+      key: count2,
+      course: ``,
+      grade: '',
+      credits: 0,
+      credits_received: 0,
+      is_repeated: false,
+    };
     setSem([...sem, newData]);
+    // handleSave(newData2, sem, setSem, true)
     addAllData()
-    // setCount(count + 1);
+
+    setCount2(count2 + 1);
   };
 
   const handleSave = (row: DataType, sem: DataType[], setSem:any, isCourse: boolean) => {
@@ -367,7 +400,7 @@ export const App: React.FC = () => {
       row.credits_received = getCreditsReceived(row.credits, row.grade);
       
     }
-    const index = newData.findIndex(item => row.course === item.course);
+    const index = newData.findIndex(item => row.key === item.key);
     const item = newData[index];
     newData.splice(index, 1, {
       ...item,
@@ -390,12 +423,13 @@ export const App: React.FC = () => {
         handleSave,
         sem,
         setSem,
+        message: col.message
       }),
     };
   });
   
-    const [isLoading, setIsLoading] = React.useState(false);
-    const inputFileRef = React.useRef<HTMLInputElement | null>(null);
+    // const [isLoading, setIsLoading] = React.useState(false);
+    // const inputFileRef = React.useRef<HTMLInputElement | null>(null);
 
     // const handleOnClick = async (e: React.MouseEvent<HTMLInputElement>) => {
 

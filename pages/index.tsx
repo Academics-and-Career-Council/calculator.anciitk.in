@@ -10,7 +10,19 @@ import DataType from '../components/datatype';
 import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from '../components/recoilDeclarations';
 
 
+
+
+
 const Home: NextPage = () => {
+
+  const handleClick1 = () => {
+    const element1 = document.getElementById("spi-cpi");
+    element1?.scrollIntoView({behavior: 'smooth'});
+  };
+  const handleClick2 = () => {
+    const element2 = document.getElementById("acad-status");
+    element2?.scrollIntoView({behavior: 'smooth'});
+  };
 
   const [semData, setSemData] = useRecoilState(allSemsData)
   // const [trial, setTrial] = useState<DataType[][]>()
@@ -238,13 +250,14 @@ const columns: ColumnsType<SPIstruct> = [
         items={[{key:"SPI", label:"Get SPI / CPI", onClick:() => {
           tempFunc()
           getSPI()
+          handleClick1()
         }}, 
         {key:"AP", label:"Find Status", onClick:() => {
           tempFunc()
           getStats(semData)
+          handleClick2()
         }}]}
       />
-
 
     </Header>
     <div>
@@ -325,7 +338,7 @@ const columns: ColumnsType<SPIstruct> = [
           
           <div className="site-layout-background" style={{ padding: 24, minHeight: 620 }}>
             <Navigation />
-            <div> { showStat &&
+            <div id='acad-status'> { showStat &&
 
             
 <div style={{paddingBottom:"50px"}}>
@@ -343,7 +356,7 @@ const columns: ColumnsType<SPIstruct> = [
 }
 </div>
 
-<div>{ showStat2 && 
+<div id='spi-cpi'>{ showStat2 && 
 <div style={{paddingBottom: "50px"}}>
 
 {(semData.length > 0) &&
