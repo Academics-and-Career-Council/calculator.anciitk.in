@@ -1,7 +1,7 @@
 import { Button, Dropdown, Menu, MenuProps } from 'antd';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { group1sem1, group1sem2, group2sem1, group2sem2 } from './coursesy22';
+import { group1sem1, group1sem2, group2sem1, group2sem2 } from './coursesY22';
 import { Sem1Data, Sem2Data, semCount } from './recoilDeclarations';
 
 
