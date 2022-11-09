@@ -1,5 +1,6 @@
-import { Menu,  Button } from 'antd';
+import { Menu,  Button, Dropdown } from 'antd';
 import Layout, { Content, Footer, Header } from 'antd/lib/layout/layout';
+import 'antd/dist/antd.css';
 import type { NextPage } from 'next'
 import { Navigation,  SPIstruct } from '../components/navigation';
 import {isMobile} from 'react-device-detect'
@@ -8,14 +9,10 @@ import {  useState } from 'react';
 import { useRecoilState } from 'recoil';
 import DataType from '../components/datatype';
 import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from '../components/recoilDeclarations';
-import { useRouter } from 'next/router'
+import { BranchesSelect }  from '../components/branchesAndSemesters';
+
 
 const Home: NextPage = () => {
-
-  let router= useRouter()
-  function redirect() {
-    router.push('/y22')
-  }
 
   const handleClick1 = () => {
     const element1 = document.getElementById("spi-cpi");
@@ -224,11 +221,49 @@ const columns: ColumnsType<SPIstruct> = [
         setShowStat2(true)
         // console.log("totCreds:", totCreds)
     }
+    const displayAllInfo = () => {
+        return (
+            <>
+                <Navigation />
+                <div> { showStat &&            
+                    <div style={{paddingBottom:"50px"}}>
+                        {(semData.length > 0) &&
+                        <p style={{"fontSize":"25px", display:'flex',justifyContent:'center', alignItems:'center'}}>{status}</p>
+                        }
+                        {
+                        (semData.length == 0) &&
+                        <p style={{display:'flex',justifyContent:'center', alignItems:'center'}}>Enter data into the semesters to find out your academic status</p>
+                        }
+                        <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+                            <Button onClick={() => setShowStat(false)}>Hide Status</Button>
+                        </div>
+                    </div>
+                }</div>
 
+                <div>{ showStat2 && 
+                    <div style={{paddingBottom: "50px"}}>
+                        {(semData.length > 0) &&
+                            <div>
+                            <Table columns={columns} dataSource={results} />
+                            <p style={{"fontSize":"30px", display:'flex',justifyContent:'center', alignItems:'center'}}>Overall CPI : {cpi}</p>
+                        </div>
+                        }
+                        {
+                            (semData.length == 0) &&
+                            <p style={{display:'flex',justifyContent:'center', alignItems:'center'}}>Enter data into the semesters to find out your SPI / CPI</p>
+                        }
+                        <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+                            <Button onClick={() => setShowStat2(false)}>Hide CPI / SPI</Button>
+                        </div>
+                    </div>
+                }</div>
+            </>
+        )
+    }
     return (
       <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
         <Layout>
-    <Header style={{ display:"flex", position: 'fixed', zIndex: 1, top:0, right:0, left:0, boxShadow:"0px 10px 5px lightblue" }}>
+    <Header style={{ display:"flex", position: 'fixed', zIndex: 1, width: '100%', top:0, right:0, left:0, boxShadow:"0px 10px 5px lightblue" }}>
       <div className="logo" style={{marginRight:"30px",
       paddingLeft:"15px",
       paddingRight:"15px",
@@ -247,7 +282,6 @@ const columns: ColumnsType<SPIstruct> = [
       
       }
       <Menu
-        style={{minWidth:"325px"}}
         theme="dark"
         mode="horizontal"
         items={[{key:"SPI", label:"Get SPI / CPI", onClick:() => {
@@ -259,11 +293,9 @@ const columns: ColumnsType<SPIstruct> = [
           tempFunc()
           getStats(semData)
           handleClick2()
-        }},
-        {key:"Y22", label:"For Y22", onClick: redirect}
-      ]}
+        }}]}
       />
-      
+
     </Header>
     <div>
       {
@@ -282,45 +314,24 @@ const columns: ColumnsType<SPIstruct> = [
                 </p>
                 
             </div>
-      <div className="site-layout-background" style={{ padding: 24, minHeight: 620 }}>
-      <Navigation />
-      <div> { showStat &&
-
+            <div >
+            <BranchesSelect />
             
-<div style={{paddingBottom:"50px"}}>
-    {(semData.length > 0) &&
-<p style={{"fontSize":"25px", display:'flex',justifyContent:'center', alignItems:'center'}}>{status}</p>
-}
-{
-        (semData.length == 0) &&
-        <p style={{display:'flex',justifyContent:'center', alignItems:'center'}}>Enter data into the semesters to find out your academic status</p>
-}
-<div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
-    <Button onClick={() => setShowStat(false)}>Hide Status</Button>
-</div>
-</div>
-}
-</div>
+            </div>
+            
 
-<div>{ showStat2 && 
-<div style={{paddingBottom: "50px"}}>
-
-{(semData.length > 0) &&
-    <div>
-    <Table columns={columns} dataSource={results} />
-    <p style={{"fontSize":"30px", display:'flex',justifyContent:'center', alignItems:'center'}}>Overall CPI : {cpi}</p>
-</div>
-}
-{
-    (semData.length == 0) &&
-    <p style={{display:'flex',justifyContent:'center', alignItems:'center'}}>Enter data into the semesters to find out your SPI / CPI</p>
-}
-<div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
-<Button onClick={() => setShowStat2(false)}>Hide CPI / SPI</Button>
-</div>
-</div>}
-</div>
-      </div>
+        {
+            !isMobile &&
+            <div className="site-layout-background" style={{ padding: 24, minHeight: 620 }}>  
+                {displayAllInfo()}
+            </div>
+        }
+        {
+            isMobile &&
+            <div className="site-layout-background" style={{ minHeight: 620 }}>
+                {displayAllInfo()}
+            </div>
+        }
     </Content>
       }
     </div>
@@ -335,7 +346,8 @@ const columns: ColumnsType<SPIstruct> = [
                 <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                 <p style={{fontSize: "15px", justifyContent:'center', alignItems:'center', margin:"10px"}}>
                   Find your semwise SPI and CPI using the AnC calculator. 
-                  Add new semesters and add new courses to each semester to get the data.
+                  Click on &quot;Semesters Done&quot; button to select your current semester, and choose your beanch from the &quot;Select Branch&quot; button.
+                   
                    You can also click on the button &quot;repeated&quot; if that course has been repeated by the student and the better grade is obtained in the 
                    next attempt. Note that only the best attempt of each course should have the repeated button not clicked.
                 </p>

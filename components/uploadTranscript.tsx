@@ -4,7 +4,7 @@ import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'antd/dist/antd.css';
 import DataType from './datatype';
-import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from './recoilDeclarations';
+import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data, semCount } from './recoilDeclarations';
 import { useRecoilState } from "recoil";
 import getCreditsReceived from './getCreditsReceived';
 import { options } from './courseOptions';
@@ -26,6 +26,10 @@ const optionsGrade:any = [
   {value: 'F'}, 
   {value: 'S'}, 
   {value: 'X'}
+]
+const optionsSX:any = [
+  {value: 'S'}, 
+  {value: 'X'},
 ]
 
 interface Item {
@@ -60,7 +64,8 @@ interface EditableCellProps {
   handleSave: (record: Item, sem: DataType[], setSem:any, isCourse:boolean) => void;
   sem: DataType[],
   setSem: any,
-  message: string
+  message: string,
+  is_sx: boolean
 }
 
 const EditableCell: React.FC<EditableCellProps> = ({
@@ -73,6 +78,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   sem,
   setSem,
   message,
+  is_sx,
   ...restProps
 }) => {
   const [editing, setEditing] = useState(false);
@@ -80,7 +86,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const inputRef = useRef<InputRef>(null);
   const form = useContext(EditableContext)!;
   const [isCourse, setIsCourse] = useState(true)
-  // console.log(dataIndex)
   if(dataIndex === "course" && isCourse === false) {
     setIsCourse(true);
   }
@@ -109,6 +114,9 @@ const EditableCell: React.FC<EditableCellProps> = ({
     }
   };
   let childNode = children;
+  if(childNode?.toString() !== ",[object Object]" && childNode?.toString() !== "," && childNode?.toString() !== ",0" && wasEdited === false) {
+    setWasEdited(true)
+  }
 
   if (editable) {
     childNode = editing ? (
@@ -151,8 +159,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
       >
         <AutoComplete
     value={inputRef}
-    options={optionsGrade}
-    placeholder="Grade(A*, A, B+, etc)"
+    options={is_sx?optionsSX:optionsGrade}
+    placeholder={is_sx?"Grade(S, X)":"Grade(A*, A, B+, etc)"}
     // onPressEnter={save}
     filterOption={(inputValue, option) =>
       typeof option!.value === 'string' && option!.value!.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
@@ -168,7 +176,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     : 
     (!wasEdited? (
     <div className="editable-cell-value-wrap" style={{ paddingRight: 24, color:"lightgray" }} onClick={() => {setWasEdited(true), toggleEdit(), setWasEdited(true)}}>
-      {message}
+      {isCourse? message:is_sx?"Grade(S, X)":message}
     </div>) : 
     (
       <div className="editable-cell-value-wrap" style={{ paddingRight: 24 }} onClick={toggleEdit}>
@@ -182,19 +190,12 @@ const EditableCell: React.FC<EditableCellProps> = ({
 };
 
 type EditableTableProps = Parameters<typeof Table>[0];
-
-
-
-
-
   const components = {
     body: {
       row: EditableRow,
       cell: EditableCell,
     },
   };
-
-
 
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 
@@ -217,7 +218,7 @@ export const App: React.FC = () => {
   const [sem15, setSem15] = useRecoilState(Sem15Data)
   const [sem16, setSem16] = useRecoilState(Sem16Data)
 
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useRecoilState(semCount);
   const [count2, setCount2] = useState(0);
 
   const addAllData = () => {
@@ -242,10 +243,6 @@ export const App: React.FC = () => {
     if(sem16.length !== 0) {semDataAll?.push(sem16)}
     setSemData(semDataAll)
   }
-  // useEffect(() => {
-  //   addAllData()
-  // })
-
   const handleDelete = (key:number, sem:DataType[], setSem:any, sem_num:number) => {
     addAllData()
     const newData = sem.filter(item => item.key !== key);
@@ -264,7 +261,8 @@ export const App: React.FC = () => {
         course:sem[ind].course,
         credits:sem[ind].credits,
         credits_received:sem[ind].credits_received,
-        grade: sem[ind].grade, is_repeated:sem[ind].is_repeated
+        grade: sem[ind].grade, is_repeated:sem[ind].is_repeated,
+        is_sx: false
       }
       newData.push(temp)
       // newData[ind].course = sem[ind].course
@@ -365,18 +363,11 @@ export const App: React.FC = () => {
       credits: 0,
       credits_received: 0,
       is_repeated: false,
+      is_sx:false
     };
     if(count < sem_num){
         setCount(sem_num)
     }
-    let newData2: DataType = {
-      key: count2,
-      course: ``,
-      grade: '',
-      credits: 0,
-      credits_received: 0,
-      is_repeated: false,
-    };
     setSem([...sem, newData]);
     // handleSave(newData2, sem, setSem, true)
     addAllData()
@@ -423,7 +414,8 @@ export const App: React.FC = () => {
         handleSave,
         sem,
         setSem,
-        message: col.message
+        message: col.message,
+        is_sx: record.is_sx
       }),
     };
   });
@@ -445,7 +437,7 @@ export const App: React.FC = () => {
     //     const formData = new FormData();
     //     Object.values(inputFileRef.current.files).forEach(file => {
     //         formData.append('file', file);
-    //         console.log(file)
+    //         
     //     })
     //     axios.post('http://127.0.0.1:5000/uploader', formData, {
     //       headers: {
@@ -454,7 +446,7 @@ export const App: React.FC = () => {
     //     })
     //     .then(function (response) {
     //       let data = response.data
-    //       console.log(data)
+    //       
     //         let index = 0;
     //         for (index = 0; index < data['sems'].length; index++) {
     //         if( data['sems'][index]['sem_num'] === 1) {setSem1(data['sems'][index]['courses']); setCount(1)}
@@ -476,7 +468,7 @@ export const App: React.FC = () => {
     //     }
     //     })
     //     .catch(function (error) {
-    //       console.log(error);
+    //       
     //     });
     //     addAllData()
     //     setIsLoading(false);

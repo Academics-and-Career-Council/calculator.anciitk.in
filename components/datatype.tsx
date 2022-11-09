@@ -8,4 +8,5 @@ export default interface DataType {
     credits: number;
     credits_received: number;
     is_repeated: boolean;
+    is_sx: boolean;
 }

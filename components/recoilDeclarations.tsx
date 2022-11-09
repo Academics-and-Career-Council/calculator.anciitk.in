@@ -6,6 +6,11 @@ export const allSemsData = atom<DataType[][]>({
   default: [],
 });
 
+export const semCount = atom<number>({
+  key: "sems-to-display",
+  default: 0,
+})
+
 export const Sem1Data = atom<DataType[]>({
   key: "sem1",
   default: [],
