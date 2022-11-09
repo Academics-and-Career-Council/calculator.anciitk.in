@@ -8,14 +8,12 @@ import {  useState } from 'react';
 import { useRecoilState } from 'recoil';
 import DataType from '../components/datatype';
 import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from '../components/recoilDeclarations';
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
+// import { NextResponse } from 'next/server'
 
 const Home: NextPage = () => {
 
-  let router= useRouter()
-  function redirect() {
-    router.push('/y22')
-  }
+
 
   const handleClick1 = () => {
     const element1 = document.getElementById("spi-cpi");
@@ -247,7 +245,7 @@ const columns: ColumnsType<SPIstruct> = [
       
       }
       <Menu
-        style={{minWidth:"325px"}}
+        style={{minWidth:"250px"}}
         theme="dark"
         mode="horizontal"
         items={[{key:"SPI", label:"Get SPI / CPI", onClick:() => {
@@ -259,10 +257,10 @@ const columns: ColumnsType<SPIstruct> = [
           tempFunc()
           getStats(semData)
           handleClick2()
-        }},
-        {key:"Y22", label:"For Y22", onClick: redirect}
+        }}
       ]}
       />
+      <Button style={{backgroundColor: "#001529", color: "lightgray", marginTop: "15px"}} href='./y22'>For Y22</Button>
       
     </Header>
     <div>
