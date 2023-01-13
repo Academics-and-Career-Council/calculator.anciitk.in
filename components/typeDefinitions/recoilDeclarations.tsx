@@ -95,3 +95,9 @@ export const Sem16Data = atom<DataType[]>({
   key: "sem16",
   default: [],
 });
+
+export const allCourses = atom({
+  key: "allCourses",
+  default: [{key:0,course:"", value:"" ,cred:0}],
+});
+

@@ -4,13 +4,14 @@ import type { FormInstance } from 'antd/es/form';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import 'antd/dist/antd.css';
 import DataType, { components } from './typeDefinitions/datatype';
-import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data, semCount } from './typeDefinitions/recoilDeclarations';
+import { allSemsData, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data, semCount ,allCourses} from './typeDefinitions/recoilDeclarations';
 import getCreditsReceived from './auxilliary_functions/getCreditsReceived';
-import { jsonOfCourseCredits } from './data/courseCredits';
+// import { jsonOfCourseCredits } from './data/courseCredits';
 import { useRecoilState, useRecoilValue } from "recoil";
 import { recoilSessionState } from "../pkg/recoilDeclarations";
 import { addAllData, defaultColumns} from './essensial_functionality/columnDeclaration';
 import { RepeatedSems } from './repeated_sems';
+import { json } from 'react-router';
 
 
 let setVar=4;
@@ -24,6 +25,7 @@ export const App: React.FC = () => {
   // setCount(dummyData.length);
   const [semData, setSemData] = useRecoilState(allSemsData)
   console.log(semData);
+  const [jsonOfCourseCredits, setjsonOfCourseCredits] = useRecoilState(allCourses)
   const [sem1, setSem1] = useRecoilState(Sem1Data)
   const [sem2, setSem2] = useRecoilState(Sem2Data)
   const [sem3, setSem3] = useRecoilState(Sem3Data)
@@ -39,6 +41,7 @@ export const App: React.FC = () => {
   const [sem13, setSem13] = useRecoilState(Sem13Data)
   const [sem14, setSem14] = useRecoilState(Sem14Data)
   const [sem15, setSem15] = useRecoilState(Sem15Data)
+  const[courseDataFetched,setCourseDataFetched]=useState(0)
   const [sem16, setSem16] = useRecoilState(Sem16Data)
   var datagrades  
   const [sessiondata, _]=useRecoilState(recoilSessionState);
@@ -48,6 +51,23 @@ let userId="45645464676gchghc";
 if (sessiondata?.user.id){
   userId=sessiondata?.user.id
 }
+ const getCourseData=async()=>{
+
+  const res = await fetch(`http://localhost:8080/courses`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    const data = await res.json();
+    console.log(data.data,"getCourseData");
+    setjsonOfCourseCredits(data.data)
+ }
+ if (!courseDataFetched){
+  getCourseData()
+  setCourseDataFetched(1)
+ }
+ 
   // const [count, setCount] = useRecoilState(semCount);
   const getdata = async () => {
     let email="";
@@ -139,6 +159,24 @@ const addinpdata = async () => {
   alert("You are not Logged In")
 }}
 
+console.log(jsonOfCourseCredits,typeof(jsonOfCourseCredits))
+// const addcoursedata=async (key:any,course:any,value:any,cred:any)=>{
+//   console.log(course)
+
+//   const res = await fetch("http://localhost:8080/register2", {
+//           method: "POST",
+//           headers: {
+//               "Content-Type": "application/json"
+//           },
+//           body: JSON.stringify({
+//             key, course, value, cred
+//           })
+//       });
+
+//       const data = await res.json();
+//       console.log(data);
+// }
+
 const [alreadyLoggedin,setalredayLoggedin]=useState(false);
 console.log(alreadyLoggedin,"already Logged in")
 if (userId && setVar && setVar!==2 && !alreadyLoggedin){
@@ -182,7 +220,10 @@ if (userId && setVar && setVar!==2 && !alreadyLoggedin){
       sem12, sem13, sem14, sem15, sem16)
     const newData = [...sem];
     if(isCourse === true) {
-      let courseAtHand = jsonOfCourseCredits.filter(item => item.course === row.course)
+      let courseAtHand = jsonOfCourseCredits.filter(item => 
+        // console.log(item.course,"hh",row.course)
+        item.course === row.course)
+      console.log(courseAtHand,"courseathand")
       if(courseAtHand.length === 0) {
         row.credits = 0;
       }
@@ -226,6 +267,8 @@ if (userId && setVar && setVar!==2 && !alreadyLoggedin){
       }),
     };
   });
+  
+  
   return (
 
     <div >
@@ -243,7 +286,8 @@ if (userId && setVar && setVar!==2 && !alreadyLoggedin){
         />
       
       <div style={{display:'flex',justifyContent:'center', alignItems:'center', padding:"10px"}}>
-      <Button  style={{width:"150px"}} onClick={() => setCount(count+1)}> Add Sem </Button>
+      <Button  style={{width:"150px"}} onClick={() => {setCount(count+1)}}> Add Sem </Button>
+      
         </div>
         <div style={{display:'flex',justifyContent:'center', alignItems:'center', padding:"10px"}}>
       <Button style={{width:"150px"}} onClick={() => {

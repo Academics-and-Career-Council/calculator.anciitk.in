@@ -1,9 +1,10 @@
 import { Form, InputRef, AutoComplete, Table, FormInstance } from "antd";
 import React from "react";
 import { useState, useRef, useContext, useEffect } from "react";
-import { options } from "../data/courseOptions";
+// import { options } from "../data/courseOptions";
 import DataType, { optionsGrade, optionsSX } from "../typeDefinitions/datatype";
-
+import { useRecoilState, useRecoilValue } from "recoil";
+import { allCourses } from "../typeDefinitions/recoilDeclarations";
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
@@ -41,7 +42,7 @@ interface EditableCellProps {
     message: string,
     is_sx: boolean
 }
-  
+
 export const EditableCell: React.FC<EditableCellProps> = ({
     title,
     editable,
@@ -55,6 +56,18 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     is_sx,
     ...restProps
   }) => {
+    const [jsonOfCourseCredits, setjsonOfCourseCredits] = useRecoilState(allCourses)
+    // console.log(jsonOfCourseCredits,"tablespeification")
+    let options:any=[]
+    let i:number=0
+    for (i;i<1356;i++){
+      // console.log(jsonOfCourseCredits[i])
+      if(jsonOfCourseCredits[i]){
+      // console.log(jsonOfCourseCredits[i].course)
+      // options=options+[jsonOfCourseCredits[i].course]
+      options.push({"value":jsonOfCourseCredits[i].course})
+    }}
+    console.log("options",options)
     const [editing, setEditing] = useState(false);
     const [wasEdited, setWasEdited] = useState(false);
     const inputRef = useRef<InputRef>(null);

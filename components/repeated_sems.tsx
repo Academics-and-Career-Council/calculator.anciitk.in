@@ -33,6 +33,7 @@ export function RepeatedSems (props:PropsType)  {
             props.sem15, props.sem16)
     
       }
+      console.log(components,"components")
     return (
         <div>
         <div>
