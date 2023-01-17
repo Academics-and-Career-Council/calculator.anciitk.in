@@ -101,3 +101,7 @@ export const allCourses = atom({
   default: [{key:0,course:"", value:"" ,cred:0}],
 });
 
+export const allCoursesY22 = atom({
+  key: "allCoursesY22",
+  default: [{key:0,course:"", category:"" ,cred:0, grade:"", credits_received:0, is_repeated: false,is_sx:false}],
+});

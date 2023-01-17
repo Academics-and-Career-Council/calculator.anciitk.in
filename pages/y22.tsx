@@ -336,8 +336,8 @@ const columns: ColumnsType<SPIstruct> = [
       <div style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
         <Layout>
     <Header style={{ display:"flex", position: 'fixed', zIndex: 1, width: '100%', top:0, right:0, left:0, boxShadow:"0px 10px 5px lightblue" }}>
-    {isMobile && 
-      <div><Button onClick={handleDrawerOpen} style={{backgroundColor: "#001529", color: "lightgray", marginTop: "15px",marginRight:"15px"}}><MenuIcon/></Button>
+    {
+      <div className={styles.mobile}><Button onClick={handleDrawerOpen} style={{backgroundColor: "#001529", color: "lightgray", marginTop: "15px",marginRight:"15px"}}><MenuIcon/></Button>
       <Drawer
         sx={{
           width: 0,
@@ -398,11 +398,11 @@ const columns: ColumnsType<SPIstruct> = [
                 />
                 </a>
                 </div>
-      {!isMobile && 
-        <div style={{color:"whitesmoke", paddingLeft:10, paddingRight:30, fontSize:30, minWidth: 500}}> Academics and Career Council </div>    
+      {
+        <div className={styles.nonmobile} style={{color:"whitesmoke", paddingLeft:10, paddingRight:30, fontSize:30, minWidth: 500}}> Academics and Career Council </div>    
       
       }
-      {!isMobile && <Menu
+      {<div className={styles.nonmobile}><Menu
         theme="dark"
         mode="horizontal"
         items={[{key:"SPI", label:"Get SPI / CPI", onClick:() => {
@@ -415,7 +415,8 @@ const columns: ColumnsType<SPIstruct> = [
           getStats(semData)
           handleClick2()
         }}]}
-      />}
+      /></div>}
+      <Button style={{backgroundColor: "#001529", color: "lightgray", marginTop: "15px"}} href='./' className={styles.nonmobile}>Pre Y22</Button>
       <div>{(sessiondata?.user.id) &&
       
       <Popover placement={"bottomRight"} content={content} title="My Profile" trigger="click">

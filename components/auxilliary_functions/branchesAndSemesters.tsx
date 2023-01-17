@@ -2,11 +2,51 @@ import { Button, Dropdown, Menu, MenuProps } from 'antd';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { group1sem1, group1sem2, group2sem1, group2sem2 } from '../data/coursesY22';
-import { Sem1Data, Sem2Data, semCount } from '../typeDefinitions/recoilDeclarations';
+import { Sem1Data, Sem2Data, semCount ,allCoursesY22} from '../typeDefinitions/recoilDeclarations';
 
 
 // PHY,SDS
+
+
 export const BranchesSelect:any = () => {
+  const[group,setGroup]=useRecoilState(allCoursesY22)
+  let group2:any=[]
+  let group1:any=[]
+  
+  let j:any={}
+  const[courseDataFetched,setCourseDataFetched]=useState(0)
+  const[dataLoading,setdataLoading]=useState(0)
+ 
+  const getCourseData=async()=>{
+    const res = await fetch(`http://localhost:8080/coursesY22`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          }
+      });
+      const data = await res.json();
+      console.log(data.data,"getCourseData");
+      setGroup(data.data)
+      
+}
+if (!courseDataFetched){
+    getCourseData()
+    setCourseDataFetched(1)
+}
+  console.log(group)
+  for (j in group){
+    // let l :any = group[j]
+    // l.grade=""
+    // l.credits_received=0
+    // l.is_repeated=false
+    // l.is_sx=false
+    if (group[j].category=="1"){
+      group1.push(group[j])
+    }else{
+      group2.push(group[j])
+    }
+  }
+  console.log(group1,group2)
   const [option, setOption] = useState(0)
   const [scount, setSemCount] = useState(0)
   const [count, setCount] = useRecoilState(semCount)
@@ -17,21 +57,21 @@ export const BranchesSelect:any = () => {
     if(scount !== 0 && option !== 0) {
       if(scount >= 1 ) {
         if(option === 1) {
-          setSem1(group1sem1)
+          setSem1(group1)
           setCount(1)
         }
         else {
-          setSem1(group2sem1)
+          setSem1(group2)
           setCount(1)
         }
         setCount(1)
       }
       if(scount === 2) {
         if(option === 1) {
-          setSem2(group1sem2)
+          setSem2(group2)
         }
         else {
-          setSem2(group2sem2)
+          setSem2(group1)
         }
         setCount(2)
         setCount(2)
