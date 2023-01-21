@@ -4,7 +4,7 @@ import { useState, useRef, useContext, useEffect } from "react";
 // import { options } from "../data/courseOptions";
 import DataType, { optionsGrade, optionsSX } from "../typeDefinitions/datatype";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { allCourses } from "../typeDefinitions/recoilDeclarations";
+import { allCourses,allCoursesY22,y22 } from "../typeDefinitions/recoilDeclarations";
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 
 interface Item {
@@ -18,7 +18,8 @@ interface Item {
 interface EditableRowProps {
     index: number;
 }
-  
+
+
 export const EditableRow: React.FC<EditableRowProps> = ({ index, ...props }) => {
     const [form] = Form.useForm();
     return (
@@ -56,18 +57,32 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     is_sx,
     ...restProps
   }) => {
+    const[group,setGroup]=useRecoilState(allCoursesY22)
+    const[isy22,setisy22]=useRecoilState(y22)
     const [jsonOfCourseCredits, setjsonOfCourseCredits] = useRecoilState(allCourses)
     // console.log(jsonOfCourseCredits,"tablespeification")
     let options:any=[]
+    let courseY22:any=[]
     let i:number=0
-    for (i;i<1356;i++){
+    for (i;i<1375;i++){
       // console.log(jsonOfCourseCredits[i])
-      if(jsonOfCourseCredits[i]){
-      // console.log(jsonOfCourseCredits[i].course)
-      // options=options+[jsonOfCourseCredits[i].course]
-      options.push({"value":jsonOfCourseCredits[i].course})
-    }}
-    console.log("options",options)
+      if(jsonOfCourseCredits[i] && !jsonOfCourseCredits[i].category ){
+  
+      options.push({"value":jsonOfCourseCredits[i].course})}
+      else if (jsonOfCourseCredits[i] && jsonOfCourseCredits[i].category){
+        // console.log("category",typeof(jsonOfCourseCredits[i]))
+        courseY22.push(jsonOfCourseCredits[i])
+      }
+      // console.log("options",options)
+    }
+    // console.log("options",options)
+    // console.log(group,"group",courseY22)
+    if(!isy22){
+      setisy22(1)
+      setGroup(courseY22)
+      
+    }
+    
     const [editing, setEditing] = useState(false);
     const [wasEdited, setWasEdited] = useState(false);
     const inputRef = useRef<InputRef>(null);

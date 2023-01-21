@@ -7,7 +7,9 @@ import Table, { ColumnsType } from 'antd/lib/table';
 import {  useState } from 'react';
 // import { useRecoilState } from 'recoil';
 import Drawer from '@mui/material/Drawer';
+import { getSPICPI } from '../components/essensial_functionality/cpiCalculation';
 import List from '@mui/material/List';
+import SPIFinder from '../components/essensial_functionality/spiFinder';
 import { styled, useTheme } from '@mui/material/styles';
 
 import Divider from '@mui/material/Divider';
@@ -31,7 +33,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Avatar} from 'antd';
 import { recoilSessionState } from "../pkg/recoilDeclarations";
 import styles from "../styles/SignupStyles.module.css";
-import { Popover } from 'antd';
+import { Popover,Modal } from 'antd';
 import { allSemsData, loginStatus, Sem10Data, Sem11Data, Sem12Data, Sem13Data, Sem14Data, Sem15Data, Sem16Data, Sem1Data, Sem2Data, Sem3Data, Sem4Data, Sem5Data, Sem6Data, Sem7Data, Sem8Data, Sem9Data } from '../components/typeDefinitions/recoilDeclarations';
 // import { useRouter } from 'next/router'
 // import { NextResponse } from 'next/server'
@@ -44,6 +46,24 @@ import {
 import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [openM, setOpenM] = useState(false);
+
+  const showModal = () => {
+    setOpenM(true);
+  };
+
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setOpenM(false);
+    }, 3000);
+  };
+
+  const handleCancel = () => {
+    setOpenM(false);
+  };
   const router = useRouter();
   const [isLogIn, setIsLogIn] = useRecoilState(loginStatus)
   
@@ -300,63 +320,63 @@ const columns: ColumnsType<SPIstruct> = [
     }
   ];
 
-    const getSPI = () => {
+    // const getSPI = () => {
 
-      let semDataAll = semData
-      semDataAll = []
-      // console.log(sem1a)
-      if(sem1a.length !== 0) {semDataAll = [sem1a];}
-      if(sem2a.length !== 0) {semDataAll?.push(sem2a)}
-      if(sem3a.length !== 0) {semDataAll?.push(sem3a)}
-      if(sem4a.length !== 0) {semDataAll?.push(sem4a)}
-      if(sem5a.length !== 0) {semDataAll?.push(sem5a)}
-      if(sem6a.length !== 0) {semDataAll?.push(sem6a)}
-      if(sem7a.length !== 0) {semDataAll?.push(sem7a)}
-      if(sem8a.length !== 0) {semDataAll?.push(sem8a)}
-      if(sem9a.length !== 0) {semDataAll?.push(sem9a)}
-      if(sem10a.length !== 0) {semDataAll?.push(sem10a)}
-      if(sem11a.length !== 0) {semDataAll?.push(sem11a)}
-      if(sem12a.length !== 0) {semDataAll?.push(sem12a)}
-      if(sem13a.length !== 0) {semDataAll?.push(sem13a)}
-      if(sem14a.length !== 0) {semDataAll?.push(sem14a)}
-      if(sem15a.length !== 0) {semDataAll?.push(sem15a)}
-      if(sem16a.length !== 0) {semDataAll?.push(sem16a)}
-      setSemData(semDataAll)
+    //   let semDataAll = semData
+    //   semDataAll = []
+    //   // console.log(sem1a)
+    //   if(sem1a.length !== 0) {semDataAll = [sem1a];}
+    //   if(sem2a.length !== 0) {semDataAll?.push(sem2a)}
+    //   if(sem3a.length !== 0) {semDataAll?.push(sem3a)}
+    //   if(sem4a.length !== 0) {semDataAll?.push(sem4a)}
+    //   if(sem5a.length !== 0) {semDataAll?.push(sem5a)}
+    //   if(sem6a.length !== 0) {semDataAll?.push(sem6a)}
+    //   if(sem7a.length !== 0) {semDataAll?.push(sem7a)}
+    //   if(sem8a.length !== 0) {semDataAll?.push(sem8a)}
+    //   if(sem9a.length !== 0) {semDataAll?.push(sem9a)}
+    //   if(sem10a.length !== 0) {semDataAll?.push(sem10a)}
+    //   if(sem11a.length !== 0) {semDataAll?.push(sem11a)}
+    //   if(sem12a.length !== 0) {semDataAll?.push(sem12a)}
+    //   if(sem13a.length !== 0) {semDataAll?.push(sem13a)}
+    //   if(sem14a.length !== 0) {semDataAll?.push(sem14a)}
+    //   if(sem15a.length !== 0) {semDataAll?.push(sem15a)}
+    //   if(sem16a.length !== 0) {semDataAll?.push(sem16a)}
+    //   setSemData(semDataAll)
 
 
-        let totCreds = 0
-        let receivedCreds = 0
-        let res = results
-        res = []
-        for(let index = 0; index < semDataAll.length; index++) {
+    //     let totCreds = 0
+    //     let receivedCreds = 0
+    //     let res = results
+    //     res = []
+    //     for(let index = 0; index < semDataAll.length; index++) {
             
-            let spi_cred = 0
-            let spi_cred_done = 0
-            let cred = 0
-            for(let index2 = 0; index2<semDataAll[index].length; index2++) {
+    //         let spi_cred = 0
+    //         let spi_cred_done = 0
+    //         let cred = 0
+    //         for(let index2 = 0; index2<semDataAll[index].length; index2++) {
                 
-                if(semDataAll[index][index2].grade !== 'S' && semDataAll[index][index2].grade !== 'X') {
-                    if(semDataAll[index][index2].is_repeated === false) {
-                        totCreds = totCreds + semDataAll[index][index2].credits
-                        receivedCreds = receivedCreds + semDataAll[index][index2].credits_received
-                    }
-                    spi_cred = spi_cred + semDataAll[index][index2].credits
-                    spi_cred_done = spi_cred_done + semDataAll[index][index2].credits_received
-                }
-                if(semDataAll[index][index2].grade !== 'X' && semDataAll[index][index2].grade !== 'E(old)' && semDataAll[index][index2].grade !== 'E(new)' && semDataAll[index][index2].grade !== 'F') {
-                    cred += semDataAll[index][index2].credits
-                }
-            }
-            let sem_name = index.toString()
-            let singleSem:SPIstruct = {sem_name:sem_name, spi:Number((spi_cred_done/spi_cred*10).toFixed(3)), credits_completed: cred}
-            res.push(singleSem)
-        }
-        setCpi(Number((receivedCreds/totCreds*10).toFixed(3)))
-        setResults(res)
-        // console.log(semDataAll)
-        setShowStat2(true)
-        // console.log("totCreds:", totCreds)
-    }
+    //             if(semDataAll[index][index2].grade !== 'S' && semDataAll[index][index2].grade !== 'X') {
+    //                 if(semDataAll[index][index2].is_repeated === false) {
+    //                     totCreds = totCreds + semDataAll[index][index2].credits
+    //                     receivedCreds = receivedCreds + semDataAll[index][index2].credits_received
+    //                 }
+    //                 spi_cred = spi_cred + semDataAll[index][index2].credits
+    //                 spi_cred_done = spi_cred_done + semDataAll[index][index2].credits_received
+    //             }
+    //             if(semDataAll[index][index2].grade !== 'X' && semDataAll[index][index2].grade !== 'E(old)' && semDataAll[index][index2].grade !== 'E(new)' && semDataAll[index][index2].grade !== 'F') {
+    //                 cred += semDataAll[index][index2].credits
+    //             }
+    //         }
+    //         let sem_name = index.toString()
+    //         let singleSem:SPIstruct = {sem_name:sem_name, spi:Number((spi_cred_done/spi_cred*10).toFixed(3)), credits_completed: cred}
+    //         res.push(singleSem)
+    //     }
+    //     setCpi(Number((receivedCreds/totCreds*10).toFixed(3)))
+    //     setResults(res)
+    //     // console.log(semDataAll)
+    //     setShowStat2(true)
+    //     // console.log("totCreds:", totCreds)
+    // }
     const items = [
       {
         label: (
@@ -406,7 +426,8 @@ const columns: ColumnsType<SPIstruct> = [
           <ListItem key="Cpi" >
             <ListItemButton onClick={() => {
           tempFunc()
-          getSPI()
+          getSPICPI(setSemData, semData, sem1a, sem2a, sem3a, sem4a, sem5a, sem6a, sem7a, sem8a, sem9a, sem10a, sem11a, 
+            sem12a, sem13a, sem14a, sem15a, sem16a,setCpi,setShowStat2,results,setResults)
           handleClick1()
         }}> 
               <ListItemText primary="Get Spi/Cpi" />
@@ -454,7 +475,8 @@ const columns: ColumnsType<SPIstruct> = [
         mode="horizontal"
         items={[{key:"SPI", label:"Get SPI / CPI", onClick:() => {
           tempFunc()
-          getSPI()
+          getSPICPI(setSemData, semData, sem1a, sem2a, sem3a, sem4a, sem5a, sem6a, sem7a, sem8a, sem9a, sem10a, sem11a, 
+            sem12a, sem13a, sem14a, sem15a, sem16a,setCpi,setShowStat2,results,setResults)
           handleClick1()
         }}, 
         {key:"AP", label:"Find Status", onClick:() => {
@@ -501,6 +523,7 @@ const columns: ColumnsType<SPIstruct> = [
                    You can also click on the button &quot;repeated&quot; if that course has been repeated by the student and the better grade is obtained in the 
                    next attempt. Note that only the best attempt of each course should have the repeated button not clicked.
                 </p>
+                
                 
             </div>
       <div className="site-layout-background" style={{ padding: 24, minHeight: 620 }}>

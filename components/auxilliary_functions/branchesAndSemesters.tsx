@@ -2,23 +2,26 @@ import { Button, Dropdown, Menu, MenuProps } from 'antd';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { group1sem1, group1sem2, group2sem1, group2sem2 } from '../data/coursesY22';
-import { Sem1Data, Sem2Data, semCount ,allCoursesY22} from '../typeDefinitions/recoilDeclarations';
+import { Sem1Data, Sem2Data, semCount ,allCourses,y22,set1Y22,set2Y22, allCoursesY22} from '../typeDefinitions/recoilDeclarations';
 
 
 // PHY,SDS
 
 
 export const BranchesSelect:any = () => {
+  const[isy22,setisy22]=useRecoilState(y22)
   const[group,setGroup]=useRecoilState(allCoursesY22)
+  const[set1,setSet1]=useRecoilState(set1Y22)
+  const[set2,setSet2]=useRecoilState(set2Y22)
+  const[courseDataFetched,setCourseDataFetched]=useState(0)
+
   let group2:any=[]
   let group1:any=[]
   
   let j:any={}
-  const[courseDataFetched,setCourseDataFetched]=useState(0)
-  const[dataLoading,setdataLoading]=useState(0)
- 
-  const getCourseData=async()=>{
-    const res = await fetch(`http://localhost:8080/coursesY22`, {
+  const getCourseSet1=async()=>{
+
+    const res = await fetch(`http://localhost:8000/courses1/1`, {
           method: "GET",
           headers: {
               "Content-Type": "application/json"
@@ -26,14 +29,32 @@ export const BranchesSelect:any = () => {
       });
       const data = await res.json();
       console.log(data.data,"getCourseData");
-      setGroup(data.data)
-      
-}
-if (!courseDataFetched){
-    getCourseData()
+  
+      setSet1(data.data)
+   }
+   const getCourseSet2=async()=>{
+
+    const res = await fetch(`http://localhost:8000/courses1/2`, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json"
+          }
+      });
+      const data = await res.json();
+      console.log(data.data,"getCourseData");
+  
+      setSet2(data.data)
+   }
+   if (!courseDataFetched){
+    getCourseSet1()
+    getCourseSet2()
     setCourseDataFetched(1)
-}
-  console.log(group)
+   }
+
+ 
+  
+  // console.log(group,"group",set1)
+  // console.log("set1",set1)
   for (j in group){
     // let l :any = group[j]
     // l.grade=""
@@ -46,7 +67,8 @@ if (!courseDataFetched){
       group2.push(group[j])
     }
   }
-  console.log(group1,group2)
+  console.log(group1,set1,"compare")
+  const test=[{key:0,course:"hhhhh", value:"jjj" ,category:"1" ,credits:10, grade:"jj", credits_received:0, is_repeated: false,is_sx:false}]
   const [option, setOption] = useState(0)
   const [scount, setSemCount] = useState(0)
   const [count, setCount] = useRecoilState(semCount)
@@ -57,28 +79,30 @@ if (!courseDataFetched){
     if(scount !== 0 && option !== 0) {
       if(scount >= 1 ) {
         if(option === 1) {
-          setSem1(group1)
+          setSem1(set1)
           setCount(1)
         }
         else {
-          setSem1(group2)
+          setSem1(set2)
           setCount(1)
         }
         setCount(1)
+      
       }
       if(scount === 2) {
         if(option === 1) {
-          setSem2(group2)
+          setSem2(set2)
         }
         else {
-          setSem2(group1)
+          setSem2(set1)
         }
         setCount(2)
         setCount(2)
       }
+      
     }
   }
-
+  console.log(sem1,"sem1o")
   const branches = (
     <Menu
       items={[

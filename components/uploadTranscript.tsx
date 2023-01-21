@@ -11,8 +11,11 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { recoilSessionState } from "../pkg/recoilDeclarations";
 import { addAllData, defaultColumns} from './essensial_functionality/columnDeclaration';
 import { RepeatedSems } from './repeated_sems';
+import type { RadioChangeEvent } from 'antd';
+import { Input, Radio } from 'antd';
 import { json } from 'react-router';
-
+import { Alert, Space ,Modal} from 'antd';
+import { PassThrough } from 'stream';
 
 let setVar=4;
 let userDataExist=0;
@@ -21,6 +24,24 @@ let userDataExist=0;
 
 let ver=0;
 export const App: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleOk = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setOpen(false);
+    }, 3000);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
   const [count, setCount] = useRecoilState(semCount);
   // setCount(dummyData.length);
   const [semData, setSemData] = useRecoilState(allSemsData)
@@ -53,14 +74,15 @@ if (sessiondata?.user.id){
 }
  const getCourseData=async()=>{
 
-  const res = await fetch(`http://localhost:8080/courses`, {
+  const res = await fetch(`http://localhost:8000/courses`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
     });
     const data = await res.json();
-    console.log(data.data,"getCourseData");
+    // console.log(data.data,"getCourseData");
+
     setjsonOfCourseCredits(data.data)
  }
  if (!courseDataFetched){
@@ -75,7 +97,7 @@ if (sessiondata?.user.id){
       email=sessiondata?.user.email
     
     
-    const res = await fetch(`http://localhost:8080/getuser/${email}`, {
+    const res = await fetch(`http://localhost:8000/getuser/${email}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -85,10 +107,17 @@ if (sessiondata?.user.id){
     const data = await res.json();
     console.log(data,"getdata");
     if (data){
-
-       datagrades=data.data.gradesData;
+      datagrades=data.data.gradesData;
       // dummyData=data.gradesData;
-      console.log(datagrades)
+      console.log(datagrades,semData.length,"Alert")
+      if (semData.length && datagrades.length>0){
+        // alert(<h1>vcvcvcc</h1>)
+        var actionUser = prompt("If you want to replace entered courses with the one you have saved earlier go with Remove else Continue", "Remove or Continue");
+        console.log(actionUser,"person")
+      
+        if (actionUser==="Remove" || actionUser==="remove"){
+          console.log("Remove")
+      // if (actionUser)
       if (count<datagrades.length){
         setCount(datagrades.length);
       }
@@ -97,14 +126,40 @@ if (sessiondata?.user.id){
       }
       if (ver==0){
         console.log("inside");
+      
       for (let y=0;y<datagrades.length;y++){
+        
         console.log(datagrades[y],y,"assigning value")
         semArray[y](datagrades[y]);
       }
       ver=1;}
       userDataExist=1;
       console.log(data.gradesData,"gradesdatatea")
+    }else if(actionUser==="Continue" || actionUser==="Continue"){
+      console.log("Countinue")
+      userDataExist=1
+    }}
+  else{
+    console.log("non entry")
+    if (count<datagrades.length){
+      setCount(datagrades.length);
     }
+    else{
+      
+    }
+    if (ver==0){
+      console.log("inside");
+    
+    for (let y=0;y<datagrades.length;y++){
+      
+      console.log(datagrades[y],y,"assigning value")
+      semArray[y](datagrades[y]);
+    }
+    ver=1;}
+    userDataExist=1;
+    console.log(data.gradesData,"gradesdatatea")
+  }
+  }
   
   
   
@@ -140,7 +195,7 @@ const addinpdata = async () => {
       // console.log(name,email)
       console.log(gradesData,"tryyyyy")
 
-      const res = await fetch("http://localhost:8080/register1", {
+      const res = await fetch("http://localhost:8000/register1", {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
@@ -152,18 +207,19 @@ const addinpdata = async () => {
 
       const data = await res.json();
       console.log(data);
+      alert("Data saved")
 
 
   // }
 }else{
-  alert("You are not Logged In")
+  alert("You must login for saving ")
 }}
 
-console.log(jsonOfCourseCredits,typeof(jsonOfCourseCredits))
+// console.log(jsonOfCourseCredits,typeof(jsonOfCourseCredits))
 // const addcoursedata=async (key:any,course:any,value:any,cred:any)=>{
 //   console.log(course)
 
-//   const res = await fetch("http://localhost:8080/register2", {
+//   const res = await fetch("http://localhost:8000/register2", {
 //           method: "POST",
 //           headers: {
 //               "Content-Type": "application/json"
@@ -198,7 +254,7 @@ if (userId && setVar && setVar!==2 && !alreadyLoggedin){
     }
     
 
-    const res2 = await fetch(`http://localhost:8080/updateuser/${email}`,{
+    const res2 = await fetch(`http://localhost:8000/updateuser/${email}`,{
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -210,8 +266,7 @@ if (userId && setVar && setVar!==2 && !alreadyLoggedin){
 
     const data2 = await res2.json();
     console.log(data2);
-
-    
+    alert("Data Updated")
 
 }
 
@@ -332,4 +387,6 @@ if (userId && setVar && setVar!==2 && !alreadyLoggedin){
     
   );
 };
+
+
 
