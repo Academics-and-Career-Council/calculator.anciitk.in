@@ -60,23 +60,17 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     const[group,setGroup]=useRecoilState(allCoursesY22)
     const[isy22,setisy22]=useRecoilState(y22)
     const [jsonOfCourseCredits, setjsonOfCourseCredits] = useRecoilState(allCourses)
-    // console.log(jsonOfCourseCredits,"tablespeification")
     let options:any=[]
     let courseY22:any=[]
     let i:number=0
     for (i;i<1375;i++){
-      // console.log(jsonOfCourseCredits[i])
       if(jsonOfCourseCredits[i] && !jsonOfCourseCredits[i].category ){
   
       options.push({"value":jsonOfCourseCredits[i].course})}
       else if (jsonOfCourseCredits[i] && jsonOfCourseCredits[i].category){
-        // console.log("category",typeof(jsonOfCourseCredits[i]))
         courseY22.push(jsonOfCourseCredits[i])
       }
-      // console.log("options",options)
     }
-    // console.log("options",options)
-    // console.log(group,"group",courseY22)
     if(!isy22){
       setisy22(1)
       setGroup(courseY22)
@@ -96,7 +90,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     }
     useEffect(() => {
       if (editing) {
-        // inputRef.current!.focus();
+        
       }
     }, [editing]);
   

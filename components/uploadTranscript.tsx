@@ -14,7 +14,7 @@ import { RepeatedSems } from './repeated_sems';
 import type { RadioChangeEvent } from 'antd';
 import { Input, Radio } from 'antd';
 import { json } from 'react-router';
-import { Alert, Space ,Modal} from 'antd';
+import { Space ,Modal} from 'antd';
 import { PassThrough } from 'stream';
 
 let setVar=4;
@@ -73,8 +73,8 @@ if (sessiondata?.user.id){
   userId=sessiondata?.user.id
 }
  const getCourseData=async()=>{
-
-  const res = await fetch(`http://localhost:8000/courses`, {
+  console.log(`${process.env.NEXT_PUBLIC_SERVER_URL}courses`,"jjjjjjjjjjjjjjjjjjjjjj")
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}courses`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -97,12 +97,14 @@ if (sessiondata?.user.id){
       email=sessiondata?.user.email
     
     
-    const res = await fetch(`http://localhost:8000/getuser/${email}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}getuser/${email}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
     });
+
+
   
     const data = await res.json();
     console.log(data,"getdata");
@@ -195,7 +197,7 @@ const addinpdata = async () => {
       // console.log(name,email)
       console.log(gradesData,"tryyyyy")
 
-      const res = await fetch("http://localhost:8000/register1", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}register1`, {
           method: "POST",
           headers: {
               "Content-Type": "application/json"
@@ -215,23 +217,7 @@ const addinpdata = async () => {
   alert("You must login for saving ")
 }}
 
-// console.log(jsonOfCourseCredits,typeof(jsonOfCourseCredits))
-// const addcoursedata=async (key:any,course:any,value:any,cred:any)=>{
-//   console.log(course)
 
-//   const res = await fetch("http://localhost:8000/register2", {
-//           method: "POST",
-//           headers: {
-//               "Content-Type": "application/json"
-//           },
-//           body: JSON.stringify({
-//             key, course, value, cred
-//           })
-//       });
-
-//       const data = await res.json();
-//       console.log(data);
-// }
 
 const [alreadyLoggedin,setalredayLoggedin]=useState(false);
 console.log(alreadyLoggedin,"already Logged in")
@@ -254,7 +240,7 @@ if (userId && setVar && setVar!==2 && !alreadyLoggedin){
     }
     
 
-    const res2 = await fetch(`http://localhost:8000/updateuser/${email}`,{
+    const res2 = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}updateuser/${email}`,{
         method: "PUT",
         headers: {
             "Content-Type": "application/json"

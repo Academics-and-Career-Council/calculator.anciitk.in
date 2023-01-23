@@ -7,32 +7,8 @@ export const getSPICPI=(setSemData:any, semData:DataType[][], sem1:DataType[], s
     sem4:DataType[], sem5:DataType[], sem6:DataType[], sem7:DataType[], sem8:DataType[], sem9:DataType[], 
     sem10:DataType[], sem11:DataType[], sem12:DataType[], sem13:DataType[], sem14:DataType[], sem15:DataType[], 
     sem16:DataType[],setCpi:any,setShowStat2:any,results:any,setResults:any) => {
-    // const [cpi, setCpi] = useState(0)
-    // const [showStat2, setShowStat2] = useState(false)
-    // const [semData, setSemData] = useRecoilState(allSemsData)
-    //  const [results, setResults] = useState<SPIstruct[]>([])
-  // const [trial, setTrial] = useState<DataType[][]>()
-    // const [status, setStatus] = useState("Normal");
-    // const [showStat, setShowStat] = useState(false)
-    // let [sem1a, ] = useRecoilState(Sem1Data);
-    // let [sem2a, ] = useRecoilState(Sem2Data)
-    // const [sem3a, ] = useRecoilState(Sem3Data)
-    // const [sem4a, ] = useRecoilState(Sem4Data)
-    // const [sem5a, ] = useRecoilState(Sem5Data)
-    // const [sem6a, ] = useRecoilState(Sem6Data)
-    // const [sem7a, ] = useRecoilState(Sem7Data)
-    // const [sem8a, ] = useRecoilState(Sem8Data)
-    // const [sem9a, ] = useRecoilState(Sem9Data)
-    // const [sem10a, ] = useRecoilState(Sem10Data)
-    // const [sem11a, ] = useRecoilState(Sem11Data)
-    // const [sem12a, ] = useRecoilState(Sem12Data)
-    // const [sem13a, ] = useRecoilState(Sem13Data)
-    // const [sem14a, ] = useRecoilState(Sem14Data)
-    // const [sem15a, ] = useRecoilState(Sem15Data)
-    // const [sem16a, ] = useRecoilState(Sem16Data)
     let semDataAll = semData
     semDataAll = []
-    // console.log(sem1a)
     if(sem1.length !== 0) {semDataAll = [sem1];}
     if(sem2.length !== 0) {semDataAll?.push(sem2)}
     if(sem3.length !== 0) {semDataAll?.push(sem3)}
@@ -81,7 +57,5 @@ export const getSPICPI=(setSemData:any, semData:DataType[][], sem1:DataType[], s
       }
       setCpi(Number((receivedCreds/totCreds*10).toFixed(3)))
       setResults(res)
-      // console.log(semDataAll)
       setShowStat2(true)
-      // console.log("totCreds:", totCreds)
   }

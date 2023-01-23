@@ -21,7 +21,7 @@ export const BranchesSelect:any = () => {
   let j:any={}
   const getCourseSet1=async()=>{
 
-    const res = await fetch(`http://localhost:8000/courses1/1`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}courses1/1`, {
           method: "GET",
           headers: {
               "Content-Type": "application/json"
@@ -34,7 +34,7 @@ export const BranchesSelect:any = () => {
    }
    const getCourseSet2=async()=>{
 
-    const res = await fetch(`http://localhost:8000/courses1/2`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}courses1/2`, {
           method: "GET",
           headers: {
               "Content-Type": "application/json"
@@ -50,17 +50,7 @@ export const BranchesSelect:any = () => {
     getCourseSet2()
     setCourseDataFetched(1)
    }
-
- 
-  
-  // console.log(group,"group",set1)
-  // console.log("set1",set1)
   for (j in group){
-    // let l :any = group[j]
-    // l.grade=""
-    // l.credits_received=0
-    // l.is_repeated=false
-    // l.is_sx=false
     if (group[j].category=="1"){
       group1.push(group[j])
     }else{
