@@ -62,7 +62,7 @@ export const NodeInput = ({ node, attributes }: Props) => {
             >
               Log in
             </Button>
-            Don't have an account?{" "}
+            {"Don't"} have an account?{" "}
             <Link href="/registration">SignUp Here!</Link>
           </Form.Item>
         </>

@@ -1,25 +1,16 @@
-import { App } from "./uploadTranscript"
-
+import { App } from "./uploadTranscript";
 
 export interface SPIstruct {
-    sem_name: string;
-    spi: number;
-    credits_completed: number;
+  sem_name: string;
+  spi: number;
+  credits_completed: number;
 }
 export function Navigation() {
-    
-
-
-    return (
+  return (
     <div>
-        
-        <div >
-            <App />
-            
-            
-            
-            
-        </div>
+      <div>
+        <App />
+      </div>
     </div>
-    )
+  );
 }

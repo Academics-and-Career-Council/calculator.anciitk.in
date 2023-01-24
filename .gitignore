@@ -1,6 +1,2 @@
-
-
 # local env files
-.env.example
-
-
+.env
