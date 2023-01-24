@@ -54,9 +54,6 @@ import {
   Sem8Data,
   Sem9Data,
 } from "../components/typeDefinitions/recoilDeclarations";
-import Image from "next/image";
-// import { useRouter } from 'next/router'
-// import { NextResponse } from 'next/server'
 import {
   Routes,
   redirect as DomRedirect,
@@ -518,7 +515,7 @@ const Home: NextPage = () => {
             }}
           >
             <a href="https://anciitk.in">
-              <Image
+              <img
                 src="https://anciitk.in/img/anc-logo.png"
                 alt="AnC IITK logo"
                 height="50px"
