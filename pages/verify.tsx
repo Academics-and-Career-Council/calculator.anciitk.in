@@ -25,7 +25,7 @@ export default function Component() {
   const { next: next } = router.query;
   return (
     <div>
-      {/* {session === undefined && ( */}
+       {session === undefined && ( 
         <Redirect
           loginUrl={`${process.env.NEXT_PUBLIC_LOGIN_URL}`}
           historyPush={router.push}
@@ -39,7 +39,7 @@ export default function Component() {
         />
 
         
-      {/* )} */}
+       )}
     </div>
   );
 }
