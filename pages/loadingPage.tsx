@@ -14,7 +14,7 @@ const LoadingPage: NextPage = () => {
       router.push("./");
     }
   });
-  return <div>Hello</div>;
+  return <></>;
 };
 
 export default LoadingPage;

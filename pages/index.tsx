@@ -96,13 +96,7 @@ const Home: NextPage = () => {
 
   const content = (
     <div>
-      <Button
-        style={{ width: "100%", borderColor: "#ffffff", textAlign: "left" }}
-      >
-        <Link href="./settings">
-          <p className={styles.logoutMenuItem}>Settings</p>
-        </Link>
-      </Button>
+      
       <Button
         onClick={() => setIsLogIn(false)}
         style={{ width: "100%", borderColor: "#ffffff", textAlign: "left" }}
