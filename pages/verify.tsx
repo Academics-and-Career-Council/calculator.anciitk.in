@@ -18,10 +18,10 @@ export default function Component() {
   const [session, setSession] = useRecoilState(recoilSessionState);
   const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
   setIsLogIn(true);
-  // if (session !== undefined) {
-  //   setSession(session);
-  //   router.push("/");
-  // }
+  if (session !== undefined) {
+    setSession(session);
+    router.push("/");
+  }
   const { next: next } = router.query;
   return (
     <div>
