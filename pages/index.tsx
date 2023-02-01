@@ -88,7 +88,7 @@ const Home: NextPage = () => {
   const [session] = useRecoilState(recoilSessionState);
   if (isLogIn === true) {
     if (session === undefined) {
-      router.push("./verify");
+      // router.push("./verify");
     }
   }
 
@@ -626,8 +626,9 @@ const Home: NextPage = () => {
                 }}
                 onClick={() => {
                   setIsLogIn(true);
-                  router.push("./verify");
+                  // router.push("./verify");
                 }}
+                href={`${process.env.NEXT_PUBLIC_LOGIN_URL}?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/verify`}
               >
                 Login
               </Button>

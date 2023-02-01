@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { useContext } from "react";
 import { recoilSessionState } from "../pkg/recoilDeclarations";
 import { loginStatus } from "../components/typeDefinitions/recoilDeclarations";
+import { useEffect } from "react";
 
 // const context= useContext();
 // const router = useRouter();
@@ -22,10 +23,47 @@ export default function Component() {
     setSession(session);
     router.push("/");
   }
+
+  useEffect(() => {
+    ory
+      .toSession()
+      .then(({ data: session }) => {
+        ory
+          .createSelfServiceLogoutFlowUrlForBrowsers()
+          .then(({ data: logout }) => {
+            xenon
+              .whoami()
+              .then((user) => {
+                setSession({
+                  active: true,
+                  logoutUrl: logout.logout_url || '',
+                  user: user,
+                  session: session
+                })
+              })
+              .catch((err) => {
+                throw new Error(err)
+              })
+          })
+          .catch((err) => {
+            return Promise.reject(err)
+          })
+      })
+      .catch((err) => {
+        switch (err.response?.status) {
+          case 403:
+            return
+          case 401:
+            return
+        }
+        return Promise.reject(err)
+      })
+  }, [])
+
   const { next: next } = router.query;
   return (
     <div>
-       {session === undefined && ( 
+       {/* {session === undefined && ( 
         <Redirect
           loginUrl={`${process.env.NEXT_PUBLIC_LOGIN_URL}`}
           historyPush={router.push}
@@ -39,7 +77,7 @@ export default function Component() {
         />
 
         
-       )}
+       )} */}
     </div>
   );
 }
