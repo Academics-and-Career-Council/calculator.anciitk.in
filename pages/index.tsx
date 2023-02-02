@@ -17,6 +17,7 @@ const Home: NextPage = () => {
   if (session !== undefined) {
     setSession(session);
     router.push("/dashboard");
+  }
 
   const sessiondata = useRecoilValue(recoilSessionState);
 
