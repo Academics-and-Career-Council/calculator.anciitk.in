@@ -36,3 +36,22 @@
     opacity: 0;
   }
 }
+
+.loaderY22{    
+  background-color: #001529;
+  
+    color: #bdbdbd;
+    height: 64px;
+    width: 93px;
+    display: flex;
+    border: 0px solid;
+    align-items: center;
+    justify-content: center;
+    margin-left: -10px;
+}
+
+.loaderY22:hover{
+  background-color: #2196f3;
+  color: white;
+
+}
