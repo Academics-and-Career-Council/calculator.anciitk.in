@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Drawer from "@mui/material/Drawer";
 // import { styled, useTheme } from '@mui/material/styles';
+// import styles from "../styles/SignupStyles.module.css";
 
 import List from "@mui/material/List";
 import { styled, useTheme } from "@mui/material/styles";
@@ -720,13 +721,13 @@ const Home: NextPage = () => {
             </div>
           }
           <Button
-            style={{
-              backgroundColor: "#001529",
-              color: "lightgray",
-              marginTop: "15px",
-            }}
+            // style={{
+            //   backgroundColor: "#001529",
+            //   color: "lightgray",
+            //   marginTop: "15px",
+            // }}
             href="./"
-            className={styles.nonmobile}
+            className={styles.loaderY22}
           >
             Pre Y22
           </Button>
@@ -752,12 +753,10 @@ const Home: NextPage = () => {
             {!sessiondata?.user.id && (
               <Button
                 style={{
-                  backgroundColor: "#001529",
-                  color: "lightgray",
-                  marginTop: "15px",
                   position: "fixed",
                   right: "30px",
                 }}
+                className={styles.loaderY22}
                 href={`${process.env.NEXT_PUBLIC_LOGIN_URL}?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/y22`}
               >
                 Login

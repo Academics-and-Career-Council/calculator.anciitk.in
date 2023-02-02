@@ -56,14 +56,62 @@ import {
 } from "../components/typeDefinitions/recoilDeclarations";
 
 import { useRouter } from "next/router";
+import { ory } from "../pkg/open-source";
+import { xenon } from "../pkg/xenon";
+import { Router } from "react-router";
 
 const Dashboard: NextPage = () => {
+  const router = useRouter();
 
   const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
 
   const sessiondata = useRecoilValue(recoilSessionState);
 
   const [session, setSession] = useRecoilState(recoilSessionState);
+
+  useEffect(() => {
+    ory
+      .toSession()
+      .then(({ data: session }) => {
+        ory
+          .createSelfServiceLogoutFlowUrlForBrowsers()
+          .then(({ data: logout }) => {
+            xenon
+              .whoami()
+              .then((user) => {
+                setSession({
+                  active: true,
+                  logoutUrl: logout.logout_url || '',
+                  user: user,
+                  session: session
+                })
+              })
+              .catch((err) => {
+                return
+              })
+          })
+          .catch((err) => {
+            
+            return Promise.reject(err)
+          })
+          .catch((err) => {
+            switch (err.response?.status) {
+              case 403:
+                return
+              case 401:
+                
+                return
+            }
+            
+            return Promise.reject(err)
+          })
+      })
+      .catch((err) => {
+        
+        
+      })
+  }, [])
+
   const logoutUrl = session?.logoutUrl;
 
   const content = (
@@ -560,8 +608,9 @@ const Dashboard: NextPage = () => {
             //   color: "lightgray",
             //   marginTop: "15px",
             // }}
-            href="./y22"
-            className={styles.nonmobile+" "+styles.loaderY22}
+            className={styles.loaderY22}
+            onClick={() => router.push("./y22")}
+            
           >
             For Y22
           </Button>
@@ -596,7 +645,7 @@ const Dashboard: NextPage = () => {
                 onClick={() => {
                   setIsLogIn(true);
                 }}
-                href={`${process.env.NEXT_PUBLIC_LOGIN_URL}?return_to=${process.env.NEXT_PUBLIC_BASE_URL}`}
+                href={`${process.env.NEXT_PUBLIC_LOGIN_URL}?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`}
 
               >
                 Login
