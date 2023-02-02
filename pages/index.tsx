@@ -1,21 +1,89 @@
-import type { NextPage } from "next";
-import Home from "./homePage";
-import Loader from "../components/loader";
-import { useState,useEffect } from "react";
-import styles from "../components/loader.module.css";
-import { Spin } from 'antd';
-const PreY22: NextPage = () => {
-  const[display,setDisplay]=useState(0)
-    useEffect(()=>{
-        const timer = setTimeout(() => {
-            setDisplay(1);
-            console.log("display change")
-          }, 3000);
-          return () => clearTimeout(timer);
-    })
-  return(<>{display && <div className={styles.animationLoad}><Home/></div>}
-  {!display && <Loader/>}
-  </>)
-}
 
-export default PreY22;
+import { ory } from "../pkg/open-source";
+import Redirect from "@anciitk/kratos-verify-session";
+import "@anciitk/kratos-verify-session/dist/index.css";
+import { useRouter } from "next/router";
+import { xenon } from "../pkg/xenon";
+import { useRecoilState } from "recoil";
+import { useContext, useEffect, useState } from "react";
+import { recoilSessionState } from "../pkg/recoilDeclarations";
+import { loginStatus } from "../components/typeDefinitions/recoilDeclarations";
+import { NextPage } from "next";
+
+const Home: NextPage = () => {
+  const router = useRouter();
+  
+  const [session, setSession] = useRecoilState(recoilSessionState);
+  const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
+  setIsLogIn(true);
+  if (session !== undefined) {
+    setSession(session);
+    router.push("/dashboard");
+  }
+
+
+  if (isLogIn === true) {
+    if (session === undefined) {
+      // router.push("./verify");
+    }
+  }
+
+  useEffect(() => {
+    ory
+      .toSession()
+      .then(({ data: session }) => {
+        ory
+          .createSelfServiceLogoutFlowUrlForBrowsers()
+          .then(({ data: logout }) => {
+            xenon
+              .whoami()
+              .then((user) => {
+                setSession({
+                  active: true,
+                  logoutUrl: logout.logout_url || '',
+                  user: user,
+                  session: session
+                })
+              })
+              .catch((err) => {
+                router.push("/dashboard");
+                throw new Error(err)
+              })
+          })
+          .catch((err) => {
+            router.push("/dashboard");
+            return Promise.reject(err)
+          })
+          .catch((err) => {
+            switch (err.response?.status) {
+              case 403:
+                router.push("/dashboard");
+              case 401:
+                router.push("/dashboard");
+                return
+            }
+            router.push("/dashboard");
+            return Promise.reject(err)
+          })
+      })
+      .catch((err) => {
+        router.push("/dashboard");
+      })
+  }, [])
+
+  return (
+
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+
+    </div>
+  );
+};
+
+export default Home;
+

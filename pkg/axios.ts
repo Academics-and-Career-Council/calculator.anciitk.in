@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   // .. where we make our configurations
-  baseURL: process.env.REACT_APP_PUBLIC_KRATOS_URL,
+  baseURL: process.env.NEXT_PUBLIC_KRATOS_URL,
   withCredentials: true,
   paramsSerializer: function (params: any) {
     let result = "";
