@@ -17,6 +17,14 @@ const Home: NextPage = () => {
   if (session !== undefined) {
     setSession(session);
     router.push("/dashboard");
+
+  const sessiondata = useRecoilValue(recoilSessionState);
+
+  const [session] = useRecoilState(recoilSessionState);
+  if (isLogIn === true) {
+    if (session === undefined) {
+      // router.push("./verify");
+    }
   }
 
   useEffect(() => {
