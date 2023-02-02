@@ -105,7 +105,7 @@ const Home: NextPage = () => {
                 </Button>
                 <Button
                   className={styles.buttonSignp}
-                  onClick={() => router.push(`http://localhost:3000/registration?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`)}
+                  onClick={() => router.push(`${process.env.NEXT_PUBLIC_ACCOUNTS_URL}/registration?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`)}
                 >
                   Register
                 </Button>
