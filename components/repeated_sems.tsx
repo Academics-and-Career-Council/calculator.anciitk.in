@@ -78,6 +78,7 @@ export function RepeatedSems(props: PropsType) {
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem1}
+              pagination={false}
               columns={
                 props.columns(props.sem1, props.setSem1, 1) as ColumnTypes
               }
@@ -99,6 +100,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem2}
@@ -123,6 +125,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem3}
@@ -147,6 +150,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem4}
@@ -171,6 +175,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem5}
@@ -195,6 +200,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem6}
@@ -219,6 +225,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem7}
@@ -243,6 +250,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem8}
@@ -267,6 +275,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem9}
@@ -291,6 +300,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem10}
@@ -315,6 +325,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem11}
@@ -339,6 +350,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem12}
@@ -363,6 +375,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem13}
@@ -387,6 +400,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem14}
@@ -411,6 +425,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem15}
@@ -435,6 +450,7 @@ export function RepeatedSems(props: PropsType) {
             
             <Table
               components={components}
+              pagination={false}
               rowClassName={() => "editable-row"}
               bordered
               dataSource={props.sem16}
