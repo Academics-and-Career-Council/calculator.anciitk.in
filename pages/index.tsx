@@ -75,9 +75,9 @@ const Home: NextPage = () => {
       })
   }, [])
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
   return (
     <div className={styles.container}>
       <div
