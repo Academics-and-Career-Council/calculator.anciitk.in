@@ -425,6 +425,7 @@ export const App: React.FC = () => {
             justifyContent: "center",
             alignItems: "center",
             padding: "10px",
+            
           }}
         >
           <Button

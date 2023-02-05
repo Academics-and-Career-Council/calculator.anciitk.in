@@ -10,11 +10,12 @@
 .nonmobile {
   opacity: 1;
 }
-.bothmobile {
-  padding-left: 20%;
-  padding-right: 20%;
-  padding-top: 20px;
-  margin-top: 64;
+.bothmobile {   
+   position: absolute;
+  left: 12vw;
+  top: 120px;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 @media screen and (max-width: 1111px) {
   .bothmobile {
@@ -55,3 +56,5 @@
   color: white;
 
 }
+
+/* . */

@@ -1,5 +1,5 @@
-import { Menu, Button } from "antd";
-import Layout, { Content, Footer, Header } from "antd/lib/layout/layout";
+import { Menu, Button,Layout } from "antd";
+// import Layout, {  } from "antd/lib/layout/layout";
 import type { NextPage } from "next";
 import { Navigation, SPIstruct } from "../components/navigation";
 import { isMobile } from "react-device-detect";
@@ -10,6 +10,16 @@ import Drawer from "@mui/material/Drawer";
 import { getSPICPI } from "../components/essensial_functionality/cpiCalculation";
 import List from "@mui/material/List";
 import SPIFinder from "../components/essensial_functionality/spiFinder";
+import {
+  EllipsisOutlined,
+  UserOutlined,
+  BookOutlined,
+  SettingOutlined,
+  SolutionOutlined,
+  ApartmentOutlined,
+  MenuOutlined,
+  LeftOutlined,
+} from "@ant-design/icons";
 import { styled, useTheme } from "@mui/material/styles";
 
 import Divider from "@mui/material/Divider";
@@ -23,7 +33,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 const drawerWidth = 240;
-
+const { Header, Content, Footer, Sider } = Layout;
 import Link from "next/link";
 // import Component from "./verify";
 import DataType from "../components/typeDefinitions/datatype";
@@ -56,14 +66,62 @@ import {
 } from "../components/typeDefinitions/recoilDeclarations";
 
 import { useRouter } from "next/router";
+import { ory } from "../pkg/open-source";
+import { xenon } from "../pkg/xenon";
+import { Router } from "react-router";
 
 const Dashboard: NextPage = () => {
+  const router = useRouter();
 
   const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
 
   const sessiondata = useRecoilValue(recoilSessionState);
 
   const [session, setSession] = useRecoilState(recoilSessionState);
+
+  useEffect(() => {
+    ory
+      .toSession()
+      .then(({ data: session }) => {
+        ory
+          .createSelfServiceLogoutFlowUrlForBrowsers()
+          .then(({ data: logout }) => {
+            xenon
+              .whoami()
+              .then((user) => {
+                setSession({
+                  active: true,
+                  logoutUrl: logout.logout_url || '',
+                  user: user,
+                  session: session
+                })
+              })
+              .catch((err) => {
+                return
+              })
+          })
+          .catch((err) => {
+            
+            return Promise.reject(err)
+          })
+          .catch((err) => {
+            switch (err.response?.status) {
+              case 403:
+                return
+              case 401:
+                
+                return
+            }
+            
+            return Promise.reject(err)
+          })
+      })
+      .catch((err) => {
+        
+        
+      })
+  }, [])
+
   const logoutUrl = session?.logoutUrl;
 
   const content = (
@@ -193,6 +251,14 @@ const Dashboard: NextPage = () => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+  const [collapsed, setCollapsed] = useState(false);
+  const onCollapse = () => {
+    if (collapsed === false) {
+      setCollapsed(true);
+    } else if (collapsed === true) {
+      setCollapsed(false);
+    }
+  };
 
   const handleDrawerClose = () => {
     setOpen(false);
@@ -250,6 +316,7 @@ const Dashboard: NextPage = () => {
       semDataAll?.push(sem16a);
     }
     setSemData(semDataAll);
+
 
     let numSems = 0;
     let prevSemCreds = 0;
@@ -362,249 +429,125 @@ const Dashboard: NextPage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        background: "#f0f2f5",
+        
       }}
     >
-      <Layout>
-        <Header
-          style={{
-            display: "flex",
-            position: "fixed",
-            zIndex: 1,
-            top: 0,
-            right: 0,
-            left: 0,
-            boxShadow: "0px 10px 5px lightblue",
-          }}
-        >
-          {
-            <div className={styles.mobile}>
-              <Button
-                onClick={handleDrawerOpen}
-                style={{
-                  backgroundColor: "#001529",
-                  color: "lightgray",
-                  marginTop: "15px",
-                  marginRight: "15px",
-                }}
-              >
-                <MenuIcon />
-              </Button>
-              <Drawer
-                sx={{
-                  width: 0,
-                  flexShrink: 0,
-                  zIndex: 10000,
-                  "& .MuiDrawer-paper": {
-                    width: drawerWidth,
-                    boxSizing: "border-box",
-                  },
-                }}
-                variant="persistent"
-                anchor="left"
-                open={open}
-              >
-                <>
-                  <IconButton onClick={handleDrawerClose}>
-                    {theme.direction === "ltr" ? (
-                      <ChevronLeftIcon />
-                    ) : (
-                      <ChevronRightIcon />
-                    )}
-                  </IconButton>
-                </>
-                <Divider />
-                <List>
-                  <ListItem key="Cpi">
-                    <ListItemButton
-                      onClick={() => {
-                        tempFunc();
-                        getSPICPI(
-                          setSemData,
-                          semData,
-                          sem1a,
-                          sem2a,
-                          sem3a,
-                          sem4a,
-                          sem5a,
-                          sem6a,
-                          sem7a,
-                          sem8a,
-                          sem9a,
-                          sem10a,
-                          sem11a,
-                          sem12a,
-                          sem13a,
-                          sem14a,
-                          sem15a,
-                          sem16a,
-                          setCpi,
-                          setShowStat2,
-                          results,
-                          setResults
-                        );
-                        handleClick1();
-                      }}
-                    >
-                      <ListItemText primary="Get Spi/Cpi" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem key="AP">
-                    <ListItemButton
-                      onClick={() => {
-                        tempFunc();
-                        getStats(semData);
-                        handleClick2();
-                      }}
-                    >
-                      <ListItemText primary="Find Status" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem key="y22">
-                    <ListItemButton href="./y22">
-                      <ListItemText primary="Y22" />
-                    </ListItemButton>
-                  </ListItem>
-                </List>
-              </Drawer>{" "}
-            </div>
-          }
-          <div
-            className="logo"
-            style={{
-              marginRight: "30px",
-              paddingLeft: "15px",
-              paddingRight: "15px",
-              backgroundColor: "whitesmoke",
-              borderRadius: 5,
-            }}
-          >
-            <a href="https://anciitk.in">
-              <img
-                src="/anc-logo.png"
-                alt="AnC IITK logo"
-                height="50px"
-              />
-            </a>
-          </div>
-          {
-            <div
-              className={styles.nonmobile}
+      <Layout style={{
+        height: "100vh",  
+      }}>
+        
+        <div style={{}}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100"}}>
+            <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+              <Menu.Item key="1" icon={<UserOutlined />}  onClick={() => {
+              tempFunc();
+              getSPICPI(
+                setSemData,
+                semData,
+                sem1a,
+                sem2a,
+                sem3a,
+                sem4a,
+                sem5a,
+                sem6a,
+                sem7a,
+                sem8a,
+                sem9a,
+                sem10a,
+                sem11a,
+                sem12a,
+                sem13a,
+                sem14a,
+                sem15a,
+                sem16a,
+                setCpi,
+                setShowStat2,
+                results,
+                setResults
+              );
+              handleClick1();
+            }}>
+                <Link href="/dashboard">Get SPI/CPI</Link>
+              </Menu.Item>
+              <Menu.Item key="2" icon={<ApartmentOutlined />}  onClick={() => {
+              tempFunc();
+              getStats(semData);
+              handleClick2();
+            }}>
+              <Link href={``}>Find Status</Link>
+              </Menu.Item>
+              <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("./y22")}>
+              <Link href='/y22'>Y22</Link>
+              </Menu.Item>
+              
+            </Menu>
+          </Sider>
+          <Header
+              className="site-layout-background"
               style={{
-                color: "whitesmoke",
-                paddingLeft: 10,
-                paddingRight: 30,
-                fontSize: 30,
-                minWidth: 500,
+                padding: 0,
+                // position:"relative",
+                backgroundColor: "#ffffff",
+                width:"100vw",
+                height: "60px",
+                boxShadow: "2px 2px 4px #b1b1b1",
+                display: "flex",
+                justifyContent:"center"
               }}
             >
-              {" "}
-              Academics and Career Council{" "}
-            </div>
-          }
+              <Link href="/dashboard">
+                <img
+                  src="https://anciitk.in/img/anc-logo.png"
+                  alt="AnC IITK logo"
+                  height="53px"
+                  className={styles.profileLogo}
+                />
+              </Link>
+              <div
+              // className={styles.nonmobile}
+              style={{
+                color: "black",
 
-          {
-            <div className={styles.nonmobile}>
-              <Menu
-                style={{ minWidth: "250px" }}
-                theme="dark"
-                mode="horizontal"
-                items={[
-                  {
-                    key: "SPI",
-                    label: "Get SPI / CPI",
-                    onClick: () => {
-                      tempFunc();
-                      getSPICPI(
-                        setSemData,
-                        semData,
-                        sem1a,
-                        sem2a,
-                        sem3a,
-                        sem4a,
-                        sem5a,
-                        sem6a,
-                        sem7a,
-                        sem8a,
-                        sem9a,
-                        sem10a,
-                        sem11a,
-                        sem12a,
-                        sem13a,
-                        sem14a,
-                        sem15a,
-                        sem16a,
-                        setCpi,
-                        setShowStat2,
-                        results,
-                        setResults
-                      );
-                      handleClick1();
-                    },
-                  },
-                  {
-                    key: "AP",
-                    label: "Find Status",
-                    onClick: () => {
-                      tempFunc();
-                      getStats(semData);
-                      handleClick2();
-                    },
-                  },
-                ]}
-              />
+                paddingLeft: 10,
+                // paddingTop: 10,
+                fontSize: 30,
+                // minWidth: 500,
+              }}
+            >
+              
+              Academics and Career Council
             </div>
-          }
-          <Button
-            // style={{
-            //   backgroundColor: "#001529",
-            //   color: "lightgray",
-            //   marginTop: "15px",
-            // }}
-            href="./y22"
-            className={styles.nonmobile+" "+styles.loaderY22}
-          >
-            For Y22
-          </Button>
-          {/* <Avatar src={<Image src={userImage} style={{ width: 32 }} />} /> */}
-          <div>
-            {sessiondata?.user.id && (
-              <Popover
-                placement={"bottomRight"}
-                content={content}
-                title="My Profile"
-                trigger="click"
-              >
-                <Avatar
-                  size={50}
-                  src={userImage}
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    top: 0,
-                  }}
-                ></Avatar>
-              </Popover>
-            )}
-            {!sessiondata?.user.id && (
-              <Button
+              <Popover placement={"bottomRight"} content={content} title="My Profile" trigger="click">
+              <div style={{
+                padding: 0,
+                backgroundColor: "#ffffff",
+                width:"15vw",
+                height: "60px",
+                boxShadow: "4px 2px 4px #b1b1b1",
+                display: "flex",
+                position:"absolute",
+                right:"0px",
+                zIndex:"10",
+                
+              }}>
+              {sessiondata?.user.rollno && <Avatar
+                size={50}
+                // src={profileAvatarUrl}
+                src={userImage}
                 style={{
-                  
-                  position: "fixed",
-                  right: "30px",
+                  // backgroundColor:"#ffffff",
+                  // height:"90px",
+                  // boxShadow: "2px 2px 4px #b1b1b1",
+                  position: "absolute",
+                  right: 20,
+                  top: 20,
                 }}
-                className={styles.loaderY22}
-                onClick={() => {
-                  setIsLogIn(true);
-                }}
-                href={`${process.env.NEXT_PUBLIC_LOGIN_URL}?return_to=${process.env.NEXT_PUBLIC_BASE_URL}`}
-
-              >
-                Login
-              </Button>
-            )}
-          </div>
-          {/* <Button style={{backgroundColor: "#001529", color: "lightgray", marginTop: "15px"}}  href='./verify'>Login</Button> */}
-        </Header>
+              >    
+                
+              </Avatar>}</div>
+              </Popover>
+            </Header></div>
         <div>
           {
             <Content className={styles.bothmobile}>
@@ -651,7 +594,7 @@ const Dashboard: NextPage = () => {
               </div>
               <div
                 className="site-layout-background"
-                style={{ padding: 24, minHeight: 620 }}
+                style={{ padding: 24 }}
               >
                 <Navigation />
                 <div>
@@ -748,6 +691,7 @@ const Dashboard: NextPage = () => {
 
         <Footer
           style={{
+            paddingTop:"0px",
             textAlign: "center",
             position: "fixed",
             bottom: "0px",

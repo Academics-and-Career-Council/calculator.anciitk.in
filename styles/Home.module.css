@@ -127,3 +127,61 @@
     filter: invert(1);
   }
 }
+.container {
+  text-align: center;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: url('https://cdn.statically.io/img/cdn.anciitk.in/f=auto/img/bg.jpg') fixed no-repeat;
+  background-size: cover;
+}
+
+.form_signup {
+  width: 100%;
+  max-width: 320px;
+  padding: 15px;
+  margin: auto;
+  border: 1px solid black;
+  background-color: whitesmoke;
+  border-radius: 20px;
+}
+
+.imgOfCaptcha {
+  padding-top: 20px;
+  padding-bottom: 15px; 
+}
+.headingForCaptcha { 
+  color: black;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 10px;
+}
+.subHeadingForCaptcha {
+  display: flex;
+  color: rgb(109, 107, 107);
+  justify-content: center;
+  align-items: flex-end;
+  margin: auto;
+  width: 60%;
+  max-width: 300px;
+  text-align: center;
+  padding: 10px;
+}
+.buttonSignp {
+  width: 70%;
+  color: #001529;
+  margin: 1%;
+  padding: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color:white;
+  border: 1px solid grey;
+  color: #001529;
+}
+
+.buttonSignp:hover {
+  background-color:aliceblue;
+}

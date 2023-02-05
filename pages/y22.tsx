@@ -1,5 +1,5 @@
-import { Menu, Button, Dropdown } from "antd";
-import Layout, { Content, Footer, Header } from "antd/lib/layout/layout";
+import { Menu, Button, Dropdown ,Layout} from "antd";
+// import Layout, { Content, Footer, Header } from "antd/lib/layout/layout";
 import "antd/dist/antd.css";
 import type { NextPage } from "next";
 import { Navigation, SPIstruct } from "../components/navigation";
@@ -9,6 +9,18 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Drawer from "@mui/material/Drawer";
 // import { styled, useTheme } from '@mui/material/styles';
+// import styles from "../styles/SignupStyles.module.css";
+import {
+  EllipsisOutlined,
+  UserOutlined,
+  BookOutlined,
+  SettingOutlined,
+  SolutionOutlined,
+  ApartmentOutlined,
+  MenuOutlined,
+  LeftOutlined,
+} from "@ant-design/icons";
+const { Header, Content, Footer, Sider } = Layout;
 
 import List from "@mui/material/List";
 import { styled, useTheme } from "@mui/material/styles";
@@ -59,6 +71,7 @@ import { BranchesSelect } from "../components/auxilliary_functions/branchesAndSe
 import router from "next/router";
 import { ory } from "../pkg/open-source";
 import { xenon } from "../pkg/xenon";
+
 const items = [
   {
     label: (
@@ -88,7 +101,14 @@ const items = [
 
 const Home: NextPage = () => {
 
-
+  const [collapsed, setCollapsed] = useState(false);
+  const onCollapse = () => {
+    if (collapsed === false) {
+      setCollapsed(true);
+    } else if (collapsed === true) {
+      setCollapsed(false);
+    }
+  };
 
   const [session, setSession] = useRecoilState(recoilSessionState);
 
@@ -576,8 +596,10 @@ const Home: NextPage = () => {
         alignItems: "center",
       }}
     >
-      <Layout>
-        <Header
+      <Layout style={{
+        height: "100vh",  
+      }}>
+        {/* <Header
           style={{
             display: "flex",
             position: "fixed",
@@ -720,13 +742,13 @@ const Home: NextPage = () => {
             </div>
           }
           <Button
-            style={{
-              backgroundColor: "#001529",
-              color: "lightgray",
-              marginTop: "15px",
-            }}
+            // style={{
+            //   backgroundColor: "#001529",
+            //   color: "lightgray",
+            //   marginTop: "15px",
+            // }}
             href="./"
-            className={styles.nonmobile}
+            className={styles.loaderY22}
           >
             Pre Y22
           </Button>
@@ -752,28 +774,120 @@ const Home: NextPage = () => {
             {!sessiondata?.user.id && (
               <Button
                 style={{
-                  backgroundColor: "#001529",
-                  color: "lightgray",
-                  marginTop: "15px",
                   position: "fixed",
                   right: "30px",
                 }}
+                className={styles.loaderY22}
                 href={`${process.env.NEXT_PUBLIC_LOGIN_URL}?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/y22`}
               >
                 Login
               </Button>
             )}
           </div>
-        </Header>
+        </Header> */}
+
+
+
+        <div style={{}}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100"}}>
+            <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+              <Menu.Item key="1" icon={<UserOutlined />}  onClick={() => {
+              tempFunc();
+              getSPI();
+              handleClick1();
+            }}>
+                <Link href="/dashboard">Get SPI/CPI</Link>
+              </Menu.Item>
+              <Menu.Item key="2" icon={<ApartmentOutlined />}  onClick={() => {
+              tempFunc();
+              getStats(semData);
+              handleClick2();
+            }}>
+              <Link href={``}>Find Status</Link>
+              </Menu.Item>
+              <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("./y22")}>
+              <Link href='/dashboard'>PRE Y22</Link>
+              </Menu.Item>
+              
+            </Menu>
+          </Sider>
+          <Header
+              className="site-layout-background"
+              style={{
+                padding: 0,
+                // position:"relative",
+                backgroundColor: "#ffffff",
+                width:"100vw",
+                height: "60px",
+                boxShadow: "2px 2px 4px #b1b1b1",
+                display: "flex",
+                justifyContent:"center"
+              }}
+            >
+              <Link href="/dashboard">
+                <img
+                  src="https://anciitk.in/img/anc-logo.png"
+                  alt="AnC IITK logo"
+                  height="53px"
+                  className={styles.profileLogo}
+                />
+              </Link>
+              <div
+              // className={styles.nonmobile}
+              style={{
+                color: "black",
+
+                paddingLeft: 10,
+                // paddingTop: 10,
+                fontSize: 30,
+                // minWidth: 500,
+              }}
+            >
+              
+              Academics and Career Council
+            </div>
+              <div style={{
+                padding: 0,
+                backgroundColor: "#ffffff",
+                width:"15vw",
+                height: "60px",
+                boxShadow: "4px 2px 4px #b1b1b1",
+                display: "flex",
+                position:"absolute",
+                right:"0px",
+                zIndex:"10",
+                
+              }}>
+              <Popover placement={"bottomRight"} content={content} title="My Profile" trigger="click">
+
+              {sessiondata?.user.rollno && <Avatar
+                size={50}
+                // src={profileAvatarUrl}
+                src={userImage}
+                style={{
+                  // backgroundColor:"#ffffff",
+                  // height:"90px",
+                  // boxShadow: "2px 2px 4px #b1b1b1",
+                  position: "absolute",
+                  right: 20,
+                  top: 20,
+                }}
+              >    
+                
+              </Avatar>}
+              </Popover></div>
+            </Header></div>
+        <div></div>
         <div>
           {!isMobile && (
             <Content
               className="site-layout"
               style={{
-                paddingLeft: "20%",
-                paddingRight: "20%",
-                marginTop: 64,
-                paddingTop: "20px",
+                 position: "absolute",
+                left: "12vw",
+                top: "120px",
+                paddingLeft: "10%",
+                paddingRight: "10%",
               }}
             >
               {/* <div  style={{ justifyContent:'center', alignItems:'center'}}> */}
@@ -891,7 +1005,7 @@ const Home: NextPage = () => {
 
               <div
                 className="site-layout-background"
-                style={{ padding: 24, minHeight: 620 }}
+                style={{ padding: 24, }}
               >
                 <Navigation />
                 <div id="acad-status">
