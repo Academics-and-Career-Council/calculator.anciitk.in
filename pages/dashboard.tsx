@@ -480,7 +480,7 @@ const Dashboard: NextPage = () => {
           >
             <a href="https://anciitk.in">
               <img
-                src="https://anciitk.in/img/anc-logo.png"
+                src="/anc-logo.png"
                 alt="AnC IITK logo"
                 height="50px"
               />

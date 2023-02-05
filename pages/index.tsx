@@ -9,79 +9,114 @@ import { useContext, useEffect, useState } from "react";
 import { recoilSessionState } from "../pkg/recoilDeclarations";
 import { loginStatus } from "../components/typeDefinitions/recoilDeclarations";
 import { NextPage } from "next";
-
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+const drawerWidth = 240;
+import Drawer from "@mui/material/Drawer";
+import MenuIcon from "@mui/icons-material/Menu";
+import IconButton from "@mui/material/IconButton";
+// import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import { Button ,Menu} from "antd";
+import Layout, { Content, Footer, Header } from "antd/lib/layout/layout";
+import "antd/dist/antd.css";
+import { styled, useTheme } from "@mui/material/styles";
+import styles from "../styles/SignupStyles.module.css";
 const Home: NextPage = () => {
-  const router = useRouter();
-  
-  const [session, setSession] = useRecoilState(recoilSessionState);
-  const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
-  setIsLogIn(true);
-  if (session !== undefined) {
-    setSession(session);
-    router.push("/dashboard");
-  }
+  const [open, setOpen] = useState(false);
+  const theme = useTheme();
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-
-  if (isLogIn === true) {
-    if (session === undefined) {
-      // router.push("./verify");
-    }
-  }
-
-  useEffect(() => {
-    ory
-      .toSession()
-      .then(({ data: session }) => {
-        ory
-          .createSelfServiceLogoutFlowUrlForBrowsers()
-          .then(({ data: logout }) => {
-            xenon
-              .whoami()
-              .then((user) => {
-                setSession({
-                  active: true,
-                  logoutUrl: logout.logout_url || '',
-                  user: user,
-                  session: session
-                })
-              })
-              .catch((err) => {
-                router.push("/dashboard");
-                throw new Error(err)
-              })
-          })
-          .catch((err) => {
-            router.push("/dashboard");
-            return Promise.reject(err)
-          })
-          .catch((err) => {
-            switch (err.response?.status) {
-              case 403:
-                router.push("/dashboard");
-              case 401:
-                router.push("/dashboard");
-                return
-            }
-            router.push("/dashboard");
-            return Promise.reject(err)
-          })
-      })
-      .catch((err) => {
-        router.push("/dashboard");
-      })
-  }, [])
-
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   return (
+    <div>
+    <Header
+          style={{
+            display: "flex",
+            position: "fixed",
+            zIndex: 1,
+            top: 0,
+            right: 0,
+            left: 0,
+            boxShadow: "0px 10px 5px lightblue",
+          }}
+        >
+          {
+            <div className={styles.mobile}>
+              {" "}
+            </div>
+          }
+          <div
+            className="logo"
+            style={{
+              marginRight: "30px",
+              paddingLeft: "15px",
+              paddingRight: "15px",
+              backgroundColor: "whitesmoke",
+              borderRadius: 5,
+            }}
+          >
+            <a href="https://anciitk.in">
+              <img
+                src="/anc-logo.png"
+                alt="AnC IITK logo"
+                height="50px"
+              />
+            </a>
+          </div>
+          {
+            <div
+              className={styles.nonmobile}
+              style={{
+                color: "whitesmoke",
+                paddingLeft: 10,
+                paddingRight: 30,
+                fontSize: 30,
+                minWidth: 500,
+              }}
+            >
+              {" "}
+              Academics and Career Council{" "}
+            </div>
+          }
 
+          {
+            <div className={styles.nonmobile}>
+              <Menu
+                style={{ minWidth: "250px" }}
+                theme="dark"
+                mode="horizontal"
+                
+              />
+            </div>
+          }
+          
+          {/* <Avatar src={<Image src={userImage} style={{ width: 32 }} />} /> */}
+          
+          {/* <Button style={{backgroundColor: "#001529", color: "lightgray", marginTop: "15px"}}  href='./verify'>Login</Button> */}
+        </Header>
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        flexDirection:"column",
+        width:"100vw",
+        height:"100vh",
       }}
     >
+      <Button type="primary"  style={{marginBottom:"17px",}}><a href="https://accounts.anciitk.in/login?return_to=http://localhost:3000/verify/" >Continue Logging In</a></Button>
+      <Button type="primary" style={{marginBottom:"17px",}}><a href="https://accounts.anciitk.in/register">Register</a></Button>
+      <Button type="primary" href="./dashboard">Continue Without Logging In</Button>
 
-    </div>
+    </div></div>
   );
 };
 
