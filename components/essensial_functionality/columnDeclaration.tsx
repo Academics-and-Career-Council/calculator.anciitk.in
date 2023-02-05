@@ -1,7 +1,7 @@
 import { Popconfirm, Tag } from "antd";
 import DataType from "../typeDefinitions/datatype";
 import { handleDelete, handleEdit } from "./handlecases";
-
+import {Tooltip} from "antd";
 export const addAllData = (
   setSemData: any,
   semData: DataType[][],
@@ -191,7 +191,9 @@ export const defaultColumns = (
                 )
               }
             >
-              <a> Repeated</a>
+              <Tooltip placement="topLeft" title="Repeated Ahead">
+
+              <a> Repeated</a></Tooltip>
             </Popconfirm>
           )}
           {record.is_repeated === true && (
@@ -224,6 +226,7 @@ export const defaultColumns = (
                 )
               }
             >
+              {/* <Tooltip placement="topLeft" title=""> */}
               <a> Undo Repeat</a>
             </Popconfirm>
           )}
