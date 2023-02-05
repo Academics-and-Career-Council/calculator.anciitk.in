@@ -10,6 +10,12 @@
 .nonmobile {
   opacity: 1;
 }
+.nonmobileT {
+  opacity: 1;
+  font-size: 30px;
+  padding-left: 10px,
+}
+
 .bothmobile {   
    position: absolute;
   left: 12vw;
@@ -23,10 +29,14 @@
     padding-right: 10%;
   }
 }
-@media screen and (max-width: 883px) {
+@media screen and (max-width: 320px) {
   .bothmobile {
-    padding-left: 0%;
-    padding-right: 0%;
+    padding-left: 12%;
+    /* padding-right: 0%; */
+  }
+  .buttonF{
+    display: flex;
+    flex-direction: column;
   }
 }
 @media screen and (max-width: 783px) {
@@ -35,6 +45,19 @@
   }
   .nonmobile {
     opacity: 0;
+  }
+  .nonmobileT {
+    opacity: 0;
+    font-size: 0;
+    padding-left: -10px;
+  }
+  .nonmobileP{
+    padding-left: 20px;
+    padding-top: 20px;
+  }
+  .nonmobileSi{
+    /* min-width: 30px !important;
+    max-width: 30px !important; */
   }
 }
 

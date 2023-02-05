@@ -11,6 +11,7 @@ import {
   set2Y22,
   allCoursesY22,
 } from "../typeDefinitions/recoilDeclarations";
+import styles from "../../styles/SignupStyles.module.css";
 
 // PHY,SDS
 
@@ -370,7 +371,7 @@ export const BranchesSelect: any = () => {
 
   return (
     <>
-      <div
+      <div className={styles.buttonF}
         style={{
           display: "flex",
           justifyContent: "center",

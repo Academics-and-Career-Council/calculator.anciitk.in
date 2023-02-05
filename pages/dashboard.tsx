@@ -251,7 +251,7 @@ const Dashboard: NextPage = () => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const onCollapse = () => {
     if (collapsed === false) {
       setCollapsed(true);
@@ -438,7 +438,7 @@ const Dashboard: NextPage = () => {
       }}>
         
         <div style={{}}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100"}}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100"}} className={styles.nonmobileSi}>
             <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
               <Menu.Item key="1" icon={<UserOutlined />}  onClick={() => {
               tempFunc();
@@ -505,13 +505,13 @@ const Dashboard: NextPage = () => {
                 />
               </Link>
               <div
-              // className={styles.nonmobile}
+              className={styles.nonmobileT}
               style={{
                 color: "black",
 
-                paddingLeft: 10,
+                
                 // paddingTop: 10,
-                fontSize: 30,
+                
                 // minWidth: 500,
               }}
             >
@@ -576,7 +576,7 @@ const Dashboard: NextPage = () => {
                   alignItems: "center",
                 }}
               >
-                <p
+                <p className={styles.nonmobileP}
                   style={{
                     fontSize: "15px",
                     justifyContent: "center",

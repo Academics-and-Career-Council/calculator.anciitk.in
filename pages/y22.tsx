@@ -101,7 +101,7 @@ const items = [
 
 const Home: NextPage = () => {
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const onCollapse = () => {
     if (collapsed === false) {
       setCollapsed(true);
@@ -833,13 +833,12 @@ const Home: NextPage = () => {
                 />
               </Link>
               <div
+              className={styles.nonmobileT}
               // className={styles.nonmobile}
               style={{
                 color: "black",
 
-                paddingLeft: 10,
-                // paddingTop: 10,
-                fontSize: 30,
+                
                 // minWidth: 500,
               }}
             >
@@ -881,14 +880,7 @@ const Home: NextPage = () => {
         <div>
           {!isMobile && (
             <Content
-              className="site-layout"
-              style={{
-                 position: "absolute",
-                left: "12vw",
-                top: "120px",
-                paddingLeft: "10%",
-                paddingRight: "10%",
-              }}
+            className={styles.bothmobile}
             >
               {/* <div  style={{ justifyContent:'center', alignItems:'center'}}> */}
               <div
@@ -957,8 +949,7 @@ const Home: NextPage = () => {
         <div>
           {isMobile && (
             <Content
-              className="site-layout"
-              style={{ marginTop: 64, paddingTop: "20px" }}
+            className={styles.bothmobile}
             >
               <div
                 style={{
@@ -984,7 +975,7 @@ const Home: NextPage = () => {
                   alignItems: "center",
                 }}
               >
-                <p
+                <p className={styles.nonmobileP}
                   style={{
                     fontSize: "15px",
                     justifyContent: "center",
