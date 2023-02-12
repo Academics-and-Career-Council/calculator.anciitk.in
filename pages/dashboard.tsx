@@ -424,6 +424,14 @@ const Dashboard: NextPage = () => {
   ];
 
   return (
+    <>
+    
+    {/* ##################################################### */}
+{/* Add loader here. Make sure session is undefined while displaying the loader */}
+    {/* ##################################################### */}
+    
+    {
+      session !== undefined &&
     <div
       style={{
         display: "flex",
@@ -703,6 +711,8 @@ const Dashboard: NextPage = () => {
         </Footer>
       </Layout>
     </div>
+    }
+    </>
   );
 };
 

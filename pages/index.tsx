@@ -17,6 +17,7 @@ const Home: NextPage = () => {
   
   const [session, setSession] = useRecoilState(recoilSessionState);
   const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
+  const [showOptions, setShowOptions] = useState(false)
   setIsLogIn(true);
   if (session !== undefined) {
     setSession(session);
@@ -50,18 +51,22 @@ const Home: NextPage = () => {
               })
               .catch((err) => {
                 // router.push("/dashboard");
+                setShowOptions(true)
                 throw new Error(err)
               })
           })
           .catch((err) => {
             // router.push("/dashboard");
+            setShowOptions(true)
             return Promise.reject(err)
           })
           .catch((err) => {
             switch (err.response?.status) {
               case 403:
+                setShowOptions(true)
                 // router.push("/dashboard");
               case 401:
+                setShowOptions(true)
                 // router.push("/dashboard");
                 return
             }
@@ -71,6 +76,7 @@ const Home: NextPage = () => {
       })
       .catch((err) => {
         // router.push("/dashboard");
+        setShowOptions(true)
         return
       })
   }, [])
@@ -79,6 +85,13 @@ const Home: NextPage = () => {
   //   setOpen(false);
   // };
   return (
+    <>
+
+    {/* ##################################################### */}
+{/* Add loader here. Make sure showOptions is false while displaying the loader */}
+    {/* ##################################################### */}
+
+    { showOptions &&
     <div className={styles.container}>
       <div
         style={{
@@ -123,6 +136,8 @@ const Home: NextPage = () => {
             </div>
       </div>
     </div>
+    }
+    </>
   );
 };
 
