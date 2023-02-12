@@ -86,7 +86,7 @@ export const App: React.FC = () => {
   const [courseDataFetched, setCourseDataFetched] = useState(0);
   const [sem16, setSem16] = useRecoilState(Sem16Data);
   var datagrades;
-  const [sessiondata, _] = useRecoilState(recoilSessionState);
+  const sessiondata = useRecoilValue(recoilSessionState);
   let userId = "45645464676gchghc";
   if (sessiondata?.user.id) {
     userId = sessiondata?.user.id;
@@ -503,7 +503,7 @@ export const App: React.FC = () => {
             }}
           >
             {" "}
-            Delete last Sem{" "}
+            Delete Last Sem{" "}
           </Button>
         </div>
 

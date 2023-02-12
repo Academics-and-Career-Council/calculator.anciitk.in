@@ -44,3 +44,7 @@ a {
 [data-theme="dark"] .editable-row:hover .editable-cell-value-wrap {
   border: 1px solid #434343;
 }
+
+.ant-layout-sider-trigger{
+  bottom: 20vh !important;
+}

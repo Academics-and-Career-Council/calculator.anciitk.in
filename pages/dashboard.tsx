@@ -11,10 +11,7 @@ import { getSPICPI } from "../components/essensial_functionality/cpiCalculation"
 import List from "@mui/material/List";
 import SPIFinder from "../components/essensial_functionality/spiFinder";
 import {
-  EllipsisOutlined,
-  UserOutlined,
-  BookOutlined,
-  SettingOutlined,
+  CalculatorOutlined ,
   SolutionOutlined,
   ApartmentOutlined,
   MenuOutlined,
@@ -131,7 +128,7 @@ const Dashboard: NextPage = () => {
         onClick={() => setIsLogIn(false)}
         style={{ width: "100%", borderColor: "#ffffff", textAlign: "left" }}
       >
-        <Link href={`${logoutUrl}`}>
+        <Link href={`./`}>
           <p className={styles.logoutMenuItem}>Logout</p>
         </Link>
       </Button>
@@ -140,7 +137,8 @@ const Dashboard: NextPage = () => {
 
   const handleClick1 = () => {
     const element1 = document.getElementById("spi-cpi");
-    element1?.scrollIntoView({ behavior: "smooth" });
+    if (element1){
+    element1.scrollIntoView({ behavior: "smooth" });}
   };
   
   const userImage = `https://images-students-iitk.sgp1.digitaloceanspaces.com/images-students-iitk/${sessiondata?.user.rollno}.jpg`;
@@ -150,7 +148,6 @@ const Dashboard: NextPage = () => {
   };
   const theme = useTheme();
   const [semData, setSemData] = useRecoilState(allSemsData);
-
   // const [trial, setTrial] = useState<DataType[][]>()
   const [status, setStatus] = useState("Normal");
   const [showStat, setShowStat] = useState(false);
@@ -438,9 +435,9 @@ const Dashboard: NextPage = () => {
       }}>
         
         <div style={{}}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100"}} className={styles.nonmobileSi}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"60vh",zIndex:"100",top:"20vh"}} className={styles.nonmobileSi}>
             <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-              <Menu.Item key="1" icon={<UserOutlined />}  onClick={() => {
+              <Menu.Item key="1" icon={<CalculatorOutlined />}  onClick={() => {
               tempFunc();
               getSPICPI(
                 setSemData,
@@ -466,9 +463,9 @@ const Dashboard: NextPage = () => {
                 results,
                 setResults
               );
-              handleClick1();
+              // handleClick1();
             }}>
-                <Link href="/dashboard">Get SPI/CPI</Link>
+                Get SPI/CPI
               </Menu.Item>
               <Menu.Item key="2" icon={<ApartmentOutlined />}  onClick={() => {
               tempFunc();
@@ -490,10 +487,11 @@ const Dashboard: NextPage = () => {
                 // position:"relative",
                 backgroundColor: "#ffffff",
                 width:"100vw",
-                height: "60px",
+                height: "70px",
                 boxShadow: "2px 2px 4px #b1b1b1",
                 display: "flex",
-                justifyContent:"center"
+                justifyContent:"center",
+              
               }}
             >
               <Link href="/dashboard">
@@ -510,7 +508,7 @@ const Dashboard: NextPage = () => {
                 color: "black",
 
                 
-                // paddingTop: 10,
+                paddingTop: 4,
                 
                 // minWidth: 500,
               }}
@@ -523,7 +521,7 @@ const Dashboard: NextPage = () => {
                 padding: 0,
                 backgroundColor: "#ffffff",
                 width:"15vw",
-                height: "60px",
+                height: "70px",
                 boxShadow: "4px 2px 4px #b1b1b1",
                 display: "flex",
                 position:"absolute",
@@ -541,7 +539,7 @@ const Dashboard: NextPage = () => {
                   // boxShadow: "2px 2px 4px #b1b1b1",
                   position: "absolute",
                   right: 20,
-                  top: 20,
+                  top: 5,
                 }}
               >    
                 
@@ -566,7 +564,7 @@ const Dashboard: NextPage = () => {
                     alignItems: "center",
                   }}
                 >
-                  CPI/SPI/Status Calculator
+                  CPI-SPI and Academic Status Calculator
                 </p>
               </div>
               <div
@@ -583,13 +581,7 @@ const Dashboard: NextPage = () => {
                     alignItems: "center",
                   }}
                 >
-                  Find your semwise SPI and CPI using the AnC calculator. Add
-                  new semesters and add new courses to each semester to get the
-                  data. You can also click on the button &quot;repeated&quot; if
-                  that course has been repeated by the student and the better
-                  grade is obtained in the next attempt. Note that only the best
-                  attempt of each course should have the repeated button not
-                  clicked.
+                  
                 </p>
               </div>
               <div
@@ -699,7 +691,7 @@ const Dashboard: NextPage = () => {
             right: "0px",
           }}
         >
-          AnC web team ©2022{" "}
+          AnC Web Team ©2022{" "}
         </Footer>
       </Layout>
     </div>

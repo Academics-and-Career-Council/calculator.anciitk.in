@@ -136,11 +136,20 @@
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background: url('https://cdn.statically.io/img/cdn.anciitk.in/f=auto/img/bg.jpg') fixed no-repeat;
+  background: url('../public/1.png') fixed no-repeat;
   background-size: cover;
+}
+@keyframes formAnimation {
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 
 .form_signup {
+  animation: formAnimation 2s;
   width: 100%;
   max-width: 320px;
   padding: 15px;
@@ -173,15 +182,9 @@
 }
 .buttonSignp {
   width: 70%;
-  color: #001529;
+  
   margin: 1%;
   padding: 5px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color:white;
-  border: 1px solid grey;
-  color: #001529;
+  
 }
 
-.buttonSignp:hover {
-  background-color:aliceblue;
-}

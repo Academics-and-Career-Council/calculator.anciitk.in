@@ -162,7 +162,7 @@ export const defaultColumns = (
           |
           {record.is_repeated === false && (
             <Popconfirm
-              title="Only click yes if you have done this course once again 
+              title="Only click Ok if you have done this course once again 
           after failing this course ( Make sure you do not select the best attempt )"
               onConfirm={() =>
                 handleEdit(
@@ -191,14 +191,14 @@ export const defaultColumns = (
                 )
               }
             >
-              <Tooltip placement="topLeft" title="Repeated Ahead">
+              <Tooltip placement="topLeft" title="Click on Repeated if you have done this course later ahead">
 
               <a> Repeated</a></Tooltip>
             </Popconfirm>
           )}
           {record.is_repeated === true && (
             <Popconfirm
-              title="Click Yes to make this course counted for both SPI and CPI"
+              title="Click Ok to make this course counted for both SPI and CPI"
               onConfirm={() =>
                 handleEdit(
                   record.key,

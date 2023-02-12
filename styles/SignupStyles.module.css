@@ -17,23 +17,25 @@
 }
 
 .bothmobile {   
-   position: absolute;
-  left: 12vw;
-  top: 120px;
-  padding-left: 10%;
-  padding-right: 10%;
+  position: absolute;
+    left: 7vw;
+    width: 88vw;
+    top: 120px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
-@media screen and (max-width: 1111px) {
+@media screen and (max-width: 800px) {
   .bothmobile {
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 1%;
+
   }
 }
 @media screen and (max-width: 320px) {
-  .bothmobile {
+  /* .bothmobile {
     padding-left: 12%;
-    /* padding-right: 0%; */
-  }
+  
+  } */
   .buttonF{
     display: flex;
     flex-direction: column;

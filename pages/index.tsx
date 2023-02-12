@@ -11,9 +11,12 @@ import { loginStatus } from "../components/typeDefinitions/recoilDeclarations";
 import { NextPage } from "next";
 import styles from '../styles/Home.module.css'
 import { Button } from "antd";
-
+import { Space, Typography } from 'antd';
+import 'antd/dist/antd.css';
 const Home: NextPage = () => {
   const router = useRouter();
+  const { Title} = Typography;
+
   
   const [session, setSession] = useRecoilState(recoilSessionState);
   const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
@@ -85,13 +88,14 @@ const Home: NextPage = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          background: "https://cdn.statically.io/img/cdn.anciitk.in/f=auto/img/bg.jpg"
+        
+          
         }}
       >
         <div className={styles.form_signup}>
               <div className={styles.imgOfCaptcha}>
                 <img
-                  src="https://anciitk.in/img/anc-logo.png"
+                  src="./anc-logo.png"
                   alt="AnC IITK logo"
                   height="100px"
                 />
@@ -100,27 +104,29 @@ const Home: NextPage = () => {
                   <br />
                   IIT Kanpur
                 </h2>
-                <Button
+              
+                <Button type="primary"
                   className={styles.buttonSignp}
                   onClick={() => router.push(`${process.env.NEXT_PUBLIC_LOGIN_URL}?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`)}
                 >
                   Login
                 </Button>
-                <Button
+                <Button type="primary"
                   className={styles.buttonSignp}
                   onClick={() => router.push(`${process.env.NEXT_PUBLIC_ACCOUNTS_URL}/registration?return_to=${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`)}
                 >
                   Register
                 </Button>
-                <Button
+                <Button type="primary"
                   className={styles.buttonSignp}
                   onClick={() => router.push(`./dashboard`)}
                 >
-                  Continue without Logging in
+                  Continue without LogIn
                 </Button>                
                
               </div>
             </div>
+            <Title level={5} style={{"color":"white","position":"absolute","right":"20px","bottom":"10px"}}>Web Team AnC@ 2022</Title>
       </div>
     </div>
   );
