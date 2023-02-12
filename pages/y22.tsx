@@ -501,6 +501,7 @@ const Home: NextPage = () => {
   const displayAllInfo = () => {
     return (
       <>
+      
         <Navigation />
         <div>
           {" "}
@@ -589,6 +590,13 @@ const Home: NextPage = () => {
     );
   };
   return (
+    <>
+    
+    {/* ##################################################### */}
+{/* Add loader here. Make sure session is undefined while displaying the loader */}
+    {/* ##################################################### */}
+
+    { session !== undefined &&
     <div
       style={{
         display: "flex",
@@ -1104,6 +1112,8 @@ const Home: NextPage = () => {
         </Footer>
       </Layout>
     </div>
+    }
+    </>
   );
 };
 
