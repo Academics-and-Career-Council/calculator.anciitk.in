@@ -71,6 +71,7 @@ import { BranchesSelect } from "../components/auxilliary_functions/branchesAndSe
 import router from "next/router";
 import { ory } from "../pkg/open-source";
 import { xenon } from "../pkg/xenon";
+import { Loader } from "../components/loader";
 
 const items = [
   {
@@ -595,6 +596,7 @@ const Home: NextPage = () => {
     {/* ##################################################### */}
 {/* Add loader here. Make sure session is undefined while displaying the loader */}
     {/* ##################################################### */}
+    {session==undefined && <Loader></Loader>}
 
     { session !== undefined &&
     <div

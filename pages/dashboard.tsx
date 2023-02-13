@@ -66,6 +66,7 @@ import { useRouter } from "next/router";
 import { ory } from "../pkg/open-source";
 import { xenon } from "../pkg/xenon";
 import { Router } from "react-router";
+import { Loader } from "../components/loader";
 
 const Dashboard: NextPage = () => {
   const router = useRouter();
@@ -422,14 +423,8 @@ const Dashboard: NextPage = () => {
 
   return (
     <>
-    
-    {/* ##################################################### */}
-{/* Add loader here. Make sure session is undefined while displaying the loader */}
-    {/* ##################################################### */}
-    
-    {
-      session !== undefined &&
-    <div
+    {session==undefined && <Loader></Loader>}
+    {session !==undefined && <div
       style={{
         display: "flex",
         justifyContent: "center",
@@ -485,6 +480,8 @@ const Dashboard: NextPage = () => {
               <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("./y22")}>
               <Link href='/y22'>Y22</Link>
               </Menu.Item>
+
+              
               
             </Menu>
           </Sider>
@@ -703,9 +700,7 @@ const Dashboard: NextPage = () => {
         </Footer>
       </Layout>
     </div>
-    }
-    </>
-  );
+}</>);
 };
 
 export default Dashboard;

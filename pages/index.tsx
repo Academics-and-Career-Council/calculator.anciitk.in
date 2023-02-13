@@ -12,6 +12,7 @@ import { NextPage } from "next";
 import styles from '../styles/Home.module.css'
 import { Button } from "antd";
 import { Space, Typography } from 'antd';
+import { Loader } from "../components/loader";
 import 'antd/dist/antd.css';
 const Home: NextPage = () => {
   const router = useRouter();
@@ -93,6 +94,7 @@ const Home: NextPage = () => {
     {/* ##################################################### */}
 {/* Add loader here. Make sure showOptions is false while displaying the loader */}
     {/* ##################################################### */}
+    {!showOptions && <Loader></Loader>}
 
     { showOptions &&
     <div className={styles.container}>
