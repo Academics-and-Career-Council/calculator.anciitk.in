@@ -72,6 +72,7 @@ const Dashboard: NextPage = () => {
   const router = useRouter();
 
   const [isLogIn, setIsLogIn] = useRecoilState(loginStatus);
+  const [loading, setLoading] = useState(false)
 
   const sessiondata = useRecoilValue(recoilSessionState);
 
@@ -118,6 +119,7 @@ const Dashboard: NextPage = () => {
         
         
       })
+      setLoading(true)
   }, [])
 
   const logoutUrl = session?.logoutUrl;
@@ -423,8 +425,8 @@ const Dashboard: NextPage = () => {
 
   return (
     <>
-    {session==undefined && <Loader></Loader>}
-    {session !==undefined && <div
+    {loading === false && <Loader/>}
+    {loading === true && <div
       style={{
         display: "flex",
         justifyContent: "center",
@@ -438,8 +440,8 @@ const Dashboard: NextPage = () => {
       }}>
         
         <div style={{}}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"60vh",zIndex:"100",top:"20vh"}} className={styles.nonmobileSi}>
-            <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100",top:"0vh"}} className={styles.nonmobileSi}>
+            <Menu theme="dark"  mode="inline">
               <Menu.Item key="1" icon={<CalculatorOutlined />}  onClick={() => {
               tempFunc();
               getSPICPI(

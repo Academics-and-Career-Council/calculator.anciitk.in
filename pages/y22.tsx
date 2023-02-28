@@ -112,6 +112,7 @@ const Home: NextPage = () => {
   };
 
   const [session, setSession] = useRecoilState(recoilSessionState);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     ory
@@ -129,6 +130,7 @@ const Home: NextPage = () => {
                   user: user,
                   session: session
                 })
+                setLoading(true)
               })
               .catch((err) => {
                 return
@@ -155,6 +157,7 @@ const Home: NextPage = () => {
         
         
       })
+      setLoading(true)
   }, [])
 
 
@@ -596,9 +599,9 @@ const Home: NextPage = () => {
     {/* ##################################################### */}
 {/* Add loader here. Make sure session is undefined while displaying the loader */}
     {/* ##################################################### */}
-    {session==undefined && <Loader></Loader>}
+    {loading==false && <Loader/>}
 
-    { session !== undefined &&
+    { loading === true &&
     <div
       style={{
         display: "flex",
@@ -799,8 +802,8 @@ const Home: NextPage = () => {
 
 
         <div style={{}}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100"}}>
-            <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh", top:"0vh",zIndex:"100"}}>
+            <Menu theme="dark"  mode="inline">
               <Menu.Item key="1" icon={<UserOutlined />}  onClick={() => {
               tempFunc();
               getSPI();

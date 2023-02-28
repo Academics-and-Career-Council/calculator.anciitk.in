@@ -83,6 +83,7 @@ const Home: NextPage = () => {
         setShowOptions(true)
         return
       })
+      setShowOptions(true)
   }, [])
 
   // const handleDrawerClose = () => {
@@ -94,7 +95,7 @@ const Home: NextPage = () => {
     {/* ##################################################### */}
 {/* Add loader here. Make sure showOptions is false while displaying the loader */}
     {/* ##################################################### */}
-    {!showOptions && <Loader></Loader>}
+    {!showOptions && <Loader/>}
 
     { showOptions &&
     <div className={styles.container}>

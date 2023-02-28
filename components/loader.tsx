@@ -11,7 +11,7 @@ export function Loader(){
         <div className={styles.loadershadow}></div>
         <div className={styles.loadershadow}></div>
         <div className={styles.loadershadow}></div>
-        <span  className={styles.loaderspan}>Academic and Career Council</span>
+        <span  className={styles.loaderspan} style={{display:"flex", alignItems:"center", justifyContent:"center"}}>Academics and Career Council</span>
         </div>
         </div>
 
