@@ -397,7 +397,7 @@ export const App: React.FC = () => {
             formData.append('file', file);
             
         })
-        axios.post(`${process.env.NEXT_PUBLIC_INTERPRETER_URL}`, formData, {
+        axios.post(process.env.NEXT_PUBLIC_INTERPRETER_URL, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
