@@ -1,9 +1,10 @@
 import { InputRef, Tag } from "antd";
-import { Button, Form, Popconfirm, Table, AutoComplete } from "antd";
+import { Button, Spin } from "antd";
 import type { FormInstance } from "antd/es/form";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "antd/dist/antd.css";
 import DataType, { components } from "./typeDefinitions/datatype";
+import styles from "../styles/SignupStyles.module.css";
 import {
   allSemsData,
   Sem10Data,
@@ -25,6 +26,7 @@ import {
   semCount,
   allCourses,
 } from "./typeDefinitions/recoilDeclarations";
+import axios from "axios";
 import getCreditsReceived from "./auxilliary_functions/getCreditsReceived";
 // import { jsonOfCourseCredits } from './data/courseCredits';
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -376,9 +378,101 @@ export const App: React.FC = () => {
       };
     });
 
+    const [isLoading, setIsLoading] = React.useState(false);
+    const inputFileRef = React.useRef<HTMLInputElement | null>(null);
+
+    const handleOnClick = async (e: React.MouseEvent<HTMLInputElement>) => {
+
+        e.preventDefault();
+
+        if (!inputFileRef.current?.files?.length) {
+            alert('Please, select file you want to upload');
+            return;
+        }
+
+        setIsLoading(true);
+
+        const formData = new FormData();
+        Object.values(inputFileRef.current.files).forEach(file => {
+            formData.append('file', file);
+            
+        })
+        axios.post(`${process.env.NEXT_PUBLIC_INTERPRETER_URL}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(function (response:any) {
+          let data = response.data
+            console.log(data)
+            let index = 0;
+            for (index = 0; index < data['sems'].length; index++) {
+            if( data['sems'][index]['sem_num'] === 1) {setSem1(data['sems'][index]['courses']); setCount(1)}
+            else if( data['sems'][index]['sem_num'] === 2) {setSem2(data['sems'][index]['courses']); setCount(2)}
+            else if(data['sems'][index]['sem_num'] === 3) {setSem3(data['sems'][index]['courses']); setCount(3)}
+            else if(data['sems'][index]['sem_num'] === 4) {setSem4(data['sems'][index]['courses']); setCount(4)}
+            else if(data['sems'][index]['sem_num'] === 5) {setSem5(data['sems'][index]['courses']); setCount(5)}
+            else if(data['sems'][index]['sem_num'] === 6) {setSem6(data['sems'][index]['courses']); setCount(6)}
+            else if(data['sems'][index]['sem_num'] === 7) {setSem7(data['sems'][index]['courses']); setCount(7)}
+            else if(data['sems'][index]['sem_num'] === 8) {setSem8(data['sems'][index]['courses']); setCount(8)}
+            else if(data['sems'][index]['sem_num'] === 9) {setSem9(data['sems'][index]['courses']); setCount(9)}
+            else if( data['sems'][index]['sem_num'] === 10) {setSem10(data['sems'][index]['courses']); setCount(10)}
+            else if( data['sems'][index]['sem_num'] === 11) {setSem11(data['sems'][index]['courses']); setCount(11)}
+            else if( data['sems'][index]['sem_num'] === 12) {setSem12(data['sems'][index]['courses']); setCount(12)}
+            else if( data['sems'][index]['sem_num'] === 13) {setSem13(data['sems'][index]['courses']); setCount(13)}
+            else if( data['sems'][index]['sem_num'] === 14) {setSem14(data['sems'][index]['courses']); setCount(14)}
+            else if( data['sems'][index]['sem_num'] === 15) {setSem15(data['sems'][index]['courses']); setCount(15)}
+            else if( data['sems'][index]['sem_num'] === 16) {setSem16(data['sems'][index]['courses']); setCount(16)}
+        }
+        setIsLoading(false);
+        })
+        .catch(function (error:Error) {
+          setIsLoading(false);
+        });
+        addAllData(setSemData,
+          semData,
+          sem1,
+          sem2,
+          sem3,
+          sem4,
+          sem5,
+          sem6,
+          sem7,
+          sem8,
+          sem9,
+          sem10,
+          sem11,
+          sem12,
+          sem13,
+          sem14,
+          sem15,
+          sem16)
+        // setIsLoading(false);
+    };
+
   return (
     <div>
       <div>
+
+      <form style={{display:'flex',justifyContent:'center', alignItems:'center'}}>
+                <div >
+                    <input 
+                    type="file" name="myfile" ref={inputFileRef}  />
+                    
+                </div>
+                <div >
+                    <input type="submit" value="Upload" disabled={isLoading} onClick={handleOnClick} className={styles.submitTransButton}/>
+                    
+                </div>
+            </form>
+            <div style={{"position":"absolute",  display:'flex', alignItems:"center", justifyContent:"center",right:"50%", top:"20%"}}>
+
+            <Spin spinning={isLoading} delay={200}>
+              
+            </Spin>
+
+            </div>
+            
         <RepeatedSems
           count={count}
           semData={semData}

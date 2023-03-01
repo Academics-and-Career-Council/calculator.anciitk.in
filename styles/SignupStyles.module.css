@@ -123,6 +123,13 @@
   animation: shadow .5s alternate infinite ease;
 }
 
+.submitTransButton {
+  background: aliceblue;
+}
+.submitTransButton:hover {
+  background: #bdbdbd;
+}
+
 @keyframes shadow{
   0%{
       transform: scaleX(1.5);
