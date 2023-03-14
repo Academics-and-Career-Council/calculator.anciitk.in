@@ -76,6 +76,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   let courseY22: any = [];
   let i: number = 0;
   for (i; i < 1375; i++) {
+    // console.log(jsonOfCourseCredits);
     if (jsonOfCourseCredits[i] && !jsonOfCourseCredits[i].category) {
       options.push({ value: jsonOfCourseCredits[i].course });
     } else if (jsonOfCourseCredits[i] && jsonOfCourseCredits[i].category) {

@@ -101,6 +101,16 @@ export const y22 = atom({
   default: 0,
 });
 
+
+export const cpispichoosere = atom({
+  key: "cpispichooser",
+  default: "",
+});
+export const branche = atom({
+  key: "branch",
+  default: "",
+});
+
 export const allCourses = atom({
   key: "allCourses",
   default: [{key:0,course:"", value:"" ,category:"" ,cred:0, grade:"", credits_received:0, is_repeated: false,is_sx:false}],

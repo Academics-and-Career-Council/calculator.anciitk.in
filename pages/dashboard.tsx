@@ -1,4 +1,4 @@
-import { Menu, Button,Layout } from "antd";
+import { Menu, Button,Layout,Dropdown } from "antd";
 // import Layout, {  } from "antd/lib/layout/layout";
 import type { NextPage } from "next";
 import { Navigation, SPIstruct } from "../components/navigation";
@@ -43,6 +43,8 @@ import styles from "../styles/SignupStyles.module.css";
 import { Popover, Modal } from "antd";
 import {
   allSemsData,
+  branche,
+  cpispichoosere,
   loginStatus,
   Sem10Data,
   Sem11Data,
@@ -60,6 +62,7 @@ import {
   Sem7Data,
   Sem8Data,
   Sem9Data,
+  semCount
 } from "../components/typeDefinitions/recoilDeclarations";
 
 import { useRouter } from "next/router";
@@ -154,22 +157,25 @@ const Dashboard: NextPage = () => {
   // const [trial, setTrial] = useState<DataType[][]>()
   const [status, setStatus] = useState("Normal");
   const [showStat, setShowStat] = useState(false);
-  let [sem1a] = useRecoilState(Sem1Data);
-  let [sem2a] = useRecoilState(Sem2Data);
-  const [sem3a] = useRecoilState(Sem3Data);
-  const [sem4a] = useRecoilState(Sem4Data);
-  const [sem5a] = useRecoilState(Sem5Data);
-  const [sem6a] = useRecoilState(Sem6Data);
-  const [sem7a] = useRecoilState(Sem7Data);
-  const [sem8a] = useRecoilState(Sem8Data);
-  const [sem9a] = useRecoilState(Sem9Data);
-  const [sem10a] = useRecoilState(Sem10Data);
-  const [sem11a] = useRecoilState(Sem11Data);
-  const [sem12a] = useRecoilState(Sem12Data);
-  const [sem13a] = useRecoilState(Sem13Data);
-  const [sem14a] = useRecoilState(Sem14Data);
-  const [sem15a] = useRecoilState(Sem15Data);
-  const [sem16a] = useRecoilState(Sem16Data);
+  let [sem1a,setSem1] = useRecoilState(Sem1Data);
+  let [sem2a,setSem2] = useRecoilState(Sem2Data);
+  const [sem3a,setSem3] = useRecoilState(Sem3Data);
+  const [sem4a,setSem4] = useRecoilState(Sem4Data);
+  const [sem5a,setSem5] = useRecoilState(Sem5Data);
+  const [sem6a,setSem6] = useRecoilState(Sem6Data);
+  const [sem7a,setSem7] = useRecoilState(Sem7Data);
+  const [sem8a,setSem8] = useRecoilState(Sem8Data);
+  const [sem9a,setSem9] = useRecoilState(Sem9Data);
+  const [sem10a,setSem10] = useRecoilState(Sem10Data);
+  const [sem11a,setSem11] = useRecoilState(Sem11Data);
+  const [sem12a,setSem12] = useRecoilState(Sem12Data);
+  const [sem13a,setSem13] = useRecoilState(Sem13Data);
+  const [sem14a,setSem14] = useRecoilState(Sem14Data);
+  const [sem15a,setSem15] = useRecoilState(Sem15Data);
+  const [sem16a,setSem16] = useRecoilState(Sem16Data);
+  const [branch, setBranch] = useRecoilState(branche);
+  const [cpispichooser,setCpispiChooser]=useRecoilState(cpispichoosere);
+  const [count, setCount] = useRecoilState(semCount);
   const semArray = [
     sem1a,
     sem2a,
@@ -377,7 +383,340 @@ const Dashboard: NextPage = () => {
   const [results, setResults] = useState<SPIstruct[]>([]);
   const [cpi, setCpi] = useState(0);
   const [showStat2, setShowStat2] = useState(false);
+  const cpispi = (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setCpispiChooser("CPI")
+                // 
+              }}
+            >
+              CPI
+            </a>
+          ),
+        },
+        {
+          key: "2",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setCpispiChooser("SPI")
+                // 
+              }}
+            >
+              SPI
+            </a>
+          ),
+        },
+        
+      ]}
+    />
+  );
 
+  const semesters = (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setCount(1);
+                // 
+              }}
+            >
+              1st Semester
+            </a>
+          ),
+        },
+        {
+          key: "2",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setCount(2);
+                // 
+              }}
+            >
+              2nd Semester
+            </a>
+          ),
+        },
+        {
+          key: "3",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setCount(3);
+                // 
+              }}
+            >
+              3rd Semester
+            </a>
+          ),
+        },
+        {
+          key: "4",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                setCount(4);
+                // 
+              }}
+            >
+              4th Semester
+            </a>
+          ),
+        }
+      ]}
+    />
+  );
+  const branches = (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+              
+                
+                setBranch("AE");
+              }}
+            >
+              AE
+            </a>
+          ),
+        },
+        {
+          key: "2",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+              
+                
+                setBranch("BSBE");
+              }}
+            >
+              BSBE
+            </a>
+          ),
+        },
+        {
+          key: "3",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("CE");
+              }}
+            >
+              CE
+            </a>
+          ),
+        },
+        {
+          key: "4",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+              
+                
+                setBranch("CHE");
+              }}
+            >
+              CHE
+            </a>
+          ),
+        },
+        {
+          key: "5",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+            
+                
+                setBranch("CHM");
+              }}
+            >
+              CHM
+            </a>
+          ),
+        },
+        {
+          key: "6",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("CSE");
+              }}
+            >
+              CSE
+            </a>
+          ),
+        },
+        {
+          key: "7",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("ECO");
+              }}
+            >
+              ECO
+            </a>
+          ),
+        },
+        {
+          key: "8",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+              
+                
+                setBranch("EE");
+              }}
+            >
+              EE
+            </a>
+          ),
+        },
+        {
+          key: "9",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("ES");
+              }}
+            >
+              ES
+            </a>
+          ),
+        },
+        {
+          key: "10",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("ME");
+              }}
+            >
+              ME
+            </a>
+          ),
+        },
+        {
+          key: "11",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("MTH");
+              }}
+            >
+              MTH
+            </a>
+          ),
+        },
+        {
+          key: "12",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("MSE");
+              }}
+            >
+              MSE
+            </a>
+          ),
+        },
+        {
+          key: "13",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("PHY");
+              }}
+            >
+              PHY
+            </a>
+          ),
+        },
+        {
+          key: "14",
+          label: (
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                
+                
+                setBranch("SDS");
+              }}
+            >
+              SDS
+            </a>
+          ),
+        },
+      ]}
+    />
+  );
   const columns: ColumnsType<SPIstruct> = [
     {
       title: "Semester",
@@ -395,7 +734,68 @@ const Dashboard: NextPage = () => {
       key: "credits_completed",
     },
   ];
+  const semArraye = [
+    setSem1,
+    setSem2,
+    setSem3,
+    setSem4,
+    setSem5,
+    setSem6,
+    setSem7,
+    setSem8,
+    setSem9,
+    setSem10,
+    setSem11,
+    setSem12,
+    setSem13,
+    setSem14,
+    setSem15,
+    setSem16,
+  ];
+  const getdatasembranchspi=async(sem:any,branch:string)=>{
+    
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}coursebranch/${branch}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(data)
+    if (data){
+      const datagrades=data.data.sem;
+      console.log(datagrades)
+      if( datagrades.length>0){
+        setCount(1);
+        
+        semArraye[0](datagrades[sem-1]);
+      }
+    }
 
+  }
+  const getdatasembranchcpi=async(sem:any,branch:string)=>{
+    
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}coursebranch/${branch}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(data)
+    if (data){
+      const datagrades=data.data.sem;
+      console.log(datagrades)
+      if( datagrades.length>0){
+        for (let io=0;io<sem;io++){
+          semArraye[io](datagrades[io]);
+        }
+        // semArraye[0](datagrades[sem-1]);
+      }
+    }
+
+  }
+  
   const items = [
     {
       label: (
@@ -591,6 +991,33 @@ const Dashboard: NextPage = () => {
                   
                 </p>
               </div>
+              <div style={{display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: "20px",}}>
+              <Dropdown overlay={cpispi} placement="bottom">
+          <Button>{cpispichooser == "" && <> CPI/SPI</>} {cpispichooser != "" && <> {cpispichooser}</>}</Button>
+        </Dropdown>
+        <Dropdown overlay={semesters} placement="bottom">
+          <Button>Semesters Done {count != 0 && <> : {count}</>}</Button>
+        </Dropdown>
+        <Dropdown overlay={branches} placement="bottom">
+          <Button>
+            {branch === "" && <>Select Branch</>}
+            {branch !== "" && <>department: {branch}</>}
+          </Button>
+        </Dropdown>
+
+        <Button onClick={()=>{
+          if (cpispichooser=="SPI"){
+            console.log("spi",count,branch);
+            getdatasembranchspi(count,branch)
+          }else if(cpispichooser=="CPI"){
+            console.log("cpi");
+            getdatasembranchcpi(count,branch)
+          }
+          }}>Display Courses</Button>
+        </div>
               <div
                 className="site-layout-background"
                 style={{ padding: 24 }}

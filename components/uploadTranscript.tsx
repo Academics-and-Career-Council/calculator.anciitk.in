@@ -3,6 +3,8 @@ import { Button, Spin } from "antd";
 import type { FormInstance } from "antd/es/form";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "antd/dist/antd.css";
+import {  Dropdown, Menu, MenuProps } from "antd";
+
 import DataType, { components } from "./typeDefinitions/datatype";
 import styles from "../styles/SignupStyles.module.css";
 import {
@@ -25,6 +27,8 @@ import {
   Sem9Data,
   semCount,
   allCourses,
+  branche,
+  cpispichoosere,
 } from "./typeDefinitions/recoilDeclarations";
 import axios from "axios";
 import getCreditsReceived from "./auxilliary_functions/getCreditsReceived";
@@ -87,6 +91,8 @@ export const App: React.FC = () => {
   const [sem15, setSem15] = useRecoilState(Sem15Data);
   const [courseDataFetched, setCourseDataFetched] = useState(0);
   const [sem16, setSem16] = useRecoilState(Sem16Data);
+  const [branch, setBranch] = useRecoilState(branche);
+  const [cpispichooser,setCpispiChooser]=useRecoilState(cpispichoosere);
   var datagrades;
   const sessiondata = useRecoilValue(recoilSessionState);
   let userId = "45645464676gchghc";
@@ -101,7 +107,6 @@ export const App: React.FC = () => {
       },
     });
     const data = await res.json();
-
     setjsonOfCourseCredits(data.data);
   };
   if (!courseDataFetched) {
@@ -128,6 +133,7 @@ export const App: React.FC = () => {
       const data = await res.json();
       if (data) {
         datagrades = data.data.gradesData;
+        console.log(datagrades)
         // dummyData=data.gradesData;
         if (semData.length && datagrades.length > 0) {
           // alert(<h1>vcvcvcc</h1>)
@@ -174,6 +180,47 @@ export const App: React.FC = () => {
       }
     }
   };
+  
+
+  // const getdatasembranchspi=async(sem:any,branch:string)=>{
+    
+  //   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}coursesp/${sem}/${branch}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await res.json();
+  //   if (data){
+  //     datagrades=data.data.gradesData;
+  //     if(semData.length && datagrades.length>0){
+  //       setCount(1);
+  //       semArray[0](datagrades[0]);
+  //     }
+  //   }
+
+  // }
+  const getdatasembranchcpi=async()=>{
+    const sem="3";
+    const branch="";
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}coursesa/${sem}/${branch}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data){
+      datagrades=data.data.gradesData;
+      if(semData.length && datagrades.length>0){
+        setCount(datagrades.length);
+        for(let y=0;y<datagrades.length;y++){
+          semArray[y](datagrades[y]);
+        }
+      }
+    }
+
+  }
   const semArray = [
     setSem1,
     setSem2,
@@ -192,8 +239,6 @@ export const App: React.FC = () => {
     setSem15,
     setSem16,
   ];
-
-
   const addinpdata = async () => {
     // e.preventDefault();
 
@@ -380,7 +425,7 @@ export const App: React.FC = () => {
 
     const [isLoading, setIsLoading] = React.useState(false);
     const inputFileRef = React.useRef<HTMLInputElement | null>(null);
-
+    
     const handleOnClick = async (e: React.MouseEvent<HTMLInputElement>) => {
 
         e.preventDefault();
@@ -472,7 +517,36 @@ export const App: React.FC = () => {
             </Spin>
 
             </div>
-            
+            <div>
+            <div className={styles.buttonF}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        
+      </div>
+      {/* <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: "20px",
+        }}
+      >
+        <Button onClick={()=>{
+          if (cpispichooser=="SPI"){
+            console.log("spi",count,branch);
+            getdatasembranchspi(count,branch)
+          }else if(cpispichooser=="CPI"){
+            console.log("cpi");
+          }
+          }}>Display Courses</Button>
+      </div> */}
+
+
+            </div>
         <RepeatedSems
           count={count}
           semData={semData}
