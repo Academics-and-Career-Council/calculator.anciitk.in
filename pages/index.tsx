@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 
   if (isLogIn === true) {
     if (session === undefined) {
-      // router.push("./verify");
+      // routerloader.push("./verify");
     }
   }
 
@@ -95,9 +95,9 @@ const Home: NextPage = () => {
     {/* ##################################################### */}
 {/* Add loader here. Make sure showOptions is false while displaying the loader */}
     {/* ##################################################### */}
-    {!showOptions && <Loader/>}
+    
 
-    { showOptions &&
+    
     <div className={styles.container}>
       <div
         style={{
@@ -145,7 +145,7 @@ const Home: NextPage = () => {
             <Title level={5} style={{"color":"white","position":"absolute","right":"20px","bottom":"10px"}}>Web Team AnC@ 2022</Title>
       </div>
     </div>
-    }
+    
     </>
   );
 };

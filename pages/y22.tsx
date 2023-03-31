@@ -599,9 +599,9 @@ const Home: NextPage = () => {
     {/* ##################################################### */}
 {/* Add loader here. Make sure session is undefined while displaying the loader */}
     {/* ##################################################### */}
-    {loading==false && <Loader/>}
+    
 
-    { loading === true &&
+    
     <div
       style={{
         display: "flex",
@@ -808,17 +808,17 @@ const Home: NextPage = () => {
               tempFunc();
               getSPI();
               handleClick1();
-            }}>
+            }} style={{borderBottom:"0.5px #757575 solid"}}>
                 <Link href="/dashboard">Get SPI/CPI</Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<ApartmentOutlined />}  onClick={() => {
               tempFunc();
               getStats(semData);
               handleClick2();
-            }}>
+            }} style={{borderBottom:"0.5px #757575 solid"}}>
               <Link href={``}>Find Status</Link>
               </Menu.Item>
-              <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("./y22")}>
+              <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("/dashboard")} style={{borderBottom:"0.5px #757575 solid"}}>
               <Link href='/dashboard'>PRE Y22</Link>
               </Menu.Item>
               
@@ -1117,7 +1117,7 @@ const Home: NextPage = () => {
         </Footer>
       </Layout>
     </div>
-    }
+    
     </>
   );
 };

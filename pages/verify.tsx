@@ -85,7 +85,7 @@ const Verify: NextPage = () => {
   })
 
   return (
-    <>{loading === true && 
+    <>
     <div
       style={{
         display: "flex",
@@ -94,8 +94,8 @@ const Verify: NextPage = () => {
       }}
     >
 
-    </div>}
-    {loading === false && <Loader/>}</>
+    </div>
+    </>
   );
 };
 

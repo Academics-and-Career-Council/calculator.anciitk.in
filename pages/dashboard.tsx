@@ -825,8 +825,8 @@ const Dashboard: NextPage = () => {
 
   return (
     <>
-    {loading === false && <Loader/>}
-    {loading === true && <div
+    
+     <div
       style={{
         display: "flex",
         justifyContent: "center",
@@ -869,17 +869,17 @@ const Dashboard: NextPage = () => {
                 setResults
               );
               // handleClick1();
-            }}>
+            }} style={{borderBottom:"0.5px #757575 solid"}}>
                 Get SPI/CPI
               </Menu.Item>
-              <Menu.Item key="2" icon={<ApartmentOutlined />}  onClick={() => {
+              <Menu.Item key="2" icon={<ApartmentOutlined /> }  onClick={() => {
               tempFunc();
               getStats(semData);
               handleClick2();
-            }}>
+            }} style={{borderBottom:"0.5px #757575 solid"}}>
               <Link href={``}>Find Status</Link>
               </Menu.Item>
-              <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("./y22")}>
+              <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("./y22")} style={{borderBottom:"0.5px #757575 solid"}}>
               <Link href='/y22'>Y22</Link>
               </Menu.Item>
 
@@ -994,20 +994,25 @@ const Dashboard: NextPage = () => {
               <div style={{display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          paddingTop: "20px",}}>
-              <Dropdown overlay={cpispi} placement="bottom">
-          <Button>{cpispichooser == "" && <> CPI/SPI</>} {cpispichooser != "" && <> {cpispichooser}</>}</Button>
+          paddingTop: "20px",
+          marginLeft:"38px"}}>
+            <Dropdown overlay={cpispi} placement="bottom">
+          <Button style={{marginRight:"20px"}}>{cpispichooser == "" && <> CPI/SPI</>} {cpispichooser != "" && <> {cpispichooser}</>}</Button>
         </Dropdown>
         <Dropdown overlay={semesters} placement="bottom">
-          <Button>Semesters Done {count != 0 && <> : {count}</>}</Button>
+          <Button >Semesters Done {count != 0 && <> : {count}</>}</Button>
         </Dropdown>
         <Dropdown overlay={branches} placement="bottom">
-          <Button>
+          <Button style={{marginLeft:"20px"}}>
             {branch === "" && <>Select Branch</>}
             {branch !== "" && <>department: {branch}</>}
           </Button>
         </Dropdown>
-
+        </div>
+        <div style={{display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: "20px",}}>
         <Button onClick={()=>{
           if (cpispichooser=="SPI"){
             console.log("spi",count,branch);
@@ -1129,7 +1134,7 @@ const Dashboard: NextPage = () => {
         </Footer>
       </Layout>
     </div>
-}</>);
+</>);
 };
 
 export default Dashboard;
