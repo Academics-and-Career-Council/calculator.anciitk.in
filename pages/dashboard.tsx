@@ -839,7 +839,7 @@ const Dashboard: NextPage = () => {
         height: "100vh",  
       }}>
         
-        <div style={{}}>
+        <div>
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh",zIndex:"100",top:"0vh"}} className={styles.nonmobileSi}>
             <Menu theme="dark"  mode="inline">
               <Menu.Item key="1" icon={<CalculatorOutlined />}  onClick={() => {
@@ -880,7 +880,7 @@ const Dashboard: NextPage = () => {
               <Link href={``}>Find Status</Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("./y22")} style={{borderBottom:"0.5px #757575 solid"}}>
-              <Link href='/y22'>Y22</Link>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/y22`}>Y22</Link>
               </Menu.Item>
 
               
@@ -901,7 +901,7 @@ const Dashboard: NextPage = () => {
               
               }}
             >
-              <Link href="/dashboard">
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`}>
                 <img
                   src="https://anciitk.in/img/anc-logo.png"
                   alt="AnC IITK logo"

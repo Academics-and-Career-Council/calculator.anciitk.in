@@ -594,11 +594,6 @@ const Home: NextPage = () => {
     );
   };
   return (
-    <>
-    
-    {/* ##################################################### */}
-{/* Add loader here. Make sure session is undefined while displaying the loader */}
-    {/* ##################################################### */}
     
 
     
@@ -801,7 +796,7 @@ const Home: NextPage = () => {
 
 
 
-        <div style={{}}>
+        <div>
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} style={{position:"fixed",height:"100vh", top:"0vh",zIndex:"100"}}>
             <Menu theme="dark"  mode="inline">
               <Menu.Item key="1" icon={<UserOutlined />}  onClick={() => {
@@ -809,7 +804,7 @@ const Home: NextPage = () => {
               getSPI();
               handleClick1();
             }} style={{borderBottom:"0.5px #757575 solid"}}>
-                <Link href="/dashboard">Get SPI/CPI</Link>
+                <Link href={''}>Get SPI/CPI</Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<ApartmentOutlined />}  onClick={() => {
               tempFunc();
@@ -819,7 +814,7 @@ const Home: NextPage = () => {
               <Link href={``}>Find Status</Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<SolutionOutlined />} onClick={() => router.push("/dashboard")} style={{borderBottom:"0.5px #757575 solid"}}>
-              <Link href='/dashboard'>PRE Y22</Link>
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`}>PRE Y22</Link>
               </Menu.Item>
               
             </Menu>
@@ -831,13 +826,13 @@ const Home: NextPage = () => {
                 // position:"relative",
                 backgroundColor: "#ffffff",
                 width:"100vw",
-                height: "60px",
+                height: "70px",
                 boxShadow: "2px 2px 4px #b1b1b1",
                 display: "flex",
                 justifyContent:"center"
               }}
             >
-              <Link href="/dashboard">
+              <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/dashboard`}>
                 <img
                   src="https://anciitk.in/img/anc-logo.png"
                   alt="AnC IITK logo"
@@ -858,11 +853,12 @@ const Home: NextPage = () => {
               
               Academics and Career Council
             </div>
+            <Popover placement={"bottomRight"} content={content} title="My Profile" trigger="click">
               <div style={{
                 padding: 0,
                 backgroundColor: "#ffffff",
                 width:"15vw",
-                height: "60px",
+                height: "70px",
                 boxShadow: "4px 2px 4px #b1b1b1",
                 display: "flex",
                 position:"absolute",
@@ -870,7 +866,7 @@ const Home: NextPage = () => {
                 zIndex:"10",
                 
               }}>
-              <Popover placement={"bottomRight"} content={content} title="My Profile" trigger="click">
+              
 
               {sessiondata?.user.rollno && <Avatar
                 size={50}
@@ -882,12 +878,13 @@ const Home: NextPage = () => {
                   // boxShadow: "2px 2px 4px #b1b1b1",
                   position: "absolute",
                   right: 20,
-                  top: 20,
+                  top: 5,
                 }}
               >    
                 
               </Avatar>}
-              </Popover></div>
+              </div>
+              </Popover>
             </Header></div>
         <div></div>
         <div>
@@ -943,7 +940,7 @@ const Home: NextPage = () => {
               {!isMobile && (
                 <div
                   className="site-layout-background"
-                  style={{ padding: 24, minHeight: 620 }}
+                  style={{ padding: 24, minHeight: 200 }}
                 >
                   {displayAllInfo()}
                 </div>
@@ -1118,7 +1115,6 @@ const Home: NextPage = () => {
       </Layout>
     </div>
     
-    </>
   );
 };
 
