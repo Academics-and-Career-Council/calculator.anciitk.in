@@ -147,7 +147,11 @@ const Dashboard: NextPage = () => {
     element1.scrollIntoView({ behavior: "smooth" });}
   };
   
-  const userImage = `https://images-students-iitk.sgp1.digitaloceanspaces.com/images-students-iitk/${sessiondata?.user.rollno}.jpg`;
+  // const userImage = `https://images-students-iitk.sgp1.digitaloceanspaces.com/images-students-iitk/${sessiondata?.user.rollno}.jpg`;
+  var userImage = `https://img.freepik.com/free-icon/user_318-804790.jpg`;
+  if (sessiondata?.user.rollno){
+    userImage = `https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/${sessiondata?.user.rollno}_0.jpg`;
+  }
   const handleClick2 = () => {
     const element2 = document.getElementById("acad-status");
     element2?.scrollIntoView({ behavior: "smooth" });
